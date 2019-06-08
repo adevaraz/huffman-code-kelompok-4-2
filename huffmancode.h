@@ -14,6 +14,19 @@
 
 #define huffmancode_h
 
+typedef struct char infotype;
+
+typedef struct huffmanNode *addr_huffman;
+typedef struct huffmanNode  {
+	infotype symbol;
+	addr_huffman left_c;
+	addr_huffman right_c;
+	double probability;
+} huffman_node;
+
+typedef struct {
+	addr_huffman tree;
+} huffman_tree;
 
 
 #endif
