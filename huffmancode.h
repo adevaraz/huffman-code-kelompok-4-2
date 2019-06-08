@@ -7,6 +7,9 @@
  * Compiler		: TDM-GCC 4.9.2
 **/
 
+#include <stdio.h>
+#include <malloc.h>
+
 #ifndef huffmancode_h
 
 #define huffmancode_h
