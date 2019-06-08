@@ -8,8 +8,8 @@
 **/
 
 #include <stdio.h>
-#include <stdbool.h>
 #include <malloc.h>
+#include <stdbool.h>
 
 #ifndef huffmancode_h
 
@@ -28,11 +28,16 @@ typedef struct huffmanNode  {
 
 typedef struct {
 	addr_huffman tree;
-} huffman_tree;
+} huffman_tree; 
 
+/*************** Destructor ***************/
 addr_huffman Dealloc(addr_huffman *N);
+
+/***************  Validate ***************/
 bool IsRightChild(addr_huffman N);
+
+/***************  Display  ***************/
 void PrintTab(int level);
-void DisplayHuffmanTree(huffman_tree T);
+void PrintTree(huffman_tree T);
 
 #endif
