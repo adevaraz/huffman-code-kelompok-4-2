@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "huffmancode.h"
 
 addr_huffman Dealloc(addr_huffman *N) {
@@ -43,7 +44,7 @@ void PrintTab(int level) {
  * tertentu
 **/
 
-void DisplayHuffmanTree(huffman_tree T) {
+void PrintTree(huffman_tree T) {
 	addr_huffman psearch;
 	bool formal;
 	int level;
