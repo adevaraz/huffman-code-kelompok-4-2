@@ -71,41 +71,46 @@ bool IsLeftChild(huffman_node node) {
 	return (node == node.parent->left_c);
 }
 
+/**
+ * Mengecek apakah node yang bersangkutan 
+ * merupakan anak kanan dari parent atau bukan
+**/
+bool IsRightChild(addr_huffman N) {
+	addr_huffman parent;
+	parent = N->parent;
+	return (parent->right_c == N);
+}
+
 /************ Huffman Operations ************/
 
 huffman_tree SortProbability(huffman_tree *the_tree);
 
+/**
+ * Menghapus keberadaan node di memori
+**/
 addr_huffman Dealloc(addr_huffman *N) {
 	(*N)->parent = NULL;
 	(*N)->left_c = NULL;
 	(*N)->right_c = NULL;
 	free(*N);
 }
-/**
- * Menghapus keberadaan node di memori
-**/
 
-bool IsRightChild(addr_huffman N) {
-	addr_huffman parent;
-	parent = N->parent;
-	return (parent->right_c == N);
-}
-/**
- * Mengecek apakah node yang bersangkutan 
- * merupakan anak kanan dari parent atau bukan
-**/
+/*************** Display ***************/
 
+/**
+ * Menampilkan sebuah jarak sesuai dengan level
+ * tertentu
+**/
 void PrintTab(int level) {
 	int i;
 	for(i = 0; i < level; i++) {
 		printf("  ");
 	}
 }
-/**
- * Menampilkan sebuah jarak sesuai dengan level
- * tertentu
-**/
 
+/**
+ * Menampilkan pohon Huffman yang sudah terbentuk
+**/
 void PrintTree(huffman_tree T) {
 	addr_huffman psearch;
 	bool formal;
@@ -137,7 +142,4 @@ void PrintTree(huffman_tree T) {
 		}
 	}
 }
-/**
- * Menampilkan pohon Huffman yang sudah terbentuk
-**/
 
