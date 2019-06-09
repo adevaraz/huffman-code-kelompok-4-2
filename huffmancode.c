@@ -30,7 +30,7 @@ huffman_tree CreateEmptyTree() {
  * Membuat tree baru yang sudah berisi satu Node sebagai root.
  * Mengembalikan sebuah tree dengan dengan root == node.
  **/
-huffman_tree CreateTree(huffman_node node) {
+huffman_tree CreateTree(addr_huffman node) {
 	huffman_tree T = CreateEmptyTree();
 	
 	T.tree = node;
@@ -48,11 +48,11 @@ addr_huffman Allocate(infotype value, double prob) {
 	addr_huffman n_node = (addr_huffman) malloc(sizeof(huffman_node));
 	
 	if(n_node != NULL) {
-		n_node.symbol = value;
-		n_node.probability = prob;
-		n_node.left_c = NULL;
-		n_node.right_c = NULL;
-		n_node.parent = NULL;
+		n_node->symbol = value;
+		n_node->probability = prob;
+		n_node->left_c = NULL;
+		n_node->right_c = NULL;
+		n_node->parent = NULL;
 	}
 	
 	return n_node;
@@ -67,8 +67,8 @@ addr_huffman Allocate(infotype value, double prob) {
  * Mengembalikan nilai .false. jika node bukan left_child
  * dari parentnya.
  **/
-bool IsLeftChild(huffman_node node) {
-	return (node == node.parent->left_c);
+bool IsLeftChild(addr_huffman node) {
+	return (node == node->parent->left_c);
 }
 
 /**
