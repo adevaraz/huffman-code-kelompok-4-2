@@ -32,20 +32,18 @@ typedef struct {
 
 /*************** Constructor ***************/
 huffman_tree CreateEmptyTree();
-huffman_tree CreateTree(huffman_tree *the_tree, huffman_node the_root);
-addr_huffman Allocate(infotype value);
+huffman_tree CreateTree(addr_huffman node);
+addr_huffman Allocate(infotype value, double prob);
 
 /*************** Validate ***************/
-bool IsLeftChild(huffman_node node);
+bool IsLeftChild(addr_huffman node);
+bool IsRightChild(addr_huffman N);
 
 /************ Huffman Operations ************/
 huffman_tree SortProbability(huffman_tree *the_tree);
 
 /*************** Destructor ***************/
 addr_huffman Dealloc(addr_huffman *N);
-
-/***************  Validate ***************/
-bool IsRightChild(addr_huffman N);
 
 /***************  Display  ***************/
 void PrintTab(int level);
