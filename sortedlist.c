@@ -70,6 +70,7 @@ void InsertSorted(sorted_list *the_list, addr_huffman value) {
 	addr_sorted prec_node = the_list->front;
 	
 	if(n_node->info->probability >= the_list->front->info->probability) {
+		/* Loop for comparing new element to element list*/
 		while(n_node->info->probability >= prec_node->next->info->probability && prec_node->next != NULL) {
 			prec_node = prec_node->next;
 		}
