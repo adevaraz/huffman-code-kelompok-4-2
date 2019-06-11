@@ -25,4 +25,12 @@ typedef struct {
 	addr_sorted front;
 } sorted_list;
 
+/*************** Constructor ***************/
+sorted_list CreateEmptyList();
+sorted_list CreateSortedList(addr_huffman value);
+addr_sorted AllocateElmt(addr_huffman value);
+
+/********* Sorted List Operations *********/
+void InsertSorted(sorted_list *the_list, addr_huffman value);
+
 #endif

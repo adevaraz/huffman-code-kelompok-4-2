@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = huffmancode.o main_huffman.o strlist.o codelist.o
-LINKOBJ  = huffmancode.o main_huffman.o strlist.o codelist.o
+OBJ      = huffmancode.o main_huffman.o codelist.o stack.o strlist.o sortedlist.o
+LINKOBJ  = huffmancode.o main_huffman.o codelist.o stack.o strlist.o sortedlist.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -30,8 +30,14 @@ huffmancode.o: huffmancode.c
 main_huffman.o: main_huffman.c
 	$(CC) -c main_huffman.c -o main_huffman.o $(CFLAGS)
 
+codelist.o: codelist.c
+	$(CC) -c codelist.c -o codelist.o $(CFLAGS)
+
+stack.o: stack.c
+	$(CC) -c stack.c -o stack.o $(CFLAGS)
+
 strlist.o: strlist.c
 	$(CC) -c strlist.c -o strlist.o $(CFLAGS)
 
-codelist.o: codelist.c
-	$(CC) -c codelist.c -o codelist.o $(CFLAGS)
+sortedlist.o: sortedlist.c
+	$(CC) -c sortedlist.c -o sortedlist.o $(CFLAGS)
