@@ -34,7 +34,7 @@ addr_stack Alloc(vartype info);
 addr_stack Deallocate(addr_stack *S);
 void DeleteStack(stack *S);
 
-/*************** Stack Operations ***************/
+/************ Stack Operations ************/
 void Push(stack *S, vartype info);
 vartype Pop(stack *S);
 

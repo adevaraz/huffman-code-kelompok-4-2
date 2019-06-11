@@ -9,6 +9,7 @@
 
 #include "stack.h"
 
+/*************** Constructor ***************/
 /**
  * Membuat stack yang kosong
  **/
@@ -25,6 +26,7 @@ addr_stack Alloc(vartype info) {
 	new_node->next = NULL;
 }
 
+/*************** Destructor ***************/
 /**
  * Menghapus keberadaan node di memori
  **/
@@ -33,6 +35,7 @@ addr_stack Deallocate(addr_stack *S) {
 	free(*S);
 }
 
+/************ Stack Operations ************/
 /**
  * Menambahkan isi stack
  **/
