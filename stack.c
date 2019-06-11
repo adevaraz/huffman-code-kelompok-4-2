@@ -51,6 +51,7 @@ void Push(stack *S, vartype info) {
 vartype Pop(stack *S) {
 	vartype pop;
 	addr_stack phelp;
+	
 	pop = (*S).top->info;
 	phelp = (*S).top;
 	(*S).top = (*S).top->next;
@@ -64,7 +65,7 @@ vartype Pop(stack *S) {
  **/
 void DeleteStack(stack *S) {
 	addr_stack pdel;
-	pdel = (*S).top;
+	
 	while((*S).top != NULL) {
 		pdel = (*S).top;
 		(*S).top= (*S).top->next;
