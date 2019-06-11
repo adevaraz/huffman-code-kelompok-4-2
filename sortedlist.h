@@ -25,4 +25,13 @@ typedef struct {
 	addr_sorted front;
 } sorted_list;
 
+/*************** Destructor ***************/
+addr_sorted DeallocateElmt(addr_sorted *N);
+void DeleteNode(sorted_list *L, double prob);
+void DeleteList(sorted_list *L);
+
+/*************** List Operations ***************/
+addr_sorted SearchNode(sorted_list L, double prob);
+addr_sorted SearchNodeBefore(sorted_list L, addr_sorted node);
+
 #endif
