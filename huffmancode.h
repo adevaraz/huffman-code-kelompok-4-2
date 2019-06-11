@@ -28,7 +28,7 @@ typedef struct huffmanNode  {
 
 typedef struct {
 	addr_huffman tree;
-} huffman_tree; 
+} huffman_tree;
 
 /*************** Constructor ***************/
 huffman_tree CreateEmptyTree();
@@ -37,15 +37,13 @@ addr_huffman Allocate(infotype value, double prob);
 
 /*************** Validate ***************/
 bool IsLeftChild(addr_huffman node);
+bool IsRightChild(addr_huffman N);
 
 /************ Huffman Operations ************/
 huffman_tree SortProbability(huffman_tree *the_tree);
 
 /*************** Destructor ***************/
 addr_huffman Dealloc(addr_huffman *N);
-
-/***************  Validate ***************/
-bool IsRightChild(addr_huffman N);
 
 /***************  Display  ***************/
 void PrintTab(int level);
