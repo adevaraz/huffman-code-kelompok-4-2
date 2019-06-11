@@ -15,14 +15,14 @@
 #include "boolean.h"
 #include "huffmancode.h"
 
-typedef struct ElmtList_t *addr_sorted;
-typedef struct ElmtList_t {
+typedef struct elmt_list_t *addr_sorted;
+typedef struct elmt_list_t {
 	addr_huffman info;
 	addr_sorted next;
-} ElmtList;
+} elmt_list;
 
 typedef struct {
 	addr_sorted front;
-} SortedList;
+} sorted_list;
 
 #endif
