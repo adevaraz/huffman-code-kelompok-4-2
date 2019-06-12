@@ -32,14 +32,14 @@ addr_sorted AllocateElmt(addr_huffman value);
 
 /********* Sorted List Operations *********/
 void InsertSorted(sorted_list *the_list, addr_huffman value);
+addr_sorted SearchNode(sorted_list L, double prob);
+addr_sorted SearchNodeBefore(sorted_list L, addr_sorted node);
+bool IsFirstElmt(sorted_list L, addr_sorted node);
 
 /*************** Destructor ***************/
 addr_sorted DeallocateElmt(addr_sorted *N);
-void DeleteNode(sorted_list *L, double prob);
+addr_sorted DeleteNode(sorted_list *L, double prob);
 void DeleteList(sorted_list *L);
 
-/*************** List Operations ***************/
-addr_sorted SearchNode(sorted_list L, double prob);
-addr_sorted SearchNodeBefore(sorted_list L, addr_sorted node);
 
 #endif
