@@ -98,12 +98,25 @@ addr_sorted DeallocateElmt(addr_sorted *N) {
  * Menghapus salah satu node berdasarkan probabilitas
  * yang dimilikinya dan probabilitas yang diminta
  **/
-void DeleteNode(sorted_list *L, double prob) {
-	addr_sorted node = SearchNode(*L, prob);
-	addr_sorted pbefore = SearchNodeBefore(*L, node);
+addr_sorted DeleteNode(sorted_list *L, double prob) {
+	addr_sorted pdel = SearchNode(*L, prob);
+	if(!IsFirstElmt(*L, pdel)) {
+		addr_sorted pbefore = SearchNodeBefore(*L, pdel);
+		pbefore->next = pdel->next;
+	}
 	
-	pbefore->next = node->next;
-	DeallocateElmt(&node);
+	addr_sorted node = pdel;
+	DeallocateElmt(&pdel);
+	
+	return node;
+}
+
+/**
+ * Mengecek apakah sebuah node merupakan elemen pertama 
+ * atau bukan
+ **/
+bool IsFirstElmt(sorted_list L, addr_sorted node) {
+	return (L.front == node);
 }
 
 /**
