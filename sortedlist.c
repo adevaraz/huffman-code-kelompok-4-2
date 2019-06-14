@@ -95,14 +95,6 @@ addr_sorted DeallocateElmt(addr_sorted *N) {
 }
 
 /**
- * List tidak kosong.
- * Mengembalikan element pertama dari sebuah list.
- **/
-addr_sorted GetFirstElmt(sorted_list L) {
-	return L->front;
-}
-
-/**
  * Menghapus salah satu node berdasarkan probabilitas
  * yang dimilikinya dan probabilitas yang diminta
  **/
@@ -111,8 +103,6 @@ addr_sorted DeleteNode(sorted_list *L, double prob) {
 	if(!IsFirstElmt(*L, pdel)) {
 		addr_sorted pbefore = SearchNodeBefore(*L, pdel);
 		pbefore->next = pdel->next;
-	} else {
-		L->front = pdel->next;
 	}
 	
 	addr_sorted node = pdel;
