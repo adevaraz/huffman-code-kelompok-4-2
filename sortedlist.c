@@ -180,14 +180,4 @@ addr_sorted SearchNodeBefore(sorted_list L, addr_sorted node) {
 	return psearch;
 }
 
-addr_huffman DeleteSmallestElmt(sorted_list *L) {
-	addr_sorted smallest = (*L).front;
-	addr_sorted pdel = smallest;
-	addr_huffman node;
-	(*L).front = (*L).front->next;
-	DeallocateElmt(&pdel);
-	node = smallest->info;
-	return node;
-}
-
 #endif
