@@ -7,9 +7,6 @@
  * Compiler		: TDM-GCC 4.9.2
 **/
 
-#ifndef sortedlist_c
-#define sortedlist_c 
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <malloc.h>
@@ -179,5 +176,3 @@ addr_sorted SearchNodeBefore(sorted_list L, addr_sorted node) {
 	
 	return psearch;
 }
-
-#endif

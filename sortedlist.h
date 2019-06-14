@@ -7,13 +7,26 @@
  * Compiler		: TDM-GCC 4.9.2
 **/
 
-#ifndef sortedlist_h
-#define sortedlist_h 
+#ifndef SORTEDLIST_H
+
+#define SORTEDLIST_H
 
 #include <stdlib.h>
 #include <stdio.h>
 #include "boolean.h"
 #include "huffmancode.h"
+
+typedef char infotype;
+
+typedef struct huffmanNode *addr_huffman;
+typedef struct huffmanNode huffman_node;
+//struct huffmanNode  {
+//	infotype symbol;
+//	addr_huffman parent;
+//	addr_huffman left_c;
+//	addr_huffman right_c;
+//	double probability;
+//};
 
 typedef struct elmt_list_t *addr_sorted;
 typedef struct elmt_list_t {
@@ -21,7 +34,7 @@ typedef struct elmt_list_t {
 	addr_sorted next;
 } elmt_list;
 
-typedef struct {
+typedef struct sorted_list {
 	addr_sorted front;
 } sorted_list;
 
@@ -40,6 +53,5 @@ bool IsFirstElmt(sorted_list L, addr_sorted node);
 addr_sorted DeallocateElmt(addr_sorted *N);
 addr_sorted DeleteNode(sorted_list *L, double prob);
 void DeleteList(sorted_list *L);
-
 
 #endif

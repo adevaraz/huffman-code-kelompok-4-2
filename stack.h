@@ -7,13 +7,12 @@
  * Compiler		: TDM-GCC 4.9.2
 **/
 
+#ifndef STACK_H
+#define STACK_H
+
 #include <stdio.h>
 #include <malloc.h>
 #include <stdbool.h>
-
-#ifndef stack_h
-
-#define stack_h
 
 typedef int vartype;
 typedef struct ElmtStack *addr_stack;

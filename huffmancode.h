@@ -7,13 +7,18 @@
  * Compiler		: TDM-GCC 4.9.2
 **/
 
+#ifndef HUFFMANCODE_H
+
+#define HUFFMANCODE_H
+
 #include <stdio.h>
 #include <malloc.h>
 #include <stdbool.h>
-
-#ifndef huffmancode_h
-
-#define huffmancode_h
+#include "huffmancode.h"
+#include "codelist.h"
+#include "stack.h"
+#include "boolean.h"
+#include "sortedlist.h"
 
 typedef char infotype;
 
@@ -27,8 +32,15 @@ typedef struct huffmanNode  {
 } huffman_node;
 
 typedef struct {
-	addr_huffman root;
+	addr_huffman tree;
 } huffman_tree;
+
+typedef struct elmt_list_t *addr_sorted;
+typedef struct elmt_list_t elmt_list;
+struct elmt_list_t {
+	addr_huffman info;
+	addr_sorted next;
+};
 
 /*************** Constructor ***************/
 huffman_tree CreateEmptyTree();
@@ -43,7 +55,7 @@ bool IsRightChild(addr_huffman N);
 void Insertion(huffman_tree *tree, infotype value, infotype probability);
 void InsertRight(addr_huffman parent, addr_huffman child);
 void InsertLeft(addr_huffman parent, addr_huffman child);
-void GenerateHuffmanTree(huffman_tree *tree, addr_sorted *sorted_list);
+huffman_tree GenerateHuffmanTree(sorted_list *nodes_list);
 void SetHuffmanCode(huffman_tree the_tree, ListCode *huffman_code);
 addr_huffman SearchHuffmanNode(huffman_tree the_tree, infotype keyword);
 

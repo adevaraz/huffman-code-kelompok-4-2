@@ -14,8 +14,8 @@
  * Tgl : 09/06/2019
  **/
 
-#ifndef codeListCode_h //if not define
-#define codeListCode_h 
+#ifndef CODELIST_H
+#define CODELIST_H
 
 #include "boolean.h"
 #include <stdlib.h>

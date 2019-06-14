@@ -13,6 +13,7 @@
 #include <stdbool.h>
 #include "huffmancode.h"
 #include "sortedlist.h"
+#include "codelist.h"
 #include "stack.h"
 
 /*************** Constructor ***************/
@@ -106,15 +107,18 @@ void InsertLeft(addr_huffman parent, addr_huffman child) {
  **/
 huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
 	addr_huffman firstnode, secondnode; //The nodes that will be merged
-	addr_huffman temp, mergednode;
+	addr_huffman mergednode;
+	addr_sorted sorted_elmt, temp;
 	double sum;
-	huffman_tree tree;
+	huffman_tree the_tree;
 	
 	while(nodes_list->front->next != NULL) {
-		firstnode = GetFirstElmt(nodes_list);
-		temp = DeleteNode(&nodes_list, firstnode->probability);
-		secondnode = GetFirstElmt(nodes_list);
-		temp = DeleteNode(&nodes_list, secondnode->probability);
+		sorted_elmt = GetFirstElmt((*nodes_list));
+		firstnode = sorted_elmt->info;
+		temp = DeleteNode(&(*nodes_list), firstnode->probability);
+		sorted_elmt = GetFirstElmt((*nodes_list));
+		secondnode = sorted_elmt->info; 
+		temp = DeleteNode(&(*nodes_list), secondnode->probability);
 		
 		sum =  firstnode->probability + secondnode->probability;
 		mergednode = Allocate((infotype) sum, sum);
@@ -127,9 +131,9 @@ huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
 		secondnode = NULL;
 	}
 	
-	tree = CreateTree(mergednode);
+	the_tree = CreateTree(mergednode);
 	
-	return tree;
+	return the_tree;
 }
 
 void SetHuffmanCode(huffman_tree the_tree, ListCode *huffman_code) {
@@ -137,7 +141,7 @@ void SetHuffmanCode(huffman_tree the_tree, ListCode *huffman_code) {
 }
 
 addr_huffman SearchHuffmanNode(huffman_tree the_tree, infotype keyword) {
-	addr_huffman psearch = the_tree.root;
+	addr_huffman psearch = the_tree.tree;
 	
 	return psearch;
 }

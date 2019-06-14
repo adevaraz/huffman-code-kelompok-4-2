@@ -7,6 +7,8 @@
  * Compiler		: TDM-GCC 4.9.2
 **/
 
+#include <malloc.h>
+#include <stdio.h>
 #include "stack.h"
 
 /*************** Constructor ***************/
