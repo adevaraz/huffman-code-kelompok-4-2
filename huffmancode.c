@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "huffmancode.h"
+#include "sortedlist.h"
+#include "stack.h"
 
 /*************** Constructor ***************/
 /**
@@ -74,20 +76,76 @@ bool IsLeftChild(addr_huffman node) {
 /**
  * Mengecek apakah node yang bersangkutan 
  * merupakan anak kanan dari parent atau bukan
-**/
+ **/
 bool IsRightChild(addr_huffman N) {
 	addr_huffman parent;
 	parent = N->parent;
 	return (parent->right_c == N);
 }
 
-/************ Huffman Operations ************/
-
-huffman_tree SortProbability(huffman_tree *the_tree);
+/********** Huffman Operations **********/
+/**
+ * Anak kanan dari suatu node == NULL.
+ * right_c dari suatu node == child.
+ **/
+void InsertRight(addr_huffman parent, addr_huffman child) {
+	parent->right_c = child;
+}
 
 /**
+ * Anak kanan dari suatu node == NULL.
+ * right_c dari suatu node == child.
+ **/
+void InsertLeft(addr_huffman parent, addr_huffman child) {
+	parent->left_c = child;
+}
+
+/**
+ * Huffman tree masih kosong.
+ * Mengembalikan huffman tree yang tidak kosong.
+ **/
+huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
+	addr_huffman firstnode, secondnode; //The nodes that will be merged
+	addr_huffman temp, mergednode;
+	double sum;
+	huffman_tree tree;
+	
+	while(nodes_list->front->next != NULL) {
+		firstnode = GetFirstElmt(nodes_list);
+		temp = DeleteNode(&nodes_list, firstnode->probability);
+		secondnode = GetFirstElmt(nodes_list);
+		temp = DeleteNode(&nodes_list, secondnode->probability);
+		
+		sum =  firstnode->probability + secondnode->probability;
+		mergednode = Allocate((infotype) sum, sum);
+		InsertLeft(mergednode, firstnode);
+		InsertRight(mergednode, secondnode);
+		
+		InsertSorted(&(*nodes_list), mergednode);
+		
+		firstnode = NULL;
+		secondnode = NULL;
+	}
+	
+	tree = CreateTree(mergednode);
+	
+	return tree;
+}
+
+void SetHuffmanCode(huffman_tree the_tree, ListCode *huffman_code) {
+	
+}
+
+addr_huffman SearchHuffmanNode(huffman_tree the_tree, infotype keyword) {
+	addr_huffman psearch = the_tree.root;
+	
+	return psearch;
+}
+
+/*************** Destructor ***************/
+/**
  * Menghapus keberadaan node di memori
-**/
+ **/
 addr_huffman Dealloc(addr_huffman *N) {
 	(*N)->parent = NULL;
 	(*N)->left_c = NULL;
