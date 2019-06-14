@@ -143,3 +143,23 @@ void PrintTree(huffman_tree T) {
 	}
 }
 
+bool IsEmpty(huffman_tree T) {
+	return T.tree == NULL;
+}
+
+void GenerateTreeNadia(huffman_tree *T, sorted_list *L) {
+	addr_huffman firstnode, secondnode;
+	addr_huffman mergednode;
+	double sum;
+	
+	firstnode = DeleteSmallestElmt(&(*L));
+	secondnode = DeleteSmallestElmt(&(*L));
+	sum = firstnode->probability + secondnode->probability;
+	mergednode = Allocate((infotype) sum, sum);
+	InsertSorted(&(*L), mergednode);
+
+}
+
+
+
+
