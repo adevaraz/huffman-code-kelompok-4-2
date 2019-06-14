@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <stdbool.h>
-#include "sortedlist.h"
 
 #ifndef huffmancode_h
 
