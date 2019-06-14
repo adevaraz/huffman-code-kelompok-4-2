@@ -32,7 +32,7 @@ sorted_list CreateEmptyList() {
  * Membuat list baru yang sudah berisi satu element sebagai front.
  * Mengembalikan sebuah list dengan dengan front == node.
  **/
-sorted_list CreateSortedList(addr_huffman value) {
+sorted_list CreateSortedList(struct huffmanNode* value) {
 	sorted_list n_list = CreateEmptyList();
 	addr_sorted n_node = AllocateElmt(value);
 	
@@ -46,7 +46,7 @@ sorted_list CreateSortedList(addr_huffman value) {
  * Mengembalikan sebuah node dengan node.info == value dan node.next == NULL.
  * Jika alokasi gagal, modul mengembalikan NULL.
  **/
-addr_sorted AllocateElmt(addr_huffman value) {
+addr_sorted AllocateElmt(struct huffmanNode* value) {
 	addr_sorted n_node = (addr_sorted) malloc(sizeof(elmt_list));
 	
 	if(n_node != NULL) {
@@ -62,7 +62,7 @@ addr_sorted AllocateElmt(addr_huffman value) {
  * List sudah memiliki minimal 1 element.
  * Menambahkan element ke list dengan terurut secara ascending.
  **/
-void InsertSorted(sorted_list *the_list, addr_huffman value) {
+void InsertSorted(sorted_list *the_list, struct huffmanNode* value) {
 	addr_sorted n_node = AllocateElmt(value);
 	addr_sorted prec_node = the_list->front;
 	
@@ -95,8 +95,8 @@ addr_sorted DeallocateElmt(addr_sorted *N) {
  * List tidak kosong.
  * Mengembalikan element pertama dari sebuah list.
  **/
-addr_sorted GetFirstElmt(sorted_list L) {
-	return L->front;
+struct huffmanNode* GetFirstElmt(sorted_list L) {
+	return L.front->info;
 }
 
 /**
@@ -122,7 +122,7 @@ addr_sorted DeleteNode(sorted_list *L, double prob) {
  * Mengecek apakah sebuah node merupakan elemen pertama 
  * atau bukan
  **/
-bool IsFirstElmt(sorted_list L, addr_sorted node) {
+boolean IsFirstElmt(sorted_list L, addr_sorted node) {
 	return (L.front == node);
 }
 

@@ -14,23 +14,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "boolean.h"
-#include "huffmancode.h"
+//#include "huffmancode.h"
 
 typedef char infotype;
 
-typedef struct huffmanNode *addr_huffman;
-typedef struct huffmanNode huffman_node;
-//struct huffmanNode  {
-//	infotype symbol;
-//	addr_huffman parent;
-//	addr_huffman left_c;
-//	addr_huffman right_c;
-//	double probability;
-//};
+//typedef struct huffmanNode *huffmanNode;
+struct huffmanNode;
 
 typedef struct elmt_list_t *addr_sorted;
 typedef struct elmt_list_t {
-	addr_huffman info;
+	struct huffmanNode *info;
 	addr_sorted next;
 } elmt_list;
 
@@ -40,14 +33,15 @@ typedef struct sorted_list {
 
 /*************** Constructor ***************/
 sorted_list CreateEmptyList();
-sorted_list CreateSortedList(addr_huffman value);
-addr_sorted AllocateElmt(addr_huffman value);
+sorted_list CreateSortedList(struct huffmanNode *value);
+addr_sorted AllocateElmt(struct huffmanNode *value);
 
 /********* Sorted List Operations *********/
-void InsertSorted(sorted_list *the_list, addr_huffman value);
+void InsertSorted(sorted_list *the_list, struct huffmanNode *value);
 addr_sorted SearchNode(sorted_list L, double prob);
 addr_sorted SearchNodeBefore(sorted_list L, addr_sorted node);
-bool IsFirstElmt(sorted_list L, addr_sorted node);
+boolean IsFirstElmt(sorted_list L, addr_sorted node);
+struct huffmanNode* GetFirstElmt(sorted_list L);
 
 /*************** Destructor ***************/
 addr_sorted DeallocateElmt(addr_sorted *N);

@@ -23,7 +23,7 @@
 typedef char infotype;
 
 typedef struct huffmanNode *addr_huffman;
-typedef struct huffmanNode  {
+typedef struct huffmanNode {
 	infotype symbol;
 	addr_huffman parent;
 	addr_huffman left_c;
@@ -31,16 +31,11 @@ typedef struct huffmanNode  {
 	double probability;
 } huffman_node;
 
+struct elmt_list_t;
+
 typedef struct {
 	addr_huffman tree;
 } huffman_tree;
-
-typedef struct elmt_list_t *addr_sorted;
-typedef struct elmt_list_t elmt_list;
-struct elmt_list_t {
-	addr_huffman info;
-	addr_sorted next;
-};
 
 /*************** Constructor ***************/
 huffman_tree CreateEmptyTree();
