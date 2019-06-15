@@ -14,7 +14,6 @@
 #include "sortedlist.h"
 #include "huffmancode.h"
 
-
 /*************** Constructor ***************/
 /**
  * Membuat list baru yang kosong.
@@ -176,3 +175,59 @@ addr_sorted SearchNodeBefore(sorted_list L, addr_sorted node) {
 	
 	return psearch;
 }
+
+/**
+ * Menghitung probabilitas yaitu banyaknya frekuensi
+ * dibagi dengan total huruf
+ **/
+double CountProbability(double freq, double count) {
+	return (freq/count);
+}
+
+/**
+ * Membuat array menjadi kosong seperti saat pertama
+ * di deklarasikan
+ **/
+void ClearArray(char *arr) {
+	int i, n;
+	n = strlen(arr);
+	for(i = n; i >= 0; i--){
+		arr[i] = arr[i+1];
+	}
+}
+
+/**
+ * Membuat List yang sudah terurut dan berisi huruf-huruf beserta 
+ * peluang munculnya huruf tersebut, dari sebuah kalimat yang ada
+ **/
+void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
+	addr_string phelp = string_l.First;
+	addr_sorted psearch;
+	addr_huffman n_node;
+	char word[MAX_WORD];
+	int i;
+	bool found;
+	double prob;
+	psearch = (*sorted_l).front;
+	prob = CountProbability(1, total);
+	while(phelp != NULL) {
+		strcpy(word, phelp->info);
+		for(i = 0; i < strlen(word); i++) {
+			while(psearch != NULL && !found) {
+				if(word[i] == psearch->info->symbol) {
+					psearch->info->probability += prob;
+					found = true;
+				} else {
+					psearch = psearch->next;
+				}
+			}
+			if(!found) {
+				n_node = Allocate(word[i], prob);
+				InsertSorted(&(*sorted_l), n_node);
+			}
+		}
+		phelp = phelp->next;
+		ClearArray(word);
+	}
+}
+
