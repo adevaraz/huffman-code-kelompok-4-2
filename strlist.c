@@ -15,9 +15,6 @@
  * Tgl : 09/06/2019
  **/
 
-#ifndef strlist_c
-#define strlist_c 
-
 #include "boolean.h"
 #include "strlist.h"
 #include <stdlib.h>
@@ -598,4 +595,3 @@ void PecahList(List *L1, List *L2, List L)
 		printf("List tidak dapat dipecah ! Kosong !\n");
 	  }
 }
-#endif

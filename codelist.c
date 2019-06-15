@@ -14,10 +14,7 @@
  * Dimodifikasi oleh : Zara Veda Mahendra / 181524031
  * Tgl : 09/06/2019
  **/
-
-#ifndef codeListCode_c
-#define codeListCode_c 
-
+ 
 #include "boolean.h"
 #include "codelist.h"
 #include <stdlib.h>
@@ -595,4 +592,3 @@ void PecahListCode(ListCode *L1, ListCode *L2, ListCode L)
 		printf("List tidak dapat dipecah ! Kosong !\n");
 	  }
 }
-#endif

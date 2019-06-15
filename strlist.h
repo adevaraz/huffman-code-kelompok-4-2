@@ -14,8 +14,8 @@
  * Tgl : 09/06/2019
  **/
 
-#ifndef strlist_h //if not define
-#define strlist_h 
+#ifndef STRLIST_H
+#define STRLIST_H 
 
 #include "boolean.h"
 #include <stdlib.h>
