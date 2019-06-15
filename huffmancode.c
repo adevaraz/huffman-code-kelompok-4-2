@@ -71,18 +71,27 @@ addr_huffman Allocate(infotype value, double prob) {
  * Mengembalikan nilai .false. jika node bukan left_child
  * dari parentnya.
  **/
-bool IsLeftChild(addr_huffman node) {
+boolean IsLeftChild(addr_huffman node) {
 	return (node == node->parent->left_c);
 }
 
 /**
- * Mengecek apakah node yang bersangkutan 
+ * Memeriksa apakah node yang bersangkutan 
  * merupakan anak kanan dari parent atau bukan
  **/
-bool IsRightChild(addr_huffman N) {
+boolean IsRightChild(addr_huffman N) {
 	addr_huffman parent;
 	parent = N->parent;
 	return (parent->right_c == N);
+}
+
+/**
+ * Memeriksa apakah node merupakan leaf atau bukan. 
+ * Mengembalikan nilai .true. jika node merupakan leaf.
+ * Mengembalikan nilai .false. jika bukan.
+ **/
+boolean IsLeaf(addr_huffman node) {
+	return (node->left_c == NULL && node->right_c);
 }
 
 /********** Huffman Operations **********/
@@ -137,14 +146,27 @@ huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
 	return the_tree;
 }
 
+/**
+ * Input berupa code huffman.
+ * Mengembalikan simbol/karakter yang telah di konversi dari code huffman.
+ **/
 infotype ConvertToSymbol(huffman_tree the_tree, char code[]) {
 	
 }
 
+/**
+ * Input kalimat.
+ * Mengembalikan kalimat dalam bentuk code huffman.
+ **/
 void ConvertToHuffmanCode() {
 	
 }
 
+/**
+ * Menyimpan code huffman di sebuah list.
+ * Huffman tree dimungkinkan tidak kosong.
+ * Terbentuk sebuah list yang berisi simbol dan code huffmannya.
+ **/
 void CreateHuffmanCode(huffman_tree the_tree, ListCode *huffman_code) {
 	addr_huffman checked_node = the_tree.tree;
 	ListCode the_code_list;
@@ -180,6 +202,11 @@ void CreateHuffmanCode(huffman_tree the_tree, ListCode *huffman_code) {
 	}
 }
 
+/**
+ * Membentuk code huffman dari sebuah symbol.
+ * Huffman tree dimungkinkan tidak kosong.
+ * Terbentuk sebuah code untuk suatu simbol.
+ **/
 IntList GenerateCode(addr_huffman node) {
 	addr_huffman parent = node->parent;
 	stack code_stack;
@@ -205,23 +232,19 @@ IntList GenerateCode(addr_huffman node) {
 	return number_list;
 }
 
-addr_huffman SearchLeaf(addr_huffman node) {
-	if(node == NULL) {
-		return;
-	} else {
-		if(IsLeaf(node)) {
-			return node;
-		} else {
-			/* Go to its children */
-			SearchLeaf(node->left_c);
-			SearchLeaf(node->right_c);
-		}
-	}
-}
-
-boolean IsLeaf(addr_huffman node) {
-	return (node->left_c == NULL && node->right_c);
-}
+//addr_huffman SearchLeaf(addr_huffman node) {
+//	if(node == NULL) {
+//		return;
+//	} else {
+//		if(IsLeaf(node)) {
+//			return node;
+//		} else {
+//			/* Go to its children */
+//			SearchLeaf(node->left_c);
+//			SearchLeaf(node->right_c);
+//		}
+//	}
+//}
 
 /*************** Destructor ***************/
 /**
