@@ -18,25 +18,26 @@
 #define CODELIST_H
 
 #include "boolean.h"
+#include "intlist.h"
 #include <stdlib.h>
 
 #define Nil  NULL				//definisikan Nil dengan NULL (addr_code yg tidak punya adress)
-#define Info(P) (P)->symbol		//P : sebuah addr_code
+#define Symbol(P) (P)->symbol		//P : sebuah addr_code
 #define Code(P) (P)->code
 #define Next(P) (P)->next
 #define First(L) ((L).First)	//L : ListCode
 
-typedef char infotype;					//type definition, diubah di sini jika infotypenya berubah                               
+typedef char symboltype;					//type definition, diubah di sini jika infotypenya berubah                               
 typedef struct tElmtListCode *addr_code;
 typedef struct  tElmtListCode   {
-	infotype symbol;
-	int code;
+	symboltype symbol;
+	IntList code;
 	addr_code next;
 } ElmtListCode;
 
 /* Definisi  ListCode                   */
 /* ListCode Kosong  :  First(L) = Nil   */
-/* Setiap elemen dengan addr_code P dapat diacu Info(P),Next(P)       */
+/* Setiap elemen dengan addr_code P dapat diacu Symbol(P),Next(P)       */
 /* Elemen terakhir  ListCode :jika addr_codenya Last, maka next(Last)=Nil */
 
 typedef struct {
@@ -54,7 +55,7 @@ void CreateListCode(ListCode *L);
 /* F.S  :  Terbentuk  ListCode kosong  	*/
 
 /* Manajeman  memory  			*/
-addr_code AlokasiCode(infotype  X, int code);
+addr_code AlokasiCode(symboltype  X, IntList code);
  /* Mengirimkan  addr_code  hasil alokasi    sebuah elemen */
  /* Jika alokasi  berhasil, maka  addr_code tidak nil, dan misalnya  */
  /* menghasilkan   P,  maka info(P)=X,  Nest(P)=Nil;               */
@@ -68,7 +69,7 @@ void DealokasiCode(addr_code *P);
 
 /*   ** PENCARIAN SEBUAH ELEMEN ListCode **   */
 
-addr_code Search1Code(ListCode L, infotype  X);
+addr_code Search1Code(ListCode L, symboltype  X);
 /* Mencari apakah  ada elemen ListCode dengan info(P)=X      */
 /* Jika ada, mengirimkan  addr_code elemen tersebut	 */
 /* Jika  tidak ada, mengirimkan Nil 			 */
@@ -78,7 +79,7 @@ boolean FSearchCode(ListCode L, addr_code P);
 /* Mengirimkan true jika ada, false jika tidak ada  	 */
 
 
-addr_code SearchPrecCode(ListCode L, infotype X);
+addr_code SearchPrecCode(ListCode L, symboltype X);
 /* mencari apakah ada elemen ListCode  yang beralamat P 	     */
 /* Mnegirimkan addr_code elemen sebelum elemen yang nilainya X */
 /* Mencari apakah ada elemen ListCode dengan info(P)=X	     */
@@ -87,13 +88,13 @@ addr_code SearchPrecCode(ListCode L, infotype X);
 /* ** PRIMITIF BERDASARKAN NILAI ** */
 
 /* ** Penambahan Elemen ** */
-void InsVFirstCode(ListCode *L, infotype X, int code);
+void InsVFirstCode(ListCode *L, symboltype X, IntList code);
 /* I.S  : L mungkin kosong          */
 /* F.S  : Melakukan alokasi sebuah elemen dan                */
 /*        menambahkan elemen pertama dengan nilai X jika     */
 /*        Alokasi berhasil 				     */
 
-void InsVLastCode(ListCode *L, infotype X, int code);
+void InsVLastCode(ListCode *L, symboltype X, IntList code);
 /* I.S  : L mungkin kosong          */
 /* F.S  : Melakukan alokasi sebuah elemen dan                */
 /*        menambahkan elemen ListCode di akhir; elemen terakhir  */
@@ -103,13 +104,13 @@ void InsVLastCode(ListCode *L, infotype X, int code);
 /* *** Penghapusan Elemen  ***  */
 	  
 
-void DelVFirstCode(ListCode *L, infotype *X);
+void DelVFirstCode(ListCode *L, symboltype *X);
   /* I.S    : ListCode tidak kosong  		                 */
   /* F.S    : Elemen pertama ListCode dihapus, nilai info disimpan   */
   /*	      pada X dan alamat elemen pertama  di-dealokasi 	 */
 
 
-void DelVLastCode(ListCode *L, infotype *X);
+void DelVLastCode(ListCode *L, symboltype *X);
   /* I.S    : ListCode tidak kosong  		                 */
   /* F.S    : Elemen terakhir ListCode dihapus, nilai info disimpan  */
   /*	      pada X dan alamat elemen terakhir di-dealokasi 	 */
@@ -138,7 +139,7 @@ void DelFirstCode (ListCode *L, addr_code *P);
 /*         Elemen ListCode berkurang satu (mungkin menjadi kosong)     */
 /* First elemen yang baru adalah suksesor elemen pertama yang lama */
 
-void DelPCode(ListCode *L, infotype X);
+void DelPCode(ListCode *L, symboltype X);
 /* I.S   : Sembarang  */
 /* F.S   : Jika ada elemen  ListCode beraddr_code P,dengan info (P)=X    */
 /*         Maka P dihapus dari ListCode dan di-dealokasi		   */

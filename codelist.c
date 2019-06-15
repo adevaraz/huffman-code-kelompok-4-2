@@ -2,7 +2,7 @@
 /* Desk :  body ListCode  berkait dgn representasi fisik    */
 /*         pointer; 					*/
 /* 	   Representasi addr_code dgn pointer 		*/
-/*	   infotype adalah integer			*/
+/*	   symboltype adalah integer			*/
 /* Oleh :  ANI RAHMANI / 23501007 	  		*/
 /* Tgl  :  25/10/01					*/	 
 
@@ -17,6 +17,7 @@
  
 #include "boolean.h"
 #include "codelist.h"
+#include "intlist.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -36,7 +37,7 @@ void CreateListCode(ListCode *L)
 }
 
 /* ********  MANAJEMEN MEMORY  ********* */
-addr_code AlokasiCode(infotype  X, int code)
+addr_code AlokasiCode(symboltype  X, IntList code)
 {/* Mengirimkan  addr_code  hasil alokasi    sebuah elemen */
  /* Jika alokasi  berhasil, maka  addr_code tidak nil, dan misalnya  */
  /* menghasilkan   P,  maka info(P)=X,  Next(P)=Nil;               */
@@ -44,7 +45,7 @@ addr_code AlokasiCode(infotype  X, int code)
    addr_code P;
    P=(addr_code)malloc(sizeof(ElmtListCode));
    if(P!=Nil) { /* Berhasil  */
-    	Info(P)=X;
+    	Symbol(P)=X;
     	Code(P) = code;
 		Next(P)=Nil;
    }
@@ -60,7 +61,7 @@ void DealokasiCode(addr_code *P)
 }
 
 /*   ** PENCARIAN SEBUAH ELEMEN ListCode **   */
-addr_code Search1Code(ListCode L, infotype  X)
+addr_code Search1Code(ListCode L, symboltype  X)
 {  /* Mencari apakah  ada elemen ListCode dengan info(P)=X   */
    /* Jika ada, mengirimkan  addr_code dgn info(P)=X       */
    /* Jika  tidak ada, mengirimkan Nil 			 */
@@ -69,7 +70,7 @@ addr_code Search1Code(ListCode L, infotype  X)
    boolean found=false;
    
    while((P!=Nil)&&(!found))  { 
-	   if(Info(P)==X) {
+	   if(Symbol(P)==X) {
 		{	found=true;
 		   	}
 	   }   
@@ -81,7 +82,7 @@ addr_code Search1Code(ListCode L, infotype  X)
 }	   
 
 
-addr_code Search2Code(ListCode L, infotype  X)
+addr_code Search2Code(ListCode L, symboltype  X)
 {  /* Mencari apakah  ada elemen ListCode dengan info(P)=X   */
    /* Jika ada, mengirimkan  addr_code dgn info(P)=X       */
    /* Jika  tidak ada, mengirimkan Nil 			 */
@@ -91,10 +92,10 @@ addr_code Search2Code(ListCode L, infotype  X)
    	return Nil;
    } else {
    	P=First(L);
-   	while((Next(P)!=Nil)&&(Info(P)!=X)) {
+   	while((Next(P)!=Nil)&&(Symbol(P)!=X)) {
 	      P=Next(P);   
-   	} /* Next(P)==Nil or Info(P)==X */
-   	if(Info(P)==X)  {
+   	} /* Next(P)==Nil or Symbol(P)==X */
+   	if(Symbol(P)==X)  {
    	    return P;	
    	}else {
    	    return Nil;
@@ -125,11 +126,11 @@ boolean FSearchCode(ListCode L, addr_code P)
   return found;
 }
 
-addr_code SearchPrecCode(ListCode L, infotype X)
+addr_code SearchPrecCode(ListCode L, symboltype X)
 { /* Mengirimkan addr_code elemen sebelum elemen yang nilainya=X */
   /* Mencari apakah ada elemen ListCode dengan info(P)=X	       */
   /* Jika ada, mengirimkan addr_code Prec, dengan Next(Prec)=P   */
-  /* dan Info(P)=X; Jika tidak ada mengirimkan Nil	       */
+  /* dan Symbol(P)=X; Jika tidak ada mengirimkan Nil	       */
   /* Jika P adalah  elemen pertama, maka Prec=Nil	       */
   addr_code Prec;	
   addr_code P;
@@ -138,12 +139,12 @@ addr_code SearchPrecCode(ListCode L, infotype X)
     Prec=Nil;
   } else { 
 	  P=First(L);
-	  while((Next(P)!=Nil) &&(Info(P)!=X)) {
+	  while((Next(P)!=Nil) &&(Symbol(P)!=X)) {
 	      Prec=P;
               P=Next(P);		 	      
-  	   }  /* Next(P)==Nil or Info(P)==X */
+  	   }  /* Next(P)==Nil or Symbol(P)==X */
   
-  	   if(Info(P)==X){ /* Ketemu Info (P)== X */
+  	   if(Symbol(P)==X){ /* Ketemu Symbol (P)== X */
   	        return Prec;
   	   } else {
   	        return Nil;  /* tidak ada X di ListCode */
@@ -154,7 +155,7 @@ addr_code SearchPrecCode(ListCode L, infotype X)
 /* ** PRIMITIF BERDASARKAN NILAI ** */
 
 /* ** Penambahan Elemen ** */
-void InsVFirstCode(ListCode *L, infotype X, int code)
+void InsVFirstCode(ListCode *L, symboltype X, IntList code)
 {  /* I.S  : L mungkin kosong          */
    /* F.S  : Melakukan alokasi sebuah elemen dan             */
    /*        menambahkan elemen pertama dengan nilai X jika  */
@@ -165,7 +166,7 @@ void InsVFirstCode(ListCode *L, infotype X, int code)
     }
 }
 
-void InsVLastCode(ListCode *L, infotype X, int code)
+void InsVLastCode(ListCode *L, symboltype X, IntList code)
 { /* I.S  : L mungkin kosong          */
   /* F.S  : Melakukan alokasi sebuah elemen dan                */
   /*        menambahkan elemen ListCode di akhir; elemen terakhir  */
@@ -180,7 +181,7 @@ void InsVLastCode(ListCode *L, infotype X, int code)
 
 /* *** Penghapusan Elemen  ***  */
 
-void DelVFirstCode(ListCode *L, infotype *X)
+void DelVFirstCode(ListCode *L, symboltype *X)
 { /* I.S    : ListCode tidak kosong  		                 */
   /* F.S    : Elemen pertama ListCode dihapus, nilai info disimpan   */
   /*	      pada X dan alamat elemen pertama  di-dealokasi 	 */
@@ -188,11 +189,11 @@ void DelVFirstCode(ListCode *L, infotype *X)
   addr_code  P;
   
   DelFirstCode(&(*L),&P); /* Hapus elemem pertama, blm didealokasi */
-  *X=Info(P); 		/* info dari First disimpan di X       */
-  Dealokasi(&P);	  
+  *X=Symbol(P); 		/* info dari First disimpan di X       */
+  DealokasiCode(&P);	  
 }
 
-void DelVLastCode(ListCode *L, infotype *X)
+void DelVLastCode(ListCode *L, symboltype *X)
 {  /* I.S    : ListCode tidak kosong  		                 */
    /* F.S    : Elemen terakhir ListCode dihapus, nilai info disimpan */
    /*	      pada X dan alamat elemen terakhir di-dealokasi 	 */
@@ -200,8 +201,8 @@ void DelVLastCode(ListCode *L, infotype *X)
    DelLast(&(*L),&P); 
         /* Hapus Elemen Terakhir, addr_codenya disimpan di P, */
         /* Belum diDealokasi, masih bisa dibaca isinya      */
-   *X=Info(P);	/* Info dari addr_code P, ditampung  */ 
-   Dealokasi(&P);
+   *X=Symbol(P);	/* Symbol dari addr_code P, ditampung  */ 
+   DealokasiCode(&P);
 }
 	
 
@@ -255,7 +256,7 @@ void DelFirstCode(ListCode *L, addr_code *P)
     
  }
 
-void DelPCode(ListCode *L, infotype X)
+void DelPCode(ListCode *L, symboltype X)
 { /* I.S   : Sembarang  */
   /* F.S   : Jika ada elemen  ListCode beraddr_code P,dengan info (P)=X    */
   /*         Maka P dihapus dari ListCode dan di-dealokasi		     */
@@ -263,12 +264,12 @@ void DelPCode(ListCode *L, infotype X)
   /*         tetap. ListCode mungkin menjadi kosomg karena penghapusan   */
     addr_code  P=First(*L);
 
-    while((Next(P)!=Nil) && (Info(P)!=X)){
+    while((Next(P)!=Nil) && (Symbol(P)!=X)){
           P=Next(P);
-    } /*Next(P)=Nil or Info(P)= X */
+    } /*Next(P)=Nil or Symbol(P)= X */
     
-    if(Info(P)==X) {
-       Dealokasi(&P);
+    if(Symbol(P)==X) {
+       DealokasiCode(&P);
     }
 }
 
@@ -321,7 +322,7 @@ void PrintInfoCode(ListCode L)
   } else { /* ListCode tidak kosong */
 	    printf("[ ");
 	    do { 
-	 	  printf("%c ",Info(P));
+	 	  printf("%c ",Symbol(P));
 		  P=Next(P);
 		  i++;
 	    } while(P!=Nil); 
@@ -351,7 +352,7 @@ int NbElmtCode(ListCode L)
 /******************************************************/
 void DelAllCode(ListCode *L)
 { /* Delete semua elemen ListCode, dan alamat elemen di-dealokasi */
-   infotype X;
+   symboltype X;
    while(!ListEmptyCode(*L)) {
 	  DelVFirst(&(*L),&X);
    } /* kosong */
@@ -386,13 +387,13 @@ ListCode FInversListCode(ListCode L)
   /* Kamus */	
    ListCode LB;
    addr_code P,PB;
-   infotype X;
-   int C;
+   symboltype X;
+   IntList C;
   
   /* Algoritma */ 
 	P=First(L);
 	CreateListCode(&LB);
-	do {    X=Info(P);
+	do {    X=Symbol(P);
 	    C = Code(P);
 		PB=AlokasiCode(X, C);	
 		if(PB!=Nil) { /* berhasil alokasi */
@@ -429,8 +430,8 @@ void CpAlokListCode(ListCode Lin, ListCode  *Lout)
     	
 	/* Kamus */
 	addr_code P,Pout;
-	infotype X;
-	int C;
+	symboltype X;
+	IntList C;
 	
 	/* ALgoritma */
 	if(!ListEmptyCode(Lin)) { /* tidak kosong */
@@ -438,9 +439,9 @@ void CpAlokListCode(ListCode Lin, ListCode  *Lout)
 		CreateListCode(&(*Lout));
 		P=First(Lin);
 		do 
-		{  X=Info(P);
+		{  X=Symbol(P);
 		   C = Code(P);
-		   Pout=AlokasiCode(X, C);
+		   Pout = AlokasiCode(X, C);
 		   if(Pout!=Nil) {  /* AlokasiCode berhasil */
 			InsertLastCode(&(*Lout),Pout);
 			P=Next(P);
@@ -466,8 +467,8 @@ void konkatCode(ListCode L1, ListCode L2, ListCode *L3)
 
 	/* Kamus */	
 	addr_code P1,P2,P3;
-    infotype X1,X2;
-    int C1, C2;
+    symboltype X1,X2;
+    IntList C1, C2;
 	
 	/* Algoritma */
 	CreateListCode(&(*L3));
@@ -476,7 +477,7 @@ void konkatCode(ListCode L1, ListCode L2, ListCode *L3)
 	P1=First(L1);
 	do 
 	{ /* L1 minimal 1 elemen */
-		X1=Info(P1);
+		X1=Symbol(P1);
 		C1 = Code(P1);
 		P3=AlokasiCode(X1, C1);
 		if(P3!=Nil) { /* AlokasiCode L3 berhasil */
@@ -493,7 +494,7 @@ void konkatCode(ListCode L1, ListCode L2, ListCode *L3)
 	P2=First(L2);
 	do
 	{ /* L2 minimal 1 elemen */
-		X2=Info(P2);
+		X2=Symbol(P2);
 		C2 = Code(P2);
 		P3=AlokasiCode(X2, C2);
 		if(P3!=Nil){
@@ -517,7 +518,7 @@ void konkat1Code(ListCode *L1, ListCode *L2, ListCode *L3)
 
 	
   addr_code P1,P2,P3;
-  infotype X1,X2,X3;
+  symboltype X1,X2,X3;
 
    CreateListCode(&(*L3));
 
@@ -539,12 +540,12 @@ void PecahListCode(ListCode *L1, ListCode *L2, ListCode L)
   /*        L tidak berubah. Untuk membentuk L1 dan L2 harus  */
   /*	  alokasi. L1 berisi separuh elemen  L dan L2 berisi  */
   /*	  sisa elemen L. Jika elemen L ganjil, maka separuh   */
-  /* 	  adalah NbElmt(L)div 2				      */
+  /* 	  adalah NbElmtCode(L)div 2				      */
  
   /* Kamus */	
   addr_code P,P1,P2;
-  infotype X1,X2;
-  int C1, C2;
+  symboltype X1,X2;
+  IntList C1, C2;
 
   int Nb,tengah;
   
@@ -552,15 +553,15 @@ void PecahListCode(ListCode *L1, ListCode *L2, ListCode L)
   if(!ListEmptyCode(L)) {           /* tidak kosong ; minimal 1 elemen    */
 	  CreateListCode(&(*L1));
 	  
-	  if(NbElmt(L)==1) {  /* Hanya L1 yang dapat diisi 1 elm, dari L */
+	  if(NbElmtCode(L) == 1) {  /* Hanya L1 yang dapat diisi 1 elm, dari L */
 		  First(*L1)=First(L);
 	  } else /* L1 beirisi > 1 elemen */
-	  	{  tengah = NbElmt(L) / 2;
+	  	{  tengah = NbElmtCode(L) / 2;
 		   P=First(L);
 		   Nb=1;
 		   
 		   do /* mengisi L1 */
-		   {  X1=Info(P);
+		   {  X1=Symbol(P);
 		   	  C1 = Code(P);
 		      P1=AlokasiCode(X1, C1);
 	   	      if(P1!=Nil){
@@ -575,7 +576,7 @@ void PecahListCode(ListCode *L1, ListCode *L2, ListCode L)
 		   } while(Nb<=tengah);
 
 		   do  /* Mengisi L2 */ 
-		   {  X2=Info(P);
+		   {  X2=Symbol(P);
 		      C2 = Code(P);
 	       	      P2=AlokasiCode(X2, C2);
 	   	      if(P2!=Nil) {

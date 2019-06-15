@@ -15,6 +15,7 @@
 #include "sortedlist.h"
 #include "codelist.h"
 #include "stack.h"
+#include "intlist.h"
 
 /*************** Constructor ***************/
 /**
@@ -70,18 +71,27 @@ addr_huffman Allocate(infotype value, double prob) {
  * Mengembalikan nilai .false. jika node bukan left_child
  * dari parentnya.
  **/
-bool IsLeftChild(addr_huffman node) {
+boolean IsLeftChild(addr_huffman node) {
 	return (node == node->parent->left_c);
 }
 
 /**
- * Mengecek apakah node yang bersangkutan 
+ * Memeriksa apakah node yang bersangkutan 
  * merupakan anak kanan dari parent atau bukan
  **/
-bool IsRightChild(addr_huffman N) {
+boolean IsRightChild(addr_huffman N) {
 	addr_huffman parent;
 	parent = N->parent;
 	return (parent->right_c == N);
+}
+
+/**
+ * Memeriksa apakah node merupakan leaf atau bukan. 
+ * Mengembalikan nilai .true. jika node merupakan leaf.
+ * Mengembalikan nilai .false. jika bukan.
+ **/
+boolean IsLeaf(addr_huffman node) {
+	return (node->left_c == NULL && node->right_c);
 }
 
 /********** Huffman Operations **********/
@@ -136,15 +146,105 @@ huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
 	return the_tree;
 }
 
-void SetHuffmanCode(huffman_tree the_tree, ListCode *huffman_code) {
+/**
+ * Input berupa code huffman.
+ * Mengembalikan simbol/karakter yang telah di konversi dari code huffman.
+ **/
+infotype ConvertToSymbol(huffman_tree the_tree, char code[]) {
 	
 }
 
-addr_huffman SearchHuffmanNode(huffman_tree the_tree, infotype keyword) {
-	addr_huffman psearch = the_tree.tree;
+/**
+ * Input kalimat.
+ * Mengembalikan kalimat dalam bentuk code huffman.
+ **/
+void ConvertToHuffmanCode() {
 	
-	return psearch;
 }
+
+/**
+ * Menyimpan code huffman di sebuah list.
+ * Huffman tree dimungkinkan tidak kosong.
+ * Terbentuk sebuah list yang berisi simbol dan code huffmannya.
+ **/
+void CreateHuffmanCode(huffman_tree the_tree, ListCode *huffman_code) {
+	addr_huffman checked_node = the_tree.tree;
+	ListCode the_code_list;
+	IntList code;
+	boolean formal = true;
+	
+	while(checked_node != NULL) {
+		if(IsLeaf(checked_node)) {
+			code = GenerateCode(checked_node);
+			InsVLastCode(&the_code_list, checked_node->symbol, code);
+			if(checked_node == checked_node->parent->right_c) {
+				if(checked_node->parent->parent->right_c != NULL) {
+					/* Its grandparents still have right child */
+					checked_node = checked_node->parent->parent->right_c;
+				} else {
+					/* It is the last node */
+					checked_node = NULL;
+				}
+			} else {
+				checked_node = checked_node->parent;
+				formal = false;
+			}
+		} else {
+			if(checked_node->left_c != NULL && formal) {
+				checked_node = checked_node->left_c;
+			} else {
+				if(checked_node->right_c != NULL) {
+					checked_node = checked_node->right_c;
+					formal = true;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * Membentuk code huffman dari sebuah symbol.
+ * Huffman tree dimungkinkan tidak kosong.
+ * Terbentuk sebuah code untuk suatu simbol.
+ **/
+IntList GenerateCode(addr_huffman node) {
+	addr_huffman parent = node->parent;
+	stack code_stack;
+	IntList number_list;
+	
+	CreateListInt(&number_list);
+	
+	while(parent != NULL) {
+		if(node == parent->left_c) {
+			Push(&code_stack, 0);
+		} else {
+			Push(&code_stack, 1);
+		}
+		
+		parent = parent->parent;
+	}
+	
+	/* Stored reversed code in list */
+	while(code_stack.top != NULL) {
+		InsVLastInt(&number_list, Pop(&code_stack));
+	}
+	
+	return number_list;
+}
+
+//addr_huffman SearchLeaf(addr_huffman node) {
+//	if(node == NULL) {
+//		return;
+//	} else {
+//		if(IsLeaf(node)) {
+//			return node;
+//		} else {
+//			/* Go to its children */
+//			SearchLeaf(node->left_c);
+//			SearchLeaf(node->right_c);
+//		}
+//	}
+//}
 
 /*************** Destructor ***************/
 /**
