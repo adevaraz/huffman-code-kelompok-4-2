@@ -24,8 +24,8 @@
 #define First(L) ((L).First)	
 
 typedef int type;                              
-typedef struct tElmtlist *addr_int;
-typedef struct  tElmtlist   {
+typedef struct tElmtListInt *addr_int;
+typedef struct  tElmtListInt   {
 	type info;
 	addr_int next;
 	}ElmtIntList;

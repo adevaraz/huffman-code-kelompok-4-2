@@ -124,11 +124,9 @@ huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
 	
 	while(nodes_list->front->next != NULL) {
 		firstnode = GetFirstElmt((*nodes_list));
-//		firstnode = sorted_elmt;
-		temp = DeleteNode(&(*nodes_list), firstnode->probability);
+		temp = DeleteNode(&(*nodes_list), firstnode->symbol);
 		secondnode = GetFirstElmt((*nodes_list));
-//		secondnode = sorted_elmt->info; 
-		temp = DeleteNode(&(*nodes_list), secondnode->probability);
+		temp = DeleteNode(&(*nodes_list), secondnode->symbol);
 		
 		sum =  firstnode->probability + secondnode->probability;
 		mergednode = Allocate((infotype) sum, sum);

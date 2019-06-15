@@ -14,7 +14,6 @@
 #include "sortedlist.h"
 #include "huffmancode.h"
 
-
 /*************** Constructor ***************/
 /**
  * Membuat list baru yang kosong.
@@ -103,8 +102,8 @@ struct huffmanNode* GetFirstElmt(sorted_list L) {
  * Menghapus salah satu node berdasarkan probabilitas
  * yang dimilikinya dan probabilitas yang diminta
  **/
-addr_sorted DeleteNode(sorted_list *L, double prob) {
-	addr_sorted pdel = SearchNode(*L, prob);
+addr_sorted DeleteNode(sorted_list *L, infotype value) {
+	addr_sorted pdel = SearchNode(*L, value);
 	if(!IsFirstElmt(*L, pdel)) {
 		addr_sorted pbefore = SearchNodeBefore(*L, pdel);
 		pbefore->next = pdel->next;
@@ -143,12 +142,12 @@ void DeleteList(sorted_list *L) {
  * Mendapatkan alamat dari sebuah node yang dicari
  * berdasarkan probabilitas
  **/
-addr_sorted SearchNode(sorted_list L, double prob) {
+addr_sorted SearchNode(sorted_list L, infotype value) {
 	addr_sorted psearch = L.front;
 	bool found = false;
 	
 	while(psearch != NULL && !found) {
-		if(psearch->info->probability == prob) {
+		if(psearch->info->symbol == value) {
 			found = true;
 		} else {
 			psearch = psearch->next;
@@ -176,3 +175,59 @@ addr_sorted SearchNodeBefore(sorted_list L, addr_sorted node) {
 	
 	return psearch;
 }
+
+/**
+ * Menghitung probabilitas yaitu banyaknya frekuensi
+ * dibagi dengan total huruf
+ **/
+double CountProbability(double freq, double count) {
+	return (freq/count);
+}
+
+/**
+ * Membuat array menjadi kosong seperti saat pertama
+ * di deklarasikan
+ **/
+void ClearArray(char *arr) {
+	int i, n;
+	n = strlen(arr);
+	for(i = n; i >= 0; i--){
+		arr[i] = arr[i+1];
+	}
+}
+
+/**
+ * Membuat List yang sudah terurut dan berisi huruf-huruf beserta 
+ * peluang munculnya huruf tersebut, dari sebuah kalimat yang ada
+ **/
+void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
+	addr_string phelp = string_l.First;
+	addr_sorted psearch;
+	addr_huffman n_node;
+	char word[MAX_WORD];
+	int i;
+	bool found;
+	double prob;
+	psearch = (*sorted_l).front;
+	prob = CountProbability(1, total);
+	while(phelp != NULL) {
+		strcpy(word, phelp->info);
+		for(i = 0; i < strlen(word); i++) {
+			while(psearch != NULL && !found) {
+				if(word[i] == psearch->info->symbol) {
+					psearch->info->probability += prob;
+					found = true;
+				} else {
+					psearch = psearch->next;
+				}
+			}
+			if(!found) {
+				n_node = Allocate(word[i], prob);
+				InsertSorted(&(*sorted_l), n_node);
+			}
+		}
+		phelp = phelp->next;
+		ClearArray(word);
+	}
+}
+
