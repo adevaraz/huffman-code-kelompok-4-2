@@ -103,8 +103,8 @@ struct huffmanNode* GetFirstElmt(sorted_list L) {
  * Menghapus salah satu node berdasarkan probabilitas
  * yang dimilikinya dan probabilitas yang diminta
  **/
-addr_sorted DeleteNode(sorted_list *L, double prob) {
-	addr_sorted pdel = SearchNode(*L, prob);
+addr_sorted DeleteNode(sorted_list *L, infotype value) {
+	addr_sorted pdel = SearchNode(*L, value);
 	if(!IsFirstElmt(*L, pdel)) {
 		addr_sorted pbefore = SearchNodeBefore(*L, pdel);
 		pbefore->next = pdel->next;
@@ -143,12 +143,12 @@ void DeleteList(sorted_list *L) {
  * Mendapatkan alamat dari sebuah node yang dicari
  * berdasarkan probabilitas
  **/
-addr_sorted SearchNode(sorted_list L, double prob) {
+addr_sorted SearchNode(sorted_list L, infotype value) {
 	addr_sorted psearch = L.front;
 	bool found = false;
 	
 	while(psearch != NULL && !found) {
-		if(psearch->info->probability == prob) {
+		if(psearch->info->symbol == value) {
 			found = true;
 		} else {
 			psearch = psearch->next;
