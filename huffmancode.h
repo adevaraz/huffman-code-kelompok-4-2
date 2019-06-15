@@ -51,8 +51,10 @@ void Insertion(huffman_tree *tree, infotype value, infotype probability);
 void InsertRight(addr_huffman parent, addr_huffman child);
 void InsertLeft(addr_huffman parent, addr_huffman child);
 huffman_tree GenerateHuffmanTree(sorted_list *nodes_list);
-void SetHuffmanCode(huffman_tree the_tree, ListCode *huffman_code);
-addr_huffman SearchHuffmanNode(huffman_tree the_tree, infotype keyword);
+//void SetHuffmanCode(huffman_tree the_tree, ListCode *huffman_code);
+//addr_huffman SearchHuffmanNode(huffman_tree the_tree, infotype keyword);
+IntList GenerateCode(addr_huffman node);
+boolean IsLeaf(addr_huffman node);
 
 /*************** Destructor ***************/
 addr_huffman Dealloc(addr_huffman *N);
