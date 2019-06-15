@@ -14,11 +14,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "boolean.h"
-//#include "huffmancode.h"
 
 typedef char infotype;
 
-//typedef struct huffmanNode *huffmanNode;
 struct huffmanNode;
 
 typedef struct elmt_list_t *addr_sorted;
@@ -38,14 +36,14 @@ addr_sorted AllocateElmt(struct huffmanNode *value);
 
 /********* Sorted List Operations *********/
 void InsertSorted(sorted_list *the_list, struct huffmanNode *value);
-addr_sorted SearchNode(sorted_list L, double prob);
+addr_sorted SearchNode(sorted_list L, infotype value);
 addr_sorted SearchNodeBefore(sorted_list L, addr_sorted node);
 boolean IsFirstElmt(sorted_list L, addr_sorted node);
 struct huffmanNode* GetFirstElmt(sorted_list L);
 
 /*************** Destructor ***************/
 addr_sorted DeallocateElmt(addr_sorted *N);
-addr_sorted DeleteNode(sorted_list *L, double prob);
+addr_sorted DeleteNode(sorted_list *L, infotype value);
 void DeleteList(sorted_list *L);
 
 #endif
