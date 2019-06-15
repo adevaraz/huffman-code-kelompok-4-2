@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <stdbool.h>
-#include "huffmancode.h"
 #include "codelist.h"
 #include "stack.h"
 #include "boolean.h"
