@@ -136,6 +136,10 @@ huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
 	return the_tree;
 }
 
+//infotype ConvertToSymbol(huffman_tree the_tree, char[] code) {
+//	
+//}
+
 void SetHuffmanCode(huffman_tree the_tree, ListCode *huffman_code) {
 	
 }
