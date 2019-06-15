@@ -37,5 +37,4 @@ void DeleteStack(stack *S);
 void Push(stack *S, vartype info);
 vartype Pop(stack *S);
 
-
 #endif

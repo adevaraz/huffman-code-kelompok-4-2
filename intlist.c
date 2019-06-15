@@ -15,35 +15,35 @@
 
 /* ** Prototype   **  */
 /* ** Test IntList Kosong **  */
-boolean ListEmpty(IntList  L)                        
+boolean ListIntEmpty(IntList  L)                        
 {  /*  Mengirim true jika IntList kosong  */
 
    	return(First(L)==Nil);	
 }
 
 /* Pembuatan  IntList Kosong  */
-void CreateList(IntList *L)
+void CreateListInt(IntList *L)
 {  /* I.S  :  Sembarang    		*/
    /* F.S  :  Terbentuk  IntList kosong  	*/
    First(*L)=Nil;
 }
 
 /* ********  MANAJEMEN MEMORY  ********* */
-addr_int Alokasi(type  X)
+addr_int AlokasiInt(type  X)
 {/* Mengirimkan  addr_int  hasil alokasi    sebuah elemen */
  /* Jika alokasi  berhasil, maka  addr_int tidak nil, dan misalnya  */
  /* menghasilkan   P,  maka info(P)=X,  Next(P)=Nil;               */
  /* Jika alokasi  gagal,  mengirimkan  Nil 			   */
    addr_int P;
-   P=(addr_int)malloc(sizeof(ElmtList));
+   P=(addr_int)malloc(sizeof(ElmtIntList));
    if(P!=Nil) { /* Berhasil  */
-    	Info(P)=X;
+    	CodeInfo(P)=X;
 		Next(P)=Nil;
    }
    return P;	   
 }
 
-void Dealokasi(addr_int *P)
+void DealokasiInt(addr_int *P)
 { /* I.S  : P terdefinisi      				*/
   /* F.S  : P dikembalikan ke  sistem 			*/
   /*   	    Melakukan dealokasi, pengembalian addr_int P */
@@ -52,7 +52,7 @@ void Dealokasi(addr_int *P)
 }
 
 /*   ** PENCARIAN SEBUAH ELEMEN LIST **   */
-addr_int Search1(IntList L, type  X)
+addr_int Search1Int(IntList L, type  X)
 {  /* Mencari apakah  ada elemen list dengan info(P)=X   */
    /* Jika ada, mengirimkan  addr_int dgn info(P)=X       */
    /* Jika  tidak ada, mengirimkan Nil 			 */
@@ -61,7 +61,7 @@ addr_int Search1(IntList L, type  X)
    boolean found=false;
    
    while((P!=Nil)&&(!found))  { 
-	   if(Info(P)==X) {
+	   if(CodeInfo(P)==X) {
 		{  found=true;
 		   }
 	   }   
@@ -73,7 +73,7 @@ addr_int Search1(IntList L, type  X)
 }	   
 
 
-addr_int Search2(IntList L, type  X)
+addr_int Search2Int(IntList L, type  X)
 {  /* Mencari apakah  ada elemen list dengan info(P)=X   */
    /* Jika ada, mengirimkan  addr_int dgn info(P)=X       */
    /* Jika  tidak ada, mengirimkan Nil 			 */
@@ -83,10 +83,10 @@ addr_int Search2(IntList L, type  X)
    	return Nil;
    } else {
    	P=First(L);
-   	while((Next(P)!=Nil)&&(Info(P)!=X)) {
+   	while((Next(P)!=Nil)&&(CodeInfo(P)!=X)) {
 	      P=Next(P);   
-   	} /* Next(P)==Nil or Info(P)==X */
-   	if(Info(P)==X)  {
+   	} /* Next(P)==Nil or CodeInfo(P)==X */
+   	if(CodeInfo(P)==X)  {
    	    return P;	
    	}else {
    	    return Nil;
@@ -96,7 +96,7 @@ addr_int Search2(IntList L, type  X)
 }	   
    
 
-boolean FSearch(IntList L, addr_int P)
+boolean FSearchInt(IntList L, addr_int P)
 { /* Mencari apakah ada elemen IntList yang beralamat P  */
   /* Mengirimkan true jika ada, false jika tidak ada  */
   /* IntList Tidak mungkin kosong  */
@@ -117,11 +117,11 @@ boolean FSearch(IntList L, addr_int P)
   return found;
 }
 
-addr_int SearchPrec(IntList L, type X)
+addr_int SearchPrecInt(IntList L, type X)
 { /* Mengirimkan addr_int elemen sebelum elemen yang nilainya=X */
   /* Mencari apakah ada elemen IntList dengan info(P)=X	       */
   /* Jika ada, mengirimkan addr_int Prec, dengan Next(Prec)=P   */
-  /* dan Info(P)=X; Jika tidak ada mengirimkan Nil	       */
+  /* dan CodeInfo(P)=X; Jika tidak ada mengirimkan Nil	       */
   /* Jika P adalah  elemen pertama, maka Prec=Nil	       */
   addr_int Prec;	
   addr_int P;
@@ -130,12 +130,12 @@ addr_int SearchPrec(IntList L, type X)
     Prec=Nil;
   } else { 
 	  P=First(L);
-	  while((Next(P)!=Nil) &&(Info(P)!=X)) {
+	  while((Next(P)!=Nil) &&(CodeInfo(P)!=X)) {
 	      Prec=P;
               P=Next(P);		 	      
-  	   }  /* Next(P)==Nil or Info(P)==X */
+  	   }  /* Next(P)==Nil or CodeInfo(P)==X */
   
-  	   if(Info(P)==X){ /* Ketemu Info (P)== X */
+  	   if(CodeInfo(P)==X){ /* Ketemu CodeInfo (P)== X */
   	        return Prec;
   	   } else {
   	        return Nil;  /* tidak ada X di IntList */
@@ -146,61 +146,61 @@ addr_int SearchPrec(IntList L, type X)
 /* ** PRIMITIF BERDASARKAN NILAI ** */
 
 /* ** Penambahan Elemen ** */
-void InsVFirst(IntList *L, type X)
+void InsVFirstInt(IntList *L, type X)
 {  /* I.S  : L mungkin kosong          */
    /* F.S  : Melakukan alokasi sebuah elemen dan             */
    /*        menambahkan elemen pertama dengan nilai X jika  */
-   /*        Alokasi berhasil 				     */
-   addr_int P=Alokasi(X);
-   if(P!=Nil) { /* Alokasi Berhasil */
-      InsertFirst(&(*L),P);
+   /*        AlokasiInt berhasil 				     */
+   addr_int P=AlokasiInt(X);
+   if(P!=Nil) { /* AlokasiInt Berhasil */
+      InsertFirstInt(&(*L),P);
     }
 }
 
-void InsVLast(IntList *L, type X)
+void InsVLastInt(IntList *L, type X)
 { /* I.S  : L mungkin kosong          */
   /* F.S  : Melakukan alokasi sebuah elemen dan                */
   /*        menambahkan elemen list di akhir; elemen terakhir  */
   /*        yang baru bernilai X jika alokasi berhasil,        */	
   /*	    Jika alokasi gagal: I.S = F.S		       */
       	
-     addr_int P=Alokasi(X);
+     addr_int P=AlokasiInt(X);
      if(P!=Nil)
-     {  InsertLast(&(*L),P);
+     {  InsertLastInt(&(*L),P);
          }
 }
 
 /* *** Penghapusan Elemen  ***  */
 
-void DelVFirst(IntList *L, type *X)
+void DelVFirstInt(IntList *L, type *X)
 { /* I.S    : IntList tidak kosong  		                 */
   /* F.S    : Elemen pertama IntList dihapus, nilai info disimpan   */
   /*	      pada X dan alamat elemen pertama  di-dealokasi 	 */
   /* Kamus */
   addr_int  P;
   
-  DelFirst(&(*L),&P); /* Hapus elemem pertama, blm didealokasi */
-  *X=Info(P); 		/* info dari First disimpan di X       */
-  Dealokasi(&P);	  
+  DelFirstInt(&(*L),&P); /* Hapus elemem pertama, blm didealokasi */
+  *X=CodeInfo(P); 		/* info dari First disimpan di X       */
+  DealokasiInt(&P);	  
 }
 
-void DelVLast(IntList *L, type *X)
+void DelVLastInt(IntList *L, type *X)
 {  /* I.S    : IntList tidak kosong  		                 */
    /* F.S    : Elemen terakhir list dihapus, nilai info disimpan */
    /*	      pada X dan alamat elemen terakhir di-dealokasi 	 */
    addr_int P;
-   DelLast(&(*L),&P); 
+   DelLastInt(&(*L),&P); 
         /* Hapus Elemen Terakhir, addressnya disimpan di P, */
         /* Belum diDealokasi, masih bisa dibaca isinya      */
-   *X=Info(P);	/* Info dari addr_int P, ditampung  */ 
-   Dealokasi(&P);
+   *X=CodeInfo(P);	/* CodeInfo dari addr_int P, ditampung  */ 
+   DealokasiInt(&P);
 }
 	
 
 /* *******  PRIMITIF BERDASARKAN ALAMAT ********	*/
 /* Penambahan Elemen Berdasarkan Alamat 		*/
 
-void InsertFirst(IntList *L, addr_int P)
+void InsertFirstInt(IntList *L, addr_int P)
 { /* I.S   : Sembarang, P sudah dialokasi		*/
   /* F.S   : Menambahkan elemen ber-addr_int P, sebagai  */
   /*         elemen pertama				*/
@@ -208,7 +208,7 @@ void InsertFirst(IntList *L, addr_int P)
     First(*L)=P;
 }
 
-void InsertAfter(IntList *L, addr_int P, addr_int Prec)
+void InsertAfterInt(IntList *L, addr_int P, addr_int Prec)
 { /* I.S   : Prec pastilah elemen  dan bukan elemen terakhir  */
   /*         P sudah dialokasi 					  */
   /* F.S   : Insert P sebagai elemen sesudah elemen beralamat Prec*/
@@ -216,13 +216,13 @@ void InsertAfter(IntList *L, addr_int P, addr_int Prec)
 	Next(Prec)=P;
 }
 
-void InsertLast(IntList  *L, addr_int P)
+void InsertLastInt(IntList  *L, addr_int P)
 { /* I.S   : Sembarang, P sudah dialokasi			*/
   /* F.S   : P ditambahkan  sebagai elemen terakhir yang baru	*/
 
       addr_int Last;
-      if(ListEmpty(*L)) { /* Jika kosong, Insert elemen pertama */
-	   InsertFirst(&(*L),P);     
+      if(ListIntEmpty(*L)) { /* Jika kosong, Insert elemen pertama */
+	   InsertFirstInt(&(*L),P);     
       }
       else { /* tdk kosong */
 	    Last=First(*L);  
@@ -235,7 +235,7 @@ void InsertLast(IntList  *L, addr_int P)
 }
 
 /* ****** PENGHAPUSAN SEBUAH ELEMEN	*********   */
-void DelFirst (IntList *L, addr_int *P)
+void DelFirstInt (IntList *L, addr_int *P)
 { /* I.S   : IntList tidak kosong 	*/
   /* F.S   : P adalah alamat elemen pertama list sebelum penghapusan */
   /*         Elemen IntList berkurang satu (mungkin menjadi kosong)     */
@@ -247,7 +247,7 @@ void DelFirst (IntList *L, addr_int *P)
     
  }
 
-void DelP(IntList *L, type X)
+void DelPInt(IntList *L, type X)
 { /* I.S   : Sembarang  */
   /* F.S   : Jika ada elemen  list beraddress P,dengan info (P)=X    */
   /*         Maka P dihapus dari IntList dan di-dealokasi		     */
@@ -255,16 +255,16 @@ void DelP(IntList *L, type X)
   /*         tetap. IntList mungkin menjadi kosomg karena penghapusan   */
     addr_int  P=First(*L);
 
-    while((Next(P)!=Nil) && (Info(P)!=X)){
+    while((Next(P)!=Nil) && (CodeInfo(P)!=X)){
           P=Next(P);
-    } /*Next(P)=Nil or Info(P)= X */
+    } /*Next(P)=Nil or CodeInfo(P)= X */
     
-    if(Info(P)==X) {
-       Dealokasi(&P);
+    if(CodeInfo(P)==X) {
+       DealokasiInt(&P);
     }
 }
 
-void DelLast(IntList *L, addr_int *P)
+void DelLastInt(IntList *L, addr_int *P)
 { /* I.S   : IntList tidak kosong  */
   /* F.S   : P adalah alamat elemen terakhir list sebelum penghapusan */
   /*	     Elemen list berkurang 1 (mungkin menjadi kosong)	      */
@@ -277,7 +277,7 @@ void DelLast(IntList *L, addr_int *P)
   Last=First(*L);
   /* dari catatan di kelas */	
   if(Next(Last)==Nil)  { /* hanya 1 elemen */
-	  DelFirst(&(*L),&(Last));
+	  DelFirstInt(&(*L),&(Last));
   }	  
   else { /* Lebih dr 1 elemen */
 	  PrecLast=Nil;
@@ -291,7 +291,7 @@ void DelLast(IntList *L, addr_int *P)
 }
 
 
-void DelAfter(IntList *L, addr_int *Pdel, addr_int Prec)
+void DelAfterInt(IntList *L, addr_int *Pdel, addr_int Prec)
 {  /* I.S   : IntList tidak kosong, Prec adalah anggota IntList	*/
    /* F.S   : Menghapus Next(Prec) :				*/
    /*         Pdel adalah alamat elemen IntList yang dihapus	*/
@@ -301,7 +301,7 @@ void DelAfter(IntList *L, addr_int *Pdel, addr_int Prec)
 
 
 /* *************PROSES SEMUA ELEMEN ****************   */
-void PrintInfo(IntList L)
+void PrintInfoInt(IntList L)
 { /* I.S   : IntList mungkin kosong 	*/
   /* F.S   : Jika list tidak kosong, semua info yang disimpan pada */
   /*         elemen list di-print			  	   */
@@ -313,7 +313,7 @@ void PrintInfo(IntList L)
   } else { /* IntList tidak kosong */
 	    printf("[ ");
 	    do { 
-	 	  printf("%d ",Info(P));
+	 	  printf("%d ",CodeInfo(P));
 		  P=Next(P);
 		  i++;
 	    } while(P!=Nil); 
@@ -322,11 +322,11 @@ void PrintInfo(IntList L)
   printf("\n");
 }
 
-int NbElmt(IntList L)
+int NbElmtInt(IntList L)
 { /* Mengirimkan banyaknya elemen list, mengirimkan Nol jika kosong */
   addr_int P;
   int NbEl=0;
-  if(ListEmpty(L)){
+  if(ListIntEmpty(L)){
  	return 0;
   } else { /* Tidak kosong */
 	      P=First(L);
@@ -338,36 +338,36 @@ int NbElmt(IntList L)
        return NbEl;		      
 }
 
-type Max(IntList L)
+type MaxInt(IntList L)
 {  /* Mengirimkan nilai info(P) yang maksimum */
 
    addr_int P;	
    type MMax;
-   if(!ListEmpty(L))
+   if(!ListIntEmpty(L))
    {      P=First(L);
-	  MMax=Info(P);
+	  MMax=CodeInfo(P);
 	  while(Next(P)!=Nil) { 
 	 	P=Next(P);
-		if(Info(P)>MMax) {
-		   MMax=Info(P);	
+		if(CodeInfo(P)>MMax) {
+		   MMax=CodeInfo(P);	
 		}	
 	  } /* Next(P)==Nil */
    }
   return MMax;	  
 }
 
-addr_int AdrMax(IntList L)
+addr_int AdrMaxInt(IntList L)
 {  /* mengirimkan addr_int P, dengan info (P) yang maksimum */
 
    addr_int PMax,P;
    type Max;
-   if(!ListEmpty(L)){
+   if(!ListIntEmpty(L)){
 	   P=First(L);
-	   Max=Info(P);
+	   Max=CodeInfo(P);
 	   while(Next(P) != Nil) { 
 		   P=Next(P);
-		   if(Info(P)>Max) {
-			   Max = Info(P);
+		   if(CodeInfo(P)>Max) {
+			   Max = CodeInfo(P);
 			   PMax=P;
 		   }
 	   } /* Next(P)==Nil */
@@ -376,18 +376,18 @@ addr_int AdrMax(IntList L)
 }
 
 
-type Min(IntList L)
+type MinInt(IntList L)
 { /* mengirimkan nilai info(P), yang minimum    */
 
    addr_int P;	
    type MMin;
-   if(!ListEmpty(L))
+   if(!ListIntEmpty(L))
    {      P=First(L);
-	  MMin=Info(P);
+	  MMin=CodeInfo(P);
 	  while(Next(P)!=Nil) { 
 	 	   P=Next(P);
-		   if(Info(P)<MMin) {
-		        MMin=Info(P);	
+		   if(CodeInfo(P)<MMin) {
+		        MMin=CodeInfo(P);	
 		   }	
 	  } /* Next(P)==Nil */
     } 
@@ -395,18 +395,18 @@ type Min(IntList L)
 }
 	
 
-addr_int AdrMin(IntList L)
+addr_int AdrMinInt(IntList L)
 { /* mengirimkan addr_int P, dengan info(P) yang minimum */
 	
    addr_int PMin,P;
    type Min;
-   if(!ListEmpty(L)){
+   if(!ListIntEmpty(L)){
 	   P=First(L);
-	   Min=Info(P);
+	   Min=CodeInfo(P);
 	   while(Next(P) != Nil) { 
 	      P=Next(P);
-	      if(Info(P)<Min) {
-			   Min = Info(P);
+	      if(CodeInfo(P)<Min) {
+			   Min = CodeInfo(P);
 			   PMin=P;
 		   }
   	   }
@@ -414,19 +414,19 @@ addr_int AdrMin(IntList L)
    return PMin;
 }
 
-float Average(IntList L)
+float AverageInt(IntList L)
 {  /* mengirimkan nilai rata-rata info(P)	*/
 	addr_int P;
 	type NbEl,Count;
 	float avg;
 	
-	if(!ListEmpty(L)) { /* Tidak kosong */
+	if(!ListIntEmpty(L)) { /* Tidak kosong */
 		P=First(L);
-		Count=Info(P);
+		Count=CodeInfo(P);
 		NbEl=1;
 		while(Next(P)!=Nil) 
 		{  P=Next(P);
-		   Count=Count+Info(P);  		    
+		   Count=Count+CodeInfo(P);  		    
 		   NbEl++;
 		} /*Next(P) == Nil */
 		avg= (float)Count/(float)NbEl;
@@ -437,15 +437,15 @@ float Average(IntList L)
 /******************************************************/
 /***   		PROSES TERHADAP LIST		    ***/
 /******************************************************/
-void DelAll(IntList *L)
+void DelAllInt(IntList *L)
 { /* Delete semua elemen list, dan alamat elemen di-dealokasi */
    type X;
-   while(!ListEmpty(*L)) {
-	  DelVFirst(&(*L),&X);
+   while(!ListIntEmpty(*L)) {
+	  DelVFirstInt(&(*L),&X);
    } /* kosong */
 }
 
-void InversList(IntList *L)
+void InversListInt(IntList *L)
 { /* I.S   : sembarang  			*/
   /* F.S   : elemen list  dibalik		*/
   /*	   elemen terakhir menjadi elemen pertama, dst    */
@@ -456,18 +456,18 @@ void InversList(IntList *L)
 	addr_int P;
 
 	/* Algoritma */
-	CreateList(&LTemp);
+	CreateListInt(&LTemp);
 	while(First(*L)!=Nil){
-		DelFirst(&(*L),&P);
+		DelFirstInt(&(*L),&P);
 		Next(P)=Nil;
-		InsertFirst(&LTemp,P);
+		InsertFirstInt(&LTemp,P);
 	}
 	First(*L)=First(LTemp);
 }
 
-IntList FInversList(IntList L)
+IntList FInversListInt(IntList L)
 { /* mengirimkan list baru (LB), hasil invers dari L 	*/
-  /* dengan Alokasi 					*/
+  /* dengan AlokasiInt 					*/
 	
   /* IntList L tidak kosong ; min 1 elemen				*/	
 	
@@ -478,11 +478,11 @@ IntList FInversList(IntList L)
   
   /* Algoritma */ 
 	P=First(L);
-	CreateList(&LB);
-	do {    X=Info(P);
-		PB=Alokasi(X);	
+	CreateListInt(&LB);
+	do {    X=CodeInfo(P);
+		PB=AlokasiInt(X);	
 		if(PB!=Nil) { /* berhasil alokasi */
-		    InsertLast(&LB,PB);
+		    InsertLastInt(&LB,PB);
 		    P=Next(P);
 		} else { /* alokasi gagal */
 			    DelAll(&LB);
@@ -492,7 +492,7 @@ IntList FInversList(IntList L)
    return LB;	
 }
 
-void CopyList(IntList L1, IntList *L2)
+void CopyListInt(IntList L1, IntList *L2)
 { /* I.S   : L1 sembarang 				*/
   /* F.S   : L1 dan L2 menunjuk ke list yang sama 	*/
   /*         tidak ada alokasi/dealokasi 		*/
@@ -500,11 +500,11 @@ void CopyList(IntList L1, IntList *L2)
 }
 
 
-IntList FCopyList(IntList L)
+IntList FCopyListInt(IntList L)
 { /* Mengirimkan list yang merupakan salinan L  	*/
 }
 
-void CpAlokList(IntList Lin, IntList  *Lout)
+void CpAlokListInt(IntList Lin, IntList  *Lout)
 { /* I.S   : Lin sembarang				    */
   /* F.S   : Jika semua alokasi berhasil, maka Lout berisi  */
   /*         hasil copy Lin. Jika ada alokasi yang  gagal   */
@@ -518,17 +518,17 @@ void CpAlokList(IntList Lin, IntList  *Lout)
 	type X;
 	
 	/* ALgoritma */
-	if(!ListEmpty(Lin)) { /* tidak kosong */
+	if(!ListIntEmpty(Lin)) { /* tidak kosong */
 	   
-		CreateList(&(*Lout));
+		CreateListInt(&(*Lout));
 		P=First(Lin);
 		do 
-		{  X=Info(P);
-		   Pout=Alokasi(X);
-		   if(Pout!=Nil) {  /* Alokasi berhasil */
-			InsertLast(&(*Lout),Pout);
+		{  X=CodeInfo(P);
+		   Pout=AlokasiInt(X);
+		   if(Pout!=Nil) {  /* AlokasiInt berhasil */
+			InsertLastInt(&(*Lout),Pout);
 			P=Next(P);
-		   } else { /* Alokasi Pout gagal */
+		   } else { /* AlokasiInt Pout gagal */
 			     DelAll(&(*Lout));
 			     First(*Lout)=Nil;
 			     break;  
@@ -538,7 +538,7 @@ void CpAlokList(IntList Lin, IntList  *Lout)
 }
 
 
-void konkat(IntList L1, IntList L2, IntList *L3)
+void konkatInt(IntList L1, IntList L2, IntList *L3)
 { /* I.S   : L1 dan L2 sembarang			      */
 /* F.S   : L1 dan L2 tetap, L3 adalah hasil konkatenasi L1 &  */
 /*	   L2. Jika semua alokasi berhasil, maka L3  adalah   */
@@ -553,18 +553,18 @@ void konkat(IntList L1, IntList L2, IntList *L3)
         type X1,X2;
 	
 	/* Algoritma */
-	CreateList(&(*L3));
+	CreateListInt(&(*L3));
 	
 	/* Mengisi L3 dengan L1 */
 	P1=First(L1);
 	do 
 	{ /* L1 minimal 1 elemen */
-		X1=Info(P1);
-		P3=Alokasi(X1);
-		if(P3!=Nil) { /* Alokasi L3 berhasil */
-			InsertLast(&(*L3),P3);
+		X1=CodeInfo(P1);
+		P3=AlokasiInt(X1);
+		if(P3!=Nil) { /* AlokasiInt L3 berhasil */
+			InsertLastInt(&(*L3),P3);
 			P1=Next(P1);
-		} else { /* Alokasi gagal ; L3 di-dealokasi semua */
+		} else { /* AlokasiInt gagal ; L3 di-dealokasi semua */
 			    DelAll(&(*L3));
 			    First(*L3)=Nil;
 			    break;
@@ -575,12 +575,12 @@ void konkat(IntList L1, IntList L2, IntList *L3)
 	P2=First(L2);
 	do
 	{ /* L2 minimal 1 elemen */
-		X2=Info(P2);
-		P3=Alokasi(X2);
+		X2=CodeInfo(P2);
+		P3=AlokasiInt(X2);
 		if(P3!=Nil){
-			InsertLast(&(*L3),P3);
+			InsertLastInt(&(*L3),P3);
 			P2=Next(P2);
-		} else { /* Alokasi L3 gagal */
+		} else { /* AlokasiInt L3 gagal */
 			DelAll(&(*L3));
 			First(*L3)=Nil;
 			break;
@@ -588,7 +588,7 @@ void konkat(IntList L1, IntList L2, IntList *L3)
 	}while (Next(P2)!=Nil);	
 }
 
-void konkat1(IntList *L1, IntList *L2, IntList *L3)
+void konkat1Int(IntList *L1, IntList *L2, IntList *L3)
 { /* I.S  : L1 dan L2 sembarang	; 			  */
   /* F.S  : L1 dan L2 kosong,  L3 adalah hasil konkatenasi*/
   /*	  L1 & L2, 					  */
@@ -600,27 +600,27 @@ void konkat1(IntList *L1, IntList *L2, IntList *L3)
   addr_int P1,P2,P3;
   type X1,X2,X3;
 
-   CreateList(&(*L3));
+   CreateListInt(&(*L3));
 
    while (First(*L1)!=Nil)  /* L1 belum kosong */
-   {   DelFirst(&(*L1),&P1);
-       InsertLast(&(*L3),P1);	   
+   {   DelFirstInt(&(*L1),&P1);
+       InsertLastInt(&(*L3),P1);	   
    } /* First(L1) == Nil ; Kosong */
 
    while (First(*L2)!=Nil)  /* L2 belum kosong */
-   {   DelFirst(&(*L2),&P2);
-       InsertLast(&(*L3),P2);	   
+   {   DelFirstInt(&(*L2),&P2);
+       InsertLastInt(&(*L3),P2);	   
    } /* First (L2) == Nil ; kosong */
 	
 }
 
-void PecahList(IntList *L1, IntList *L2, IntList L)
+void PecahListInt(IntList *L1, IntList *L2, IntList L)
 { /* I.S  : L mungkin kosong  */
   /* F.S  : Berdasarkan L, dibentuk 2 buah list L1 dan L2     */
   /*        L tidak berubah. Untuk membentuk L1 dan L2 harus  */
   /*	  alokasi. L1 berisi separuh elemen  L dan L2 berisi  */
   /*	  sisa elemen L. Jika elemen L ganjil, maka separuh   */
-  /* 	  adalah NbElmt(L)div 2				      */
+  /* 	  adalah NbElmtInt(L)div 2				      */
  
   /* Kamus */	
   addr_int P,P1,P2;
@@ -629,21 +629,21 @@ void PecahList(IntList *L1, IntList *L2, IntList L)
   int Nb,tengah;
   
   /* ALgoritma */
-  if(!ListEmpty(L)) {           /* tidak kosong ; minimal 1 elemen    */
-	  CreateList(&(*L1));
+  if(!ListIntEmpty(L)) {           /* tidak kosong ; minimal 1 elemen    */
+	  CreateListInt(&(*L1));
 	  
-	  if(NbElmt(L)==1) {  /* Hanya L1 yang dapat diisi 1 elm, dari L */
+	  if(NbElmtInt(L)==1) {  /* Hanya L1 yang dapat diisi 1 elm, dari L */
 		  First(*L1)=First(L);
 	  } else /* L1 beirisi > 1 elemen */
-	  	{  tengah = NbElmt(L) / 2;
+	  	{  tengah = NbElmtInt(L) / 2;
 		   P=First(L);
 		   Nb=1;
 		   
 		   do /* mengisi L1 */
-		   {  X1=Info(P);
-		      P1=Alokasi(X1);
+		   {  X1=CodeInfo(P);
+		      P1=AlokasiInt(X1);
 	   	      if(P1!=Nil){
-			  InsertLast(&(*L1),P1);      
+			  InsertLastInt(&(*L1),P1);      
 			  P=Next(P);
 			  Nb++;
 		      } else { /* alokasi gagal; semua di-dealokasi */
@@ -654,10 +654,10 @@ void PecahList(IntList *L1, IntList *L2, IntList L)
 		   } while(Nb<=tengah);
 
 		   do  /* Mengisi L2 */ 
-		   {  X2=Info(P);
-	       	      P2=Alokasi(X2);
+		   {  X2=CodeInfo(P);
+	       	      P2=AlokasiInt(X2);
 	   	      if(P2!=Nil) {
-			      InsertLast(&(*L2),P2);
+			      InsertLastInt(&(*L2),P2);
 			      P=Next(P);
 		      } else {
 			      DelAll(&(*L2));

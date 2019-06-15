@@ -31,7 +31,7 @@ typedef char symboltype;					//type definition, diubah di sini jika infotypenya 
 typedef struct tElmtListCode *addr_code;
 typedef struct  tElmtListCode   {
 	symboltype symbol;
-	addr_int code;
+	IntList code;
 	addr_code next;
 } ElmtListCode;
 
@@ -55,7 +55,7 @@ void CreateListCode(ListCode *L);
 /* F.S  :  Terbentuk  ListCode kosong  	*/
 
 /* Manajeman  memory  			*/
-addr_code AlokasiCode(symboltype  X, addr_int code);
+addr_code AlokasiCode(symboltype  X, IntList code);
  /* Mengirimkan  addr_code  hasil alokasi    sebuah elemen */
  /* Jika alokasi  berhasil, maka  addr_code tidak nil, dan misalnya  */
  /* menghasilkan   P,  maka info(P)=X,  Nest(P)=Nil;               */
@@ -88,13 +88,13 @@ addr_code SearchPrecCode(ListCode L, symboltype X);
 /* ** PRIMITIF BERDASARKAN NILAI ** */
 
 /* ** Penambahan Elemen ** */
-void InsVFirstCode(ListCode *L, symboltype X, addr_int code);
+void InsVFirstCode(ListCode *L, symboltype X, IntList code);
 /* I.S  : L mungkin kosong          */
 /* F.S  : Melakukan alokasi sebuah elemen dan                */
 /*        menambahkan elemen pertama dengan nilai X jika     */
 /*        Alokasi berhasil 				     */
 
-void InsVLastCode(ListCode *L, symboltype X, addr_int code);
+void InsVLastCode(ListCode *L, symboltype X, IntList code);
 /* I.S  : L mungkin kosong          */
 /* F.S  : Melakukan alokasi sebuah elemen dan                */
 /*        menambahkan elemen ListCode di akhir; elemen terakhir  */
