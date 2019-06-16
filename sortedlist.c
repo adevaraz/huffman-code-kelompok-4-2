@@ -21,9 +21,9 @@
  **/
 sorted_list CreateEmptyList() {
 	sorted_list n_list;
-	
+
 	n_list.front = NULL;
-	
+
 	return n_list;
 }
 
@@ -34,9 +34,9 @@ sorted_list CreateEmptyList() {
 sorted_list CreateSortedList(struct huffmanNode* value) {
 	sorted_list n_list = CreateEmptyList();
 	addr_sorted n_node = AllocateElmt(value);
-	
+
 	n_list.front = n_node;
-	
+
 	return n_list;
 }
 
@@ -47,12 +47,12 @@ sorted_list CreateSortedList(struct huffmanNode* value) {
  **/
 addr_sorted AllocateElmt(struct huffmanNode* value) {
 	addr_sorted n_node = (addr_sorted) malloc(sizeof(elmt_list));
-	
+
 	if(n_node != NULL) {
 		n_node->info = value;
 		n_node->next = NULL;
 	}
-	
+
 	return n_node;
 }
 
@@ -64,7 +64,7 @@ addr_sorted AllocateElmt(struct huffmanNode* value) {
 void InsertSorted(sorted_list *the_list, struct huffmanNode* value) {
 	addr_sorted n_node = AllocateElmt(&(*value));
 	addr_sorted prec_node = the_list->front;
-	
+
 	if(n_node->info->probability >= the_list->front->info->probability) {
 
 		if(prec_node->next != NULL) {
@@ -73,7 +73,7 @@ void InsertSorted(sorted_list *the_list, struct huffmanNode* value) {
 				prec_node = prec_node->next;
 			}
 		}
-		
+
 		n_node->next = prec_node->next;
 		prec_node->next = n_node->next;
 	} else {
@@ -89,7 +89,7 @@ void InsertSorted(sorted_list *the_list, struct huffmanNode* value) {
 addr_sorted DeallocateElmt(addr_sorted *N) {
 	(*N)->info = NULL;
 	(*N)->next = NULL;
-	
+
 	free(*N);
 }
 
@@ -113,15 +113,15 @@ addr_sorted DeleteNode(sorted_list *L, infotype value) {
 	} else {
 		L->front = pdel->next;
 	}
-	
+
 	addr_sorted node = pdel;
 	DeallocateElmt(&pdel);
-	
+
 	return node;
 }
 
 /**
- * Mengecek apakah sebuah node merupakan elemen pertama 
+ * Mengecek apakah sebuah node merupakan elemen pertama
  * atau bukan
  **/
 boolean IsFirstElmt(sorted_list L, addr_sorted node) {
@@ -133,7 +133,7 @@ boolean IsFirstElmt(sorted_list L, addr_sorted node) {
  **/
 void DeleteList(sorted_list *L) {
 	addr_sorted pdel;
-	
+
 	while((*L).front != NULL) {
 		pdel = (*L).front;
 		(*L).front = (*L).front->next;
@@ -148,7 +148,7 @@ void DeleteList(sorted_list *L) {
 addr_sorted SearchNode(sorted_list L, infotype value) {
 	addr_sorted psearch = L.front;
 	bool found = false;
-	
+
 	while(psearch != NULL && !found) {
 		if(psearch->info->symbol == value) {
 			found = true;
@@ -156,7 +156,7 @@ addr_sorted SearchNode(sorted_list L, infotype value) {
 			psearch = psearch->next;
 		}
 	}
-	
+
 	return psearch;
 }
 
@@ -167,7 +167,7 @@ addr_sorted SearchNode(sorted_list L, infotype value) {
 addr_sorted SearchNodeBefore(sorted_list L, addr_sorted node) {
 	addr_sorted psearch = L.front;
 	bool found = false;
-	
+
 	while(psearch->next != NULL && !found) {
 		if(psearch->next == node) {
 			found = true;
@@ -175,7 +175,7 @@ addr_sorted SearchNodeBefore(sorted_list L, addr_sorted node) {
 			psearch = psearch->next;
 		}
 	}
-	
+
 	return psearch;
 }
 
@@ -200,7 +200,7 @@ void ClearArray(char *arr) {
 }
 
 /**
- * Membuat List yang sudah terurut dan berisi huruf-huruf beserta 
+ * Membuat List yang sudah terurut dan berisi huruf-huruf beserta
  * peluang munculnya huruf tersebut, dari sebuah kalimat yang ada
  **/
 void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
@@ -213,10 +213,6 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 	bool found = false;
 	double prob;
 	
-	*sorted_l = CreateEmptyList();
-	n_node = Allocate(word[0], CountProbability(1, total));
-	n_sorted = AllocateElmt(n_node);
-	(*sorted_l).front = n_sorted;
 	psearch = sorted_l->front;
 	prob = CountProbability(1, total);
 	while(phelp != NULL) {
@@ -232,11 +228,14 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 			}
 			if(!found) {
 				n_node = Allocate(word[i], prob);
-				InsertSorted(sorted_l, n_node);
+				if(sorted_l->front != NULL) {
+					InsertSorted(&(*sorted_l), n_node);
+				} else {
+					CreateSortedList(n_node);
+				}
 			}
 		}
 		phelp = phelp->next;
 		ClearArray(word);
 	}
 }
-
