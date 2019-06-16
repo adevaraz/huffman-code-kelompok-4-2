@@ -18,6 +18,7 @@ int main() {
 	len = strlen(text);
 	for(i = 0; i < len ; i++) {
 		text[i] = tolower(text[i]);
+		printf("%c ", text[i]);
 	}
 	
 	CreateList(&sentence);
@@ -25,7 +26,7 @@ int main() {
 	
 	GenerateSortedList(sentence, &node_list, (double) len);
 	
-	printf("%c\n\n", node_list.front->next);
+	printf("%c\n\n", node_list.front->info->symbol);
 	the_tree = GenerateHuffmanTree(&node_list);
 	
 	PrintTree(the_tree);
