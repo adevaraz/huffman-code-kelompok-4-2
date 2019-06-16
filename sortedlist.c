@@ -223,7 +223,12 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 			}
 			if(!found) {
 				n_node = Allocate(word[i], prob);
-				InsertSorted(&(*sorted_l), n_node);
+				if(sorted_l->front != NULL) {
+					InsertSorted(&(*sorted_l), n_node);
+				} else {
+					CreateSortedList(n_node);
+				}
+				
 			}
 		}
 		phelp = phelp->next;
