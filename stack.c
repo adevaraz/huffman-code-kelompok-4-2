@@ -15,7 +15,7 @@
 /**
  * Membuat stack yang kosong
  **/
-addr_stack CreateStack(stack *S) {
+void CreateStack(stack *S) {
 	(*S).top = NULL;
 }
 

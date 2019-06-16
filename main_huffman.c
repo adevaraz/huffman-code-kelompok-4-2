@@ -5,6 +5,7 @@
 #include "huffmancode.h"
 #include "sortedlist.h"
 #include "strlist.h"
+#include "codelist.h"
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
@@ -15,6 +16,7 @@ int main() {
 	huffman_tree the_tree;
 	List sentence;
 	boolean stop;
+	ListCode codes;
 	
 	len = strlen(text);
 	for(i = 0; i < len ; i++) {
@@ -53,7 +55,11 @@ int main() {
 	the_tree = GenerateHuffmanTree(&node_list);
 	
 	printf("\nHuffman Tree : ");
-	PrintTree(the_tree);
+	PrintTreeCoba(the_tree.tree);
+	
+	printf("\nCodes : ");
+	CreateHuffmanCode(the_tree, &codes);
+	
 	printf("\n\nyahooo!");
 	return 0;
 }

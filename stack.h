@@ -26,7 +26,7 @@ typedef struct {
 } stack;
 
 /*************** Constructor ***************/
-addr_stack CreateStack(stack *S);
+void CreateStack(stack *S);
 addr_stack Alloc(vartype info);
 
 /*************** Destructor ***************/

@@ -59,5 +59,7 @@ addr_huffman Dealloc(addr_huffman *N);
 /***************  Display  ***************/
 void PrintTab(int level);
 void PrintTree(huffman_tree T);
+int Level(addr_huffman node);
+void Indent(int n);
 
 #endif

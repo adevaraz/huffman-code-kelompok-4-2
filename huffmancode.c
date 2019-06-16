@@ -91,7 +91,7 @@ boolean IsRightChild(addr_huffman N) {
  * Mengembalikan nilai .false. jika bukan.
  **/
 boolean IsLeaf(addr_huffman node) {
-	return (node->left_c == NULL && node->right_c);
+	return (node->left_c == NULL && node->right_c == NULL);
 }
 
 /********** Huffman Operations **********/
@@ -101,6 +101,7 @@ boolean IsLeaf(addr_huffman node) {
  **/
 void InsertRight(addr_huffman parent, addr_huffman child) {
 	parent->right_c = child;
+	child->parent = parent;
 }
 
 /**
@@ -109,6 +110,7 @@ void InsertRight(addr_huffman parent, addr_huffman child) {
  **/
 void InsertLeft(addr_huffman parent, addr_huffman child) {
 	parent->left_c = child;
+	child->parent = parent;
 }
 
 /**
@@ -136,8 +138,6 @@ huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
 		
 		InsertSorted(&(*nodes_list), mergednode);
 		
-//		printf("\nList Front : %g", nodes_list->front->info->probability);
-//		printf("\n[ %c ] : %g", mergednode->symbol, mergednode->probability);
 		firstnode = NULL;
 		secondnode = NULL;
 	}
@@ -173,6 +173,8 @@ void CreateHuffmanCode(huffman_tree the_tree, ListCode *huffman_code) {
 	ListCode the_code_list;
 	IntList code;
 	boolean formal = true;
+	
+	CreateListInt(&code);
 	
 	while(checked_node != NULL) {
 		if(IsLeaf(checked_node)) {
@@ -213,6 +215,7 @@ IntList GenerateCode(addr_huffman node) {
 	stack code_stack;
 	IntList number_list;
 	
+	CreateStack(&code_stack);
 	CreateListInt(&number_list);
 	
 	while(parent != NULL) {
@@ -306,3 +309,36 @@ void PrintTree(huffman_tree T) {
 	}
 }
 
+void PrintTreeCoba(addr_huffman T) {
+	addr_huffman phelp = T;
+	int level;
+	
+	if(phelp != NULL) {
+		level = Level(phelp);
+		Indent(level);
+		printf("%g ", phelp->probability);
+		PrintTreeCoba(phelp->left_c);
+		PrintTreeCoba(phelp->right_c);
+	}
+}
+
+int Level(addr_huffman node) {
+	int level = 0;
+	
+	while(node->parent != NULL) {
+		level += 1;
+		node = node->parent;
+	}
+	
+	return level;
+}
+
+void Indent(int n) {
+	int i = 0;
+	
+	printf("\n");
+	while(i < n) {
+		printf("   ");
+		i++;
+	}
+}
