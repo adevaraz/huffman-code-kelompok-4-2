@@ -26,7 +26,6 @@ int main() {
 	
 	GenerateSortedList(sentence, &node_list, (double) len);
 	
-	printf("%c\n\n", node_list.front->info->symbol);
 	the_tree = GenerateHuffmanTree(&node_list);
 	
 	PrintTree(the_tree);
