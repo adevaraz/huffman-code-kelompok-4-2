@@ -10,7 +10,7 @@
 
 int main() {
 	char text[100] = { "Zara Nadia" }, temp[26];
-	int i, j, len;
+	int i, j, len, spaces = 0;
 	sorted_list node_list;
 	huffman_tree the_tree;
 	List sentence;
@@ -32,6 +32,7 @@ int main() {
 				j++;
 			} else {
 				stop = true;
+				spaces += 1;
 			}
 		}
 		InsVLast(&sentence, temp);
@@ -41,7 +42,7 @@ int main() {
 	printf("Str List : ");
 	PrintInfo(sentence);
 	
-	GenerateSortedList(sentence, &node_list, (double) len);
+	GenerateSortedList(sentence, &node_list, (double) (len - spaces));
 	
 	printf("\nSorted List :\n");
 	PrintSorted(node_list);
