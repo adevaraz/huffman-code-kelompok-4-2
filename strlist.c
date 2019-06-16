@@ -322,13 +322,11 @@ void PrintInfo(List L)
   if( P==Nil) { 
   	  printf("List Kosong !\n");
   } else { /* List tidak kosong */
-	    printf("[ ");
 	    do { 
-	 	  printf("%s ",Info(P));
+	 	  printf("[ %s ] ",Info(P));
 		  P=Next(P);
 		  i++;
 	    } while(P!=Nil); 
-	    printf("]");
 	 }
   printf("\n");
 }

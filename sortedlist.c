@@ -65,21 +65,27 @@ void InsertSorted(sorted_list *the_list, struct huffmanNode* value) {
 	addr_sorted n_node = AllocateElmt(&(*value));
 	addr_sorted prec_node = the_list->front;
 
-	if(n_node->info->probability >= the_list->front->info->probability) {
-
-		while(prec_node->next != NULL) {
-			/* Loop for comparing new element to element list*/
-			if(n_node->info->probability >= prec_node->next->info->probability) {
-				prec_node = prec_node->next;
-			}
-		}
-
-		n_node->next = prec_node->next;
-		prec_node->next = n_node;
-	} else {
-		/* Insertion as front list */
-		n_node->next = the_list->front;
+	if(the_list->front == NULL) {
 		the_list->front = n_node;
+	} else {
+		if(n_node->info->probability >= the_list->front->info->probability) {
+
+			while(prec_node->next != NULL) {
+					/* Loop for comparing new element to element list*/
+				if(n_node->info->probability >= prec_node->next->info->probability) {
+					prec_node = prec_node->next;
+				} else {
+					break;
+				}
+			}
+
+			n_node->next = prec_node->next;
+			prec_node->next = n_node;
+		} else {
+			/* Insertion as front list */
+			n_node->next = the_list->front;
+			the_list->front = n_node;
+		}
 	}
 }
 
@@ -221,6 +227,7 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 		strcpy(word, phelp->info);
 		for(i = 0; i < strlen(word); i++) {
 			psearch = sorted_l->front;
+			found = false;
 			if(sorted_l->front == NULL) {
 				n_node = Allocate(word[i], prob);
 				*sorted_l = CreateSortedList(n_node);

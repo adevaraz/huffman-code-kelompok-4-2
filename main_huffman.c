@@ -9,7 +9,7 @@
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main() {
-	char text[100] = { "Zara Nadia Uhuy" }, temp[26];
+	char text[100] = { "Zara Nadia" }, temp[26];
 	int i, j, len;
 	sorted_list node_list;
 	huffman_tree the_tree;
@@ -26,18 +26,19 @@ int main() {
 		stop = false;
 		j = 0;
 		while(!stop) {
-			if(text[i] != "") {
+			if(text[i] != ' ' && text[i] != '\0') {
 				temp[j] = text[i];
+				i++;
 				j++;
 			} else {
 				stop = true;
 			}
-			i++;
 		}
 		InsVLast(&sentence, temp);
+		ClearArray(temp);
 	}
 	
-	printf("\nStr List : ");
+	printf("Str List : ");
 	PrintInfo(sentence);
 	
 	GenerateSortedList(sentence, &node_list, (double) len);
@@ -45,9 +46,10 @@ int main() {
 	printf("\nSorted List :\n");
 	PrintSorted(node_list);
 	
-//	the_tree = GenerateHuffmanTree(&node_list);
-//	
-//	PrintTree(the_tree);
+	the_tree = GenerateHuffmanTree(&node_list);
+	
+	printf("\nHuffman Tree : ");
+	PrintTree(the_tree);
 	printf("\n\nyahooo!");
 	return 0;
 }

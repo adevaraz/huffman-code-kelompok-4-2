@@ -130,12 +130,14 @@ huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
 		temp = DeleteNode(&(*nodes_list), secondnode->symbol);
 		
 		sum =  firstnode->probability + secondnode->probability;
-		mergednode = Allocate((infotype) sum, sum);
+		mergednode = Allocate((char) sum, sum);
 		InsertLeft(mergednode, firstnode);
 		InsertRight(mergednode, secondnode);
 		
 		InsertSorted(&(*nodes_list), mergednode);
 		
+//		printf("\nList Front : %g", nodes_list->front->info->probability);
+//		printf("\n[ %c ] : %g", mergednode->symbol, mergednode->probability);
 		firstnode = NULL;
 		secondnode = NULL;
 	}
