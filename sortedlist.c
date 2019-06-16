@@ -62,13 +62,16 @@ addr_sorted AllocateElmt(struct huffmanNode* value) {
  * Menambahkan element ke list dengan terurut secara ascending.
  **/
 void InsertSorted(sorted_list *the_list, struct huffmanNode* value) {
-	addr_sorted n_node = AllocateElmt(value);
+	addr_sorted n_node = AllocateElmt(&(*value));
 	addr_sorted prec_node = the_list->front;
 	
 	if(n_node->info->probability >= the_list->front->info->probability) {
-		/* Loop for comparing new element to element list*/
-		while(n_node->info->probability >= prec_node->next->info->probability && prec_node->next != NULL) {
-			prec_node = prec_node->next;
+
+		if(prec_node->next != NULL) {
+			/* Loop for comparing new element to element list*/
+			while(n_node->info->probability >= prec_node->next->info->probability) {
+				prec_node = prec_node->next;
+			}
 		}
 		
 		n_node->next = prec_node->next;
@@ -203,16 +206,22 @@ void ClearArray(char *arr) {
 void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 	addr_string phelp = string_l.First;
 	addr_sorted psearch;
+	addr_sorted n_sorted = (addr_sorted) malloc(sizeof(elmt_list));
 	addr_huffman n_node;
 	char word[MAX_WORD];
 	int i;
-	bool found;
+	bool found = false;
 	double prob;
-	psearch = (*sorted_l).front;
+	
+	*sorted_l = CreateEmptyList();
+	n_node = Allocate(word[0], CountProbability(1, total));
+	n_sorted = AllocateElmt(n_node);
+	(*sorted_l).front = n_sorted;
+	psearch = sorted_l->front;
 	prob = CountProbability(1, total);
 	while(phelp != NULL) {
 		strcpy(word, phelp->info);
-		for(i = 0; i < strlen(word); i++) {
+		for(i = 1; i < strlen(word); i++) {
 			while(psearch != NULL && !found) {
 				if(word[i] == psearch->info->symbol) {
 					psearch->info->probability += prob;
@@ -223,7 +232,7 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 			}
 			if(!found) {
 				n_node = Allocate(word[i], prob);
-				InsertSorted(&(*sorted_l), n_node);
+				InsertSorted(sorted_l, n_node);
 			}
 		}
 		phelp = phelp->next;
