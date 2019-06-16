@@ -228,7 +228,6 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 				} else {
 					CreateSortedList(n_node);
 				}
-				
 			}
 		}
 		phelp = phelp->next;
