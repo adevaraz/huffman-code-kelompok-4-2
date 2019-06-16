@@ -117,12 +117,13 @@ void InsertLeft(addr_huffman parent, addr_huffman child) {
  **/
 huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
 	addr_huffman firstnode, secondnode; //The nodes that will be merged
-	addr_huffman mergednode, sorted_elmt;;
+	addr_huffman mergednode;
 	struct elmt_list_t *temp;
 	double sum;
+	addr_sorted phelp = nodes_list->front;
 	huffman_tree the_tree;
 	
-	while(nodes_list->front->next != NULL) {
+	while(phelp->next != NULL) {
 		firstnode = GetFirstElmt((*nodes_list));
 		temp = DeleteNode(&(*nodes_list), firstnode->symbol);
 		secondnode = GetFirstElmt((*nodes_list));
