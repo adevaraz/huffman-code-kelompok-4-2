@@ -214,25 +214,29 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 	double prob;
 	
 	psearch = sorted_l->front;
+	*sorted_l = CreateEmptyList();
 	prob = CountProbability(1, total);
+	psearch = (*sorted_l).front;
 	while(phelp != NULL) {
 		strcpy(word, phelp->info);
-		for(i = 1; i < strlen(word); i++) {
-			while(psearch != NULL && !found) {
-				if(word[i] == psearch->info->symbol) {
-					psearch->info->probability += prob;
-					found = true;
-				} else {
-					psearch = psearch->next;
-				}
-			}
-			if(!found) {
+		psearch = sorted_l->front;
+		for(i = 0; i < strlen(word); i++) {
+			if(sorted_l->front == NULL) {
 				n_node = Allocate(word[i], prob);
-				if(sorted_l->front != NULL) {
-					InsertSorted(&(*sorted_l), n_node);
-				} else {
-					CreateSortedList(n_node);
+				*sorted_l = CreateSortedList(n_node);
+			} else {
+				while(psearch != NULL && !found) {
+					if(word[i] == psearch->info->symbol) {
+						psearch->info->probability += prob;
+						found = true;
+					} else {
+						psearch = psearch->next;
+					}
 				}
+				if(!found) {
+					n_node = Allocate(word[i], prob);
+					InsertSorted(&(*sorted_l), n_node);
+				}				
 			}
 		}
 		phelp = phelp->next;
