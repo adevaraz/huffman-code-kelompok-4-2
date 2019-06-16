@@ -324,7 +324,7 @@ void PrintInfo(List L)
   } else { /* List tidak kosong */
 	    printf("[ ");
 	    do { 
-	 	  printf("%c ",Info(P));
+	 	  printf("%s ",Info(P));
 		  P=Next(P);
 		  i++;
 	    } while(P!=Nil); 

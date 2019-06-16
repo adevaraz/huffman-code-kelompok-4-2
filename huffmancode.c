@@ -123,7 +123,7 @@ huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
 	addr_sorted phelp = nodes_list->front;
 	huffman_tree the_tree;
 	
-	while(phelp->next != NULL) {
+	while(nodes_list->front->next != NULL) {
 		firstnode = GetFirstElmt((*nodes_list));
 		temp = DeleteNode(&(*nodes_list), firstnode->symbol);
 		secondnode = GetFirstElmt((*nodes_list));

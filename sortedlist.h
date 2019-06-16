@@ -44,10 +44,14 @@ struct huffmanNode* GetFirstElmt(sorted_list L);
 void GenerateSortedList(List string_l, sorted_list *sorted_l, double total);
 double CountProbability(double freq, double count);
 void ClearArray(char *arr);
+void CopyElmt(addr_sorted *dest, addr_sorted source);
 
 /*************** Destructor ***************/
 addr_sorted DeallocateElmt(addr_sorted *N);
 addr_sorted DeleteNode(sorted_list *L, infotype value);
 void DeleteList(sorted_list *L);
+
+/*************** Display ***************/
+void PrintSorted(sorted_list the_list);
 
 #endif

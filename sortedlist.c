@@ -67,15 +67,15 @@ void InsertSorted(sorted_list *the_list, struct huffmanNode* value) {
 
 	if(n_node->info->probability >= the_list->front->info->probability) {
 
-		if(prec_node->next != NULL) {
+		while(prec_node->next != NULL) {
 			/* Loop for comparing new element to element list*/
-			while(n_node->info->probability >= prec_node->next->info->probability) {
+			if(n_node->info->probability >= prec_node->next->info->probability) {
 				prec_node = prec_node->next;
 			}
 		}
 
 		n_node->next = prec_node->next;
-		prec_node->next = n_node->next;
+		prec_node->next = n_node;
 	} else {
 		/* Insertion as front list */
 		n_node->next = the_list->front;
@@ -205,7 +205,7 @@ void ClearArray(char *arr) {
  **/
 void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 	addr_string phelp = string_l.First;
-	addr_sorted psearch;
+	addr_sorted psearch, pdel;
 	addr_sorted n_sorted = (addr_sorted) malloc(sizeof(elmt_list));
 	addr_huffman n_node;
 	char word[MAX_WORD];
@@ -219,8 +219,8 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 	psearch = (*sorted_l).front;
 	while(phelp != NULL) {
 		strcpy(word, phelp->info);
-		psearch = sorted_l->front;
 		for(i = 0; i < strlen(word); i++) {
+			psearch = sorted_l->front;
 			if(sorted_l->front == NULL) {
 				n_node = Allocate(word[i], prob);
 				*sorted_l = CreateSortedList(n_node);
@@ -228,18 +228,37 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 				while(psearch != NULL && !found) {
 					if(word[i] == psearch->info->symbol) {
 						psearch->info->probability += prob;
+						CopyElmt(&pdel, psearch);
+						DeleteNode(sorted_l, psearch->info->symbol);
+						InsertSorted(sorted_l, pdel->info);
 						found = true;
+						free(pdel);
 					} else {
 						psearch = psearch->next;
 					}
 				}
 				if(!found) {
 					n_node = Allocate(word[i], prob);
-					InsertSorted(&(*sorted_l), n_node);
+					InsertSorted(sorted_l, n_node);
 				}				
 			}
 		}
 		phelp = phelp->next;
 		ClearArray(word);
 	}
+}
+
+void PrintSorted(sorted_list the_list) {
+	addr_sorted phelp = the_list.front;
+	
+	while(phelp != NULL) {
+		printf("[ %c ]", phelp->info->symbol);
+		printf(" %g\n", phelp->info->probability);
+		
+		phelp = phelp->next;
+	}
+}
+
+void CopyElmt(addr_sorted *dest, addr_sorted source) {
+	*dest = AllocateElmt(source->info);
 }
