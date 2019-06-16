@@ -32,13 +32,16 @@ int main() {
 				j++;
 			} else {
 				stop = true;
-				spaces += 1;
+				if(text[i] == ' ') {
+					spaces += 1;
+				}
 			}
 		}
 		InsVLast(&sentence, temp);
 		ClearArray(temp);
 	}
 	
+	printf("Spaces : %d\n", spaces);
 	printf("Str List : ");
 	PrintInfo(sentence);
 	
