@@ -168,26 +168,41 @@ void ConvertToHuffmanCode() {
  * Huffman tree dimungkinkan tidak kosong.
  * Terbentuk sebuah list yang berisi simbol dan code huffmannya.
  **/
-void CreateHuffmanCode(huffman_tree the_tree, ListCode *huffman_code) {
-	addr_huffman checked_node = the_tree.tree;
+ListCode CreateHuffmanCode(huffman_tree the_tree) {
+	addr_huffman checked_node = the_tree.tree, phelp;
 	ListCode the_code_list;
 	IntList code;
 	boolean formal = true;
 	
 	CreateListInt(&code);
+	CreateListCode(&the_code_list);
 	
 	while(checked_node != NULL) {
 		if(IsLeaf(checked_node)) {
 			code = GenerateCode(checked_node);
 			InsVLastCode(&the_code_list, checked_node->symbol, code);
+			PrintInfoCode(the_code_list);
+			printf("\n");
 			if(checked_node == checked_node->parent->right_c) {
-				if(checked_node->parent->parent->right_c != NULL) {
-					/* Its grandparents still have right child */
-					checked_node = checked_node->parent->parent->right_c;
-				} else {
-					/* It is the last node */
-					checked_node = NULL;
+				phelp = checked_node;
+				
+				/* Loop for checking whether it is last node or no */
+				while(phelp->parent != NULL) {
+					if(phelp == phelp->parent->right_c) {
+						phelp = phelp->parent;
+					} else {
+						break;
+					}
 				}
+				
+				checked_node = phelp->parent;
+				formal = false;
+//				if(phelp->parent != NULL) {
+//					/* Go to right child */
+//					checked_node = phelp->parent->right_c;
+//				} else {
+//					checked_node = phelp->parent;
+//				}
 			} else {
 				checked_node = checked_node->parent;
 				formal = false;
@@ -203,6 +218,8 @@ void CreateHuffmanCode(huffman_tree the_tree, ListCode *huffman_code) {
 			}
 		}
 	}
+	
+	return the_code_list;
 }
 
 /**
@@ -225,6 +242,7 @@ IntList GenerateCode(addr_huffman node) {
 			Push(&code_stack, 1);
 		}
 		
+		node = parent;
 		parent = parent->parent;
 	}
 	
@@ -316,7 +334,7 @@ void PrintTreeCoba(addr_huffman T) {
 	if(phelp != NULL) {
 		level = Level(phelp);
 		Indent(level);
-		printf("%g ", phelp->probability);
+		printf("[ %c ] %g ", phelp->symbol, phelp->probability);
 		PrintTreeCoba(phelp->left_c);
 		PrintTreeCoba(phelp->right_c);
 	}

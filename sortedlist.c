@@ -201,7 +201,7 @@ void ClearArray(char *arr) {
 	int i, n;
 	n = strlen(arr);
 	for(i = n; i >= 0; i--){
-		arr[i] = arr[i+1];
+		arr[i] = '\0';
 	}
 }
 

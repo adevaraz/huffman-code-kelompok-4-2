@@ -10,13 +10,19 @@
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main() {
-	char text[100] = { "Zara Nadia" }, temp[26];
+	char text[100] = { "haloo nadia" }, temp[26];
 	int i, j, len, spaces = 0;
 	sorted_list node_list;
 	huffman_tree the_tree;
 	List sentence;
 	boolean stop;
 	ListCode codes;
+	
+//	text = calloc(100, sizeof(char));
+//	gets(text);
+
+//	ClearArray(text);
+//	scanf(" %s", text);
 	
 	len = strlen(text);
 	for(i = 0; i < len ; i++) {
@@ -57,9 +63,13 @@ int main() {
 	printf("\nHuffman Tree : ");
 	PrintTreeCoba(the_tree.tree);
 	
-	printf("\nCodes : ");
-	CreateHuffmanCode(the_tree, &codes);
+	CreateListCode(&codes);
+	printf("\n\nCodes : ");
+	printf("\n");
+	codes = CreateHuffmanCode(the_tree);
+	PrintInfoCode(codes);
 	
-	printf("\n\nyahooo!");
+	printf("yahooo!");
+	getch();
 	return 0;
 }

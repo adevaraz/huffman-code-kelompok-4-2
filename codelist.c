@@ -320,13 +320,13 @@ void PrintInfoCode(ListCode L)
   if( P==Nil) { 
   	  printf("ListCode Kosong !\n");
   } else { /* ListCode tidak kosong */
-	    printf("[ ");
 	    do { 
-	 	  printf("%c ",Symbol(P));
+	 	  printf("[ %c ] ",Symbol(P));
+	 	  PrintInfoInt(Code(P));
+	 	  printf("\n");
 		  P=Next(P);
 		  i++;
 	    } while(P!=Nil); 
-	    printf("]");
 	 }
   printf("\n");
 }
