@@ -58,8 +58,7 @@ ListCode CreateHuffmanCode(huffman_tree the_tree);
 addr_huffman Dealloc(addr_huffman *N);
 
 /***************  Display  ***************/
-void PrintTab(int level);
-void PrintTree(huffman_tree T);
+void PrintTree(addr_huffman T);
 int Level(addr_huffman node);
 void Indent(int n);
 

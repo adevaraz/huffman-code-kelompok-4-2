@@ -194,18 +194,6 @@ double CountProbability(double freq, double count) {
 }
 
 /**
- * Membuat array menjadi kosong seperti saat pertama
- * di deklarasikan
- **/
-void ClearArray(char *arr) {
-	int i, n;
-	n = strlen(arr);
-	for(i = n; i >= 0; i--){
-		arr[i] = '\0';
-	}
-}
-
-/**
  * Membuat List yang sudah terurut dan berisi huruf-huruf beserta
  * peluang munculnya huruf tersebut, dari sebuah kalimat yang ada
  **/

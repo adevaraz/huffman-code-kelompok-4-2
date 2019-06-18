@@ -260,18 +260,18 @@ void ConvertToSymbol(huffman_tree the_tree, char code[]) {
  * Input kalimat.
  * Menampilkan kalimat dalam bentuk code huffman.
  **/
-void ConvertToHuffmanCode(ListCode the_codes, List sentence) {
+boolean ConvertToHuffmanCode(ListCode the_codes, List sentence) {
 	addr_code phelp;
 	addr_string pword;
 	int i, len;
-	boolean same;
+	boolean same = true;
 	
 	pword = sentence.First;
 	
-	while(pword != NULL) {
+	while(pword != NULL && same) {
 		len = strlen(pword->info);
-		
-		for(i = 0; i < len; i++) {
+		i = 0;
+		while(i < len && same) {
 			phelp = the_codes.First;
 			same = false;
 			while(phelp != NULL && !same) {
@@ -284,13 +284,14 @@ void ConvertToHuffmanCode(ListCode the_codes, List sentence) {
 			
 			if(same) {
 				PrintInfoInt(phelp->code);
-			} else {
-				printf("no symbol");
+				i++;
 			}
 		}
 		
 		pword = pword->next;
 	}
+	
+	return same;
 }
 
 /*************** Destructor ***************/
@@ -307,20 +308,9 @@ addr_huffman Dealloc(addr_huffman *N) {
 /*************** Display ***************/
 
 /**
- * Menampilkan sebuah jarak sesuai dengan level
- * tertentu
-**/
-void PrintTab(int level) {
-	int i;
-	for(i = 0; i < level; i++) {
-		printf("  ");
-	}
-}
-
-/**
  * Menampilkan pohon Huffman yang sudah terbentuk
 **/
-void PrintTreeCoba(addr_huffman T) {
+void PrintTree(addr_huffman T) {
 	addr_huffman phelp = T;
 	int level;
 	
@@ -328,8 +318,8 @@ void PrintTreeCoba(addr_huffman T) {
 		level = Level(phelp);
 		Indent(level);
 		printf("[ %c ] %g ", phelp->symbol, phelp->probability);
-		PrintTreeCoba(phelp->left_c);
-		PrintTreeCoba(phelp->right_c);
+		PrintTree(phelp->left_c);
+		PrintTree(phelp->right_c);
 	}
 }
 
@@ -355,7 +345,37 @@ void Indent(int n) {
 	
 	printf("\n");
 	while(i < n) {
-		printf("   ");
+		printf("\t");
 		i++;
 	}
 }
+
+/**
+ * Menampilkan menu.
+ */
+int Menu() {
+	int choice;
+	
+	printf("[\t\tM E N U\t\t]\n\n");
+	printf("1 - Init Huffman Tree\n");
+	printf("2 - Print Huffman Tree\n");
+	printf("3 - List of codes\n");
+	printf("4 - Convert new sentence from exist Huffman Tree\n");
+	printf("5 - Convert code to symbol\n");
+	printf("6 - Delete Huffman Tree\n");
+	printf("7 - Exit\n");
+	printf("Choose a number : ");
+	scanf("%d", &choice);
+	return choice;
+ }
+ 
+ int InitMenu() {
+	int choice;
+ 	
+	printf("[\t\tI N I T  M E N U\t\t]\n\n");
+	printf("1 - Init by sentence\n");
+	printf("2 - Init by word and its probability\n");
+	printf("3 - Back\n");
+	printf("Choose a number : ");
+	scanf("%d", &choice);
+ }

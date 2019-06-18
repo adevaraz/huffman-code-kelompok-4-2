@@ -43,7 +43,6 @@ boolean IsFirstElmt(sorted_list L, addr_sorted node);
 struct huffmanNode* GetFirstElmt(sorted_list L);
 void GenerateSortedList(List string_l, sorted_list *sorted_l, double total);
 double CountProbability(double freq, double count);
-void ClearArray(char *arr);
 void CopyElmt(addr_sorted *dest, addr_sorted source);
 
 /*************** Destructor ***************/
