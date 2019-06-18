@@ -148,22 +148,6 @@ huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
 }
 
 /**
- * Input berupa code huffman.
- * Mengembalikan simbol/karakter yang telah di konversi dari code huffman.
- **/
-infotype ConvertToSymbol(huffman_tree the_tree, char code[]) {
-	
-}
-
-/**
- * Input kalimat.
- * Mengembalikan kalimat dalam bentuk code huffman.
- **/
-void ConvertToHuffmanCode() {
-	
-}
-
-/**
  * Menyimpan code huffman di sebuah list.
  * Huffman tree dimungkinkan tidak kosong.
  * Terbentuk sebuah list yang berisi simbol dan code huffmannya.
@@ -196,17 +180,11 @@ ListCode CreateHuffmanCode(huffman_tree the_tree) {
 				}
 				
 				checked_node = phelp->parent;
-				formal = false;
-//				if(phelp->parent != NULL) {
-//					/* Go to right child */
-//					checked_node = phelp->parent->right_c;
-//				} else {
-//					checked_node = phelp->parent;
-//				}
 			} else {
 				checked_node = checked_node->parent;
-				formal = false;
 			}
+			
+			formal = false;
 		} else {
 			if(checked_node->left_c != NULL && formal) {
 				checked_node = checked_node->left_c;
@@ -254,19 +232,66 @@ IntList GenerateCode(addr_huffman node) {
 	return number_list;
 }
 
-//addr_huffman SearchLeaf(addr_huffman node) {
-//	if(node == NULL) {
-//		return;
-//	} else {
-//		if(IsLeaf(node)) {
-//			return node;
-//		} else {
-//			/* Go to its children */
-//			SearchLeaf(node->left_c);
-//			SearchLeaf(node->right_c);
-//		}
-//	}
-//}
+/**
+ * Input berupa code huffman.
+ * Menampilkan simbol/karakter yang telah di konversi dari code huffman.
+ **/
+void ConvertToSymbol(huffman_tree the_tree, char code[]) {
+	addr_huffman phelp;
+	int i;
+	
+	phelp = the_tree.tree;
+	while(phelp != NULL && i < strlen(code)) {
+		if(code[i] == '0') {
+			phelp = phelp->left_c;	
+		} else {
+			phelp = phelp->right_c;
+		}
+
+		if (IsLeaf(phelp)) {
+			printf("%c", phelp->symbol);
+			phelp = the_tree.tree;	
+		}
+		i++;
+	}
+}
+
+/**
+ * Input kalimat.
+ * Menampilkan kalimat dalam bentuk code huffman.
+ **/
+void ConvertToHuffmanCode(ListCode the_codes, List sentence) {
+	addr_code phelp;
+	addr_string pword;
+	int i, len;
+	boolean same;
+	
+	pword = sentence.First;
+	
+	while(pword != NULL) {
+		len = strlen(pword->info);
+		
+		for(i = 0; i < len; i++) {
+			phelp = the_codes.First;
+			same = false;
+			while(phelp != NULL && !same) {
+				if(phelp->symbol == pword->info[i]) {
+					same = true;
+				} else {
+					phelp = phelp->next;
+				}
+			}
+			
+			if(same) {
+				PrintInfoInt(phelp->code);
+			} else {
+				printf("no symbol");
+			}
+		}
+		
+		pword = pword->next;
+	}
+}
 
 /*************** Destructor ***************/
 /**
@@ -295,38 +320,6 @@ void PrintTab(int level) {
 /**
  * Menampilkan pohon Huffman yang sudah terbentuk
 **/
-void PrintTree(huffman_tree T) {
-	addr_huffman psearch;
-	bool formal;
-	int level;
-	
-	psearch = T.tree;
-	formal = true;
-	level = 0;
-	printf("%c", psearch->symbol);
-	while(psearch != NULL) {
-		if(psearch->left_c != NULL && formal) {
-			psearch = psearch->left_c;
-			level = level + 1;
-			PrintTab(level);
-			printf("%c", psearch->symbol);
-			formal = true;
-		} else {
-			if(psearch->right_c != NULL) {
-				psearch = psearch->right_c;
-				level = level + 1;
-				PrintTab(level);
-				printf("%c", psearch->symbol);
-				formal = true;
-			} else {
-				psearch = psearch->parent;
-				level = level - 1;
-				formal = false;
-			}
-		}
-	}
-}
-
 void PrintTreeCoba(addr_huffman T) {
 	addr_huffman phelp = T;
 	int level;
@@ -340,6 +333,9 @@ void PrintTreeCoba(addr_huffman T) {
 	}
 }
 
+/**
+ * Mencari level dari suatu node
+ **/
 int Level(addr_huffman node) {
 	int level = 0;
 	
@@ -351,6 +347,9 @@ int Level(addr_huffman node) {
 	return level;
 }
 
+/**
+ * Menampilkan space sesuai dengan level
+ */
 void Indent(int n) {
 	int i = 0;
 	

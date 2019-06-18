@@ -311,13 +311,11 @@ void PrintInfoInt(IntList L)
   if( P==Nil) { 
   	  printf("IntList Kosong !\n");
   } else { /* IntList tidak kosong */
-	    printf("[ ");
 	    do { 
-	 	  printf("%d ",CodeInfo(P));
+	 	  printf("%d", CodeInfo(P));
 		  P=Next(P);
 		  i++;
 	    } while(P!=Nil); 
-	    printf("]");
 	 }
   printf("\n");
 }
