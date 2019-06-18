@@ -356,7 +356,7 @@ void Indent(int n) {
 int Menu() {
 	int choice;
 	
-	printf("[\t\tM E N U\t\t]\n\n");
+	printf("[  M E N U  ]\n\n");
 	printf("1 - Init Huffman Tree\n");
 	printf("2 - Print Huffman Tree\n");
 	printf("3 - List of codes\n");
@@ -372,10 +372,9 @@ int Menu() {
  int InitMenu() {
 	int choice;
  	
-	printf("[\t\tI N I T  M E N U\t\t]\n\n");
+	printf("[  I N I T  M E N U  ]\n\n");
 	printf("1 - Init by sentence\n");
 	printf("2 - Init by word and its probability\n");
-	printf("3 - Back\n");
 	printf("Choose a number : ");
 	scanf("%d", &choice);
  }

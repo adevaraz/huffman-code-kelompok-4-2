@@ -14,9 +14,9 @@
 #define CONVERT_CODE 5
 #define DELETE_TREE 6
 #define EXIT 7
+
 #define INIT_BY_SENTENCE 1
 #define INIT_BY_W_P 2
-#define BACK 3
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
@@ -26,10 +26,12 @@ int main() {
 	int choice = 0;
 	int init_choice = 0;
 	boolean end = false;
-	sorted_list node_list;
-	huffman_tree the_tree;
+	sorted_list node_list = CreateEmptyList();
+	huffman_tree the_tree = CreateEmptyTree();
 	List sentence;
 	ListCode codes;
+	
+	CreateListCode(&codes);
 	
 	while(!end) {
 		system("cls");
@@ -41,67 +43,75 @@ int main() {
 				init_choice = InitMenu();
 			
 				switch(init_choice) {
-					case INIT_BY_SENTENCE :
+					case 1 :
 						InitStr(&sentence, &spaces, &len);
 						GenerateSortedList(sentence, &node_list, (double) (len - spaces));
+						the_tree = GenerateHuffmanTree(&node_list);
 						codes = CreateHuffmanCode(the_tree);
 						printf("\n");
 						ConvertToHuffmanCode(codes, sentence);
 						break;
 					
-					case INIT_BY_W_P :
+					case 2 :
 						
 						break;
-					
-					case BACK :
-						break;
-			}
+				}
+				
+				init_choice = 0;
 			break;
 		
 			case PRINT_TREE :
 				system("cls");
 				
-				printf("[\t\tH U F F M A N  T R E E\t\t]\n\n");
-				PrintTree(the_tree.tree);
-				getch();
+				printf("[  H U F F M A N  T R E E  ]\n\n");
+				if(the_tree.tree != NULL) {
+					PrintTree(the_tree.tree);	
+				} else {
+					printf("The Huffman Tree is empty!\n");
+				}
 				break;
 			
 			case CODE_LIST :
 				system("cls");
 				
-				printf("[\t\tT H E  C O D E S\t\t]\n\n");
+				printf("[  T H E  C O D E S  ]\n\n");
 				PrintInfoCode(codes);
-				getch();
 				break;
 				
 			case CONVERT_SENTENCE :
 				system("cls");
-				DelAll(&sentence);
+				if(the_tree.tree != NULL) {
+					DelAll(&sentence);
 				
-				printf("[\t\tC O N V E R T  S E N T E N C E\t\t]\n\n");
+					printf("[  C O N V E R T  S E N T E N C E  ]\n\n");
 				
-				printf("Conversion Result : ");
-				getch();
+					printf("Conversion Result : ");
+				} else {
+					printf("The Huffman Tree is empty!\n");
+				}
 				break;
 				
 			case CONVERT_CODE :
 				system("cls");
 				
-				printf("[\t\tC O N V E R T  C O D E\t\t]\n\n");
+				printf("[  C O N V E R T  C O D E  ]\n\n");
 				printf("Available codes : \n");
 				PrintInfoCode(codes);
 				
 				printf("Conversion Result : ");
-				getch();
 				break;
 			
 			case DELETE_TREE :
 				system("cls");
 				
-				printf("Deleting..");
-				getch();
-				printf("The tree is empty\n");
-				getch();
+				if(the_tree.tree != NULL) {
+					printf("Deleting..");
+					getch();
+					printf("The Huffman Tree is now empty\n");	
+				} else {
+					printf("The Huffman Tree is empty\n");
+				}
+				
 				break;
 			
 			case EXIT : 
@@ -109,27 +119,32 @@ int main() {
 				printf("Exiting system..\n");
 				end = true;
 				break;
+				
+			default :
+				printf("\nPlease enter the right number!\n");
+				break;
 		}
+		getch();
+		choice = 0;
 	}
 	
-	printf("Spaces : %d\n", spaces);
-	printf("Str List : ");
-	PrintInfo(sentence);
-	
-	
-	
-	printf("\nSorted List :\n");
-	PrintSorted(node_list);
-	
-	the_tree = GenerateHuffmanTree(&node_list);
-	
-	
-	
-	CreateListCode(&codes);
-	printf("\n\nCodes : ");
-	printf("\n");
-	
-	PrintInfoCode(codes);
+//	printf("Spaces : %d\n", spaces);
+//	printf("Str List : ");
+//	PrintInfo(sentence);
+//	
+//	
+//	
+//	printf("\nSorted List :\n");
+//	PrintSorted(node_list);
+//	
+//	
+//	
+//	
+//	CreateListCode(&codes);
+//	printf("\n\nCodes : ");
+//	printf("\n");
+//	
+//	PrintInfoCode(codes);
 	
 	printf("\nyahooo!");
 	getch();
