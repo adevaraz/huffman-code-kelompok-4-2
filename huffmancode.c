@@ -236,24 +236,39 @@ IntList GenerateCode(addr_huffman node) {
  * Input berupa code huffman.
  * Menampilkan simbol/karakter yang telah di konversi dari code huffman.
  **/
-void ConvertToSymbol(huffman_tree the_tree, char code[]) {
+bool ConvertToSymbol(huffman_tree the_tree, char code[], char* output) {
 	addr_huffman phelp;
-	int i;
-	
+	bool exist;
+	int i, j;
+	j = 0;
+	i = 0;
+	exist = true;
 	phelp = the_tree.tree;
-	while(phelp != NULL && i < strlen(code)) {
-		if(code[i] == '0') {
-			phelp = phelp->left_c;	
-		} else {
-			phelp = phelp->right_c;
+	while(i < strlen(code)) {
+		while(phelp != NULL) {
+			if(code[i] == '0' || code [i] == '1') {
+				if(code[i] == '0') {
+					phelp = phelp->left_c;	
+				} else {
+					phelp = phelp->right_c;
+				}
+				if (IsLeaf(phelp)) {
+					output[j] = phelp->symbol;
+					//printf("%c", phelp->symbol);
+					phelp = NULL;
+					j++;	
+				} 	
+//				if(!IsLeaf(phelp) && i == strlen(code)) {
+//					exist = false;
+//				}			
+			} else {
+				exist = false;
+			}
+			i++;
 		}
-
-		if (IsLeaf(phelp)) {
-			printf("%c", phelp->symbol);
-			phelp = the_tree.tree;	
-		}
-		i++;
+		phelp = the_tree.tree;
 	}
+	return exist;
 }
 
 /**
