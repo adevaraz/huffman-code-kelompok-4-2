@@ -255,6 +255,12 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 	}
 }
 
+void InitFromProb(sorted_list *L, infotype info, double prob) {
+	addr_huffman n_node;
+	n_node = Allocate(info, prob);
+	InsertSorted(L, n_node);
+}
+
 void PrintSorted(sorted_list the_list) {
 	addr_sorted phelp = the_list.front;
 	
