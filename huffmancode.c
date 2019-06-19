@@ -269,12 +269,14 @@ bool ConvertToSymbol(huffman_tree the_tree, char code[], char* output) {
  * Input kalimat.
  * Menampilkan kalimat dalam bentuk code huffman.
  **/
-boolean ConvertToHuffmanCode(ListCode the_codes, List sentence) {
+boolean ConvertToHuffmanCode(ListCode the_codes, List sentence, IntList *output) {
 	addr_code phelp;
+	addr_int pinsert;
 	addr_string pword;
 	int i, len;
 	boolean same = true;
 	
+	CreateListInt(output);
 	pword = sentence.First;
 	
 	while(pword != NULL && same) {
@@ -292,7 +294,14 @@ boolean ConvertToHuffmanCode(ListCode the_codes, List sentence) {
 			}
 			
 			if(same) {
-				PrintInfoInt(phelp->code);
+				pinsert = phelp->code.First;
+				
+				while(pinsert != NULL) {
+					InsVLastInt(output, pinsert->info);
+					pinsert = pinsert->next;
+				}
+				
+				free(pinsert);
 				i++;
 			}
 		}
