@@ -26,6 +26,7 @@
 
 int main() {
 	boolean end = false;
+	boolean exist;
 	int choice = 0;
 	int init_choice = 0;
 	
@@ -46,14 +47,14 @@ int main() {
 	while(!end) {
 		ClearArray(to_be_converted);
 		system("cls");
-		choice = Menu();
-	
+		Menu();
+		scanf(" %d", &choice);
 		switch(choice) {
 			case INIT_TREE :
 				system("cls");
 				if(the_tree.tree == NULL) {
-					init_choice = InitMenu();
-			
+					InitMenu();
+					scanf(" %d", &init_choice);
 					switch(init_choice) {
 						case INIT_BY_SENTENCE :
 							system("cls");
@@ -66,14 +67,22 @@ int main() {
 							
 							codes = CreateHuffmanCode(the_tree);
 							
-							printf("\n");
+							printf("\nThe Codes :\n");
+							PrintInfoCode(codes);
 							printf("Conversion Result : ");
 							ConvertToHuffmanCode(codes, sentence);
 							break;
 					
 						case INIT_BY_C_P :
 							printf("[  I N I T  B Y  C H A R A C T E R  ]\n\n");
-								InitFromProb(&node_list);
+							InitFromProb(&node_list);
+							
+							the_tree = GenerateHuffmanTree(&node_list);
+							
+							codes = CreateHuffmanCode(the_tree);
+							
+							printf("\nThe Codes :\n");
+							PrintInfoCode(codes);	
 							break;
 						
 						case BACK :
@@ -128,11 +137,12 @@ int main() {
 				PrintInfoCode(codes);
 				
 				printf("Enter the codes : ");
-				scanf("%s", to_be_converted);
+				scanf(" %s", to_be_converted);
 				
-				switch(ConvertToSymbol(the_tree, to_be_converted, converted_code)) {
+				exist = ConvertToSymbol(the_tree, to_be_converted, &converted_code);
+				switch(exist) {
 					case CODE_EXIST :
-						printf("Conversion Result : ");
+						printf("\nConversion Result : ");
 						printf("%s", &converted_code);
 						break;
 					

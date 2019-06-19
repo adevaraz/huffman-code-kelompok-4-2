@@ -371,9 +371,7 @@ void Indent(int n) {
 /**
  * Menampilkan menu.
  */
-int Menu() {
-	int choice;
-	
+void Menu() {
 	printf("[  M E N U  ]\n\n");
 	printf("1 - Init Huffman Tree\n");
 	printf("2 - Print Huffman Tree\n");
@@ -383,19 +381,12 @@ int Menu() {
 	printf("6 - Delete Huffman Tree\n");
 	printf("7 - Exit\n");
 	printf("Choose a number : ");
-	scanf(" %d", &choice);
-	return choice;
  }
  
- int InitMenu() {
-	int choice;
- 	
+void InitMenu() {
 	printf("[  I N I T  M E N U  ]\n\n");
 	printf("1 - Init by sentence\n");
 	printf("2 - Init by word and its probability\n");
 	printf("3 - Back\n");
 	printf("Choose a number : ");
-	scanf(" %d", &choice);
-	
-	return choice;
  }
