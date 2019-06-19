@@ -252,13 +252,9 @@ bool ConvertToSymbol(huffman_tree the_tree, char code[], char* output) {
 				}
 				if (IsLeaf(phelp)) {
 					output[j] = phelp->symbol;
-					//printf("%c", phelp->symbol);
 					phelp = NULL;
 					j++;	
-				} 	
-//				if(!IsLeaf(phelp) && i == strlen(code)) {
-//					exist = false;
-//				}			
+				}		
 			} else {
 				exist = false;
 			}
@@ -305,6 +301,15 @@ boolean ConvertToHuffmanCode(ListCode the_codes, List sentence) {
 	}
 	
 	return same;
+}
+
+void DeleteHuffmanTree(addr_huffman the_node) {
+	
+	if(the_node != NULL) {
+		DeleteHuffmanTree(the_node->left_c);
+		DeleteHuffmanTree(the_node->right_c);
+		Dealloc(&the_node);
+	}
 }
 
 /*************** Destructor ***************/
@@ -378,7 +383,7 @@ int Menu() {
 	printf("6 - Delete Huffman Tree\n");
 	printf("7 - Exit\n");
 	printf("Choose a number : ");
-	scanf("%d", &choice);
+	scanf(" %d", &choice);
 	return choice;
  }
  
@@ -390,7 +395,7 @@ int Menu() {
 	printf("2 - Init by word and its probability\n");
 	printf("3 - Back\n");
 	printf("Choose a number : ");
-	scanf("%d", &choice);
+	scanf(" %d", &choice);
 	
 	return choice;
  }

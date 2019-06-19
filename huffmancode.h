@@ -53,6 +53,7 @@ void InsertLeft(addr_huffman parent, addr_huffman child);
 huffman_tree GenerateHuffmanTree(sorted_list *nodes_list);
 IntList GenerateCode(addr_huffman node);
 ListCode CreateHuffmanCode(huffman_tree the_tree);
+void DeleteHuffmanTree(addr_huffman the_node);
 
 /*************** Destructor ***************/
 addr_huffman Dealloc(addr_huffman *N);
