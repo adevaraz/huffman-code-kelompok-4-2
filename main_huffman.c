@@ -17,6 +17,7 @@
 
 #define INIT_BY_SENTENCE 1
 #define INIT_BY_W_P 2
+#define BACK 3
 
 #define CODE_EXIST true
 #define CODE_NOT_EXIST false
@@ -24,20 +25,19 @@
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main() {
-	int len = 0;
-	int spaces = 0;
+	boolean end = false;
 	int choice = 0;
 	int init_choice = 0;
-	boolean end = false;
+	
+	int len = 0;
+	int spaces = 0;
+	
 	sorted_list node_list = CreateEmptyList();
 	huffman_tree the_tree = CreateEmptyTree();
-	char text[100] = { "ananda bayu" }, temp[26];
-	char *converted_code;
-	int i, j, len, spaces = 0;
-	sorted_list node_list;
-	huffman_tree the_tree;
 	List sentence;
 	ListCode codes;
+	
+	char *converted_code;
 	
 	CreateListCode(&codes);
 	
@@ -47,29 +47,36 @@ int main() {
 	
 		switch(choice) {
 			case INIT_TREE :
-				system("cls");
-				init_choice = InitMenu();
+				if(the_tree.tree == NULL) {
+					system("cls");
+					init_choice = InitMenu();
 			
-				switch(init_choice) {
-					case 1 :
-						InitStr(&sentence, &spaces, &len);
-						GenerateSortedList(sentence, &node_list, (double) (len - spaces));
-						the_tree = GenerateHuffmanTree(&node_list);
-						codes = CreateHuffmanCode(the_tree);
-						printf("\n");
-						ConvertToHuffmanCode(codes, sentence);
-						break;
+					switch(init_choice) {
+						case INIT_BY_SENTENCE :
+							system("cls");
+							printf("[  I N I T  B Y  S E N T E N C E  ]\n\n");
+							InitStr(&sentence, &spaces, &len);
+							GenerateSortedList(sentence, &node_list, (double) (len - spaces));
+							the_tree = GenerateHuffmanTree(&node_list);
+							codes = CreateHuffmanCode(the_tree);
+							printf("\n");
+							printf("Conversion Result : ");
+							ConvertToHuffmanCode(codes, sentence);
+							break;
 					
-					case 2 :
+						case INIT_BY_W_P :
+							printf("[  I N I T  B Y  W O R D  ]\n\n");
+							break;
 						
-						break;
-						
-					case 3 :
-						
-						break;
-				}
+						case BACK :
+							printf("\nBack to menu...\n");
+							break;
+					}
 				
-				init_choice = 0;
+					init_choice = 0;
+				} else {
+					printf("\nThe tree has been initialized before..\n");
+				}
 			break;
 		
 			case PRINT_TREE :
@@ -137,7 +144,6 @@ int main() {
 				break;
 		}
 		getch();
-		choice = 0;
 	}
 	
 //	printf("Spaces : %d\n", spaces);
@@ -176,7 +182,7 @@ int main() {
 	the_tree = GenerateHuffmanTree(&node_list);
 	
 	printf("\nHuffman Tree : ");
-	PrintTreeCoba(the_tree.tree);
+	PrintTree(the_tree.tree);
 	
 	CreateListCode(&codes);
 	printf("\n\nCodes : ");

@@ -165,8 +165,6 @@ ListCode CreateHuffmanCode(huffman_tree the_tree) {
 		if(IsLeaf(checked_node)) {
 			code = GenerateCode(checked_node);
 			InsVLastCode(&the_code_list, checked_node->symbol, code);
-			PrintInfoCode(the_code_list);
-			printf("\n");
 			if(checked_node == checked_node->parent->right_c) {
 				phelp = checked_node;
 				
@@ -390,6 +388,9 @@ int Menu() {
 	printf("[  I N I T  M E N U  ]\n\n");
 	printf("1 - Init by sentence\n");
 	printf("2 - Init by word and its probability\n");
+	printf("3 - Back\n");
 	printf("Choose a number : ");
 	scanf("%d", &choice);
+	
+	return choice;
  }
