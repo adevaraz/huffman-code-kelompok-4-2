@@ -36,6 +36,18 @@ void CreateList(List *L)
    First(*L)=Nil;
 }
 
+/**
+ * Membuat array menjadi kosong seperti saat pertama
+ * di deklarasikan
+ **/
+void ClearArray(char *arr) {
+	int i, n;
+	n = strlen(arr);
+	for(i = n; i >= 0; i--){
+		arr[i] = '\0';
+	}
+}
+
 /* ********  MANAJEMEN MEMORY  ********* */
 addr_string Alokasi(infotype  X[])
 {/* Mengirimkan  addr_string  hasil alokasi    sebuah elemen */
@@ -50,6 +62,43 @@ addr_string Alokasi(infotype  X[])
 		Next(P)=Nil;
    }
    return P;	   
+}
+
+void InitStr(List *sentence, int *spaces, int *len) {
+	char text[100], temp[26];
+	int i, j;
+	boolean stop;
+	
+	CreateList(sentence);
+	
+	printf("Enter the sentence : ");
+	ClearArray(text);
+	scanf("%s", text);
+	
+	(*len) = strlen(text);
+	for(i = 0; i < (*len) ; i++) {
+		text[i] = tolower(text[i]);
+	}
+	
+	CreateList(sentence);
+	for(i = 0; i < (*len); i++) {
+		stop = false;
+		j = 0;
+		while(!stop) {
+			if(text[i] != ' ' && text[i] != '\0') {
+				temp[j] = text[i];
+				i++;
+				j++;
+			} else {
+				stop = true;
+				if(text[i] == ' ') {
+					spaces += 1;
+				}
+			}
+		}
+		InsVLast(sentence, temp);
+		ClearArray(temp);
+	}
 }
 
 void Dealokasi(addr_string *P)

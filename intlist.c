@@ -317,7 +317,6 @@ void PrintInfoInt(IntList L)
 		  i++;
 	    } while(P!=Nil); 
 	 }
-  printf("\n");
 }
 
 int NbElmtInt(IntList L)

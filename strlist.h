@@ -52,6 +52,8 @@ void CreateList(List *L);
 /* I.S  :  Sembarang    		*/
 /* F.S  :  Terbentuk  List kosong  	*/
 
+void ClearArray(char *arr);
+
 /* Manajeman  memory  			*/
 addr_string Alokasi(infotype  X[]);
  /* Mengirimkan  addr_string  hasil alokasi    sebuah elemen */
