@@ -74,7 +74,7 @@ int main() {
 	codes = CreateHuffmanCode(the_tree);
 	PrintInfoCode(codes);
 	
-	switch(ConvertToSymbol(the_tree, "00010111", &converted_code)) {
+	switch(ConvertToSymbol(the_tree, "00010111101", &converted_code)) {
 		case CODE_EXIST :
 			printf("%s", &converted_code);
 			break;
