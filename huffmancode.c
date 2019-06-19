@@ -245,7 +245,7 @@ bool ConvertToSymbol(huffman_tree the_tree, char code[], char* output) {
 	exist = true;
 	phelp = the_tree.tree;
 	while(i < strlen(code)) {
-		while(phelp != NULL) {
+		while(phelp != NULL && exist) {
 			if(code[i] == '0' || code [i] == '1') {
 				if(code[i] == '0') {
 					phelp = phelp->left_c;	
