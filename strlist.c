@@ -73,7 +73,7 @@ void InitStr(List *sentence, int *spaces, int *len) {
 	
 	printf("Enter the sentence : ");
 	ClearArray(text);
-	scanf("%s", text);
+	scanf(" %s", text);
 	
 	(*len) = strlen(text);
 	for(i = 0; i < (*len) ; i++) {
@@ -404,7 +404,7 @@ void DelAll(List *L)
    infotype X;
    while(!ListEmpty(*L)) {
 	  DelVFirst(&(*L),&X);
-   } /* kosong */
+   }
 }
 
 void InversList(List *L)

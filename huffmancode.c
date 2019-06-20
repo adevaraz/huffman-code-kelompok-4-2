@@ -165,8 +165,6 @@ ListCode CreateHuffmanCode(huffman_tree the_tree) {
 		if(IsLeaf(checked_node)) {
 			code = GenerateCode(checked_node);
 			InsVLastCode(&the_code_list, checked_node->symbol, code);
-			PrintInfoCode(the_code_list);
-			printf("\n");
 			if(checked_node == checked_node->parent->right_c) {
 				phelp = checked_node;
 				
@@ -254,13 +252,9 @@ bool ConvertToSymbol(huffman_tree the_tree, char code[], char* output) {
 				}
 				if (IsLeaf(phelp)) {
 					output[j] = phelp->symbol;
-					//printf("%c", phelp->symbol);
 					phelp = NULL;
 					j++;	
-				} 	
-//				if(!IsLeaf(phelp) && i == strlen(code)) {
-//					exist = false;
-//				}			
+				}		
 			} else {
 				exist = false;
 			}
@@ -275,12 +269,14 @@ bool ConvertToSymbol(huffman_tree the_tree, char code[], char* output) {
  * Input kalimat.
  * Menampilkan kalimat dalam bentuk code huffman.
  **/
-boolean ConvertToHuffmanCode(ListCode the_codes, List sentence) {
+boolean ConvertToHuffmanCode(ListCode the_codes, List sentence, IntList *output) {
 	addr_code phelp;
+	addr_int pinsert;
 	addr_string pword;
 	int i, len;
 	boolean same = true;
 	
+	CreateListInt(output);
 	pword = sentence.First;
 	
 	while(pword != NULL && same) {
@@ -298,7 +294,14 @@ boolean ConvertToHuffmanCode(ListCode the_codes, List sentence) {
 			}
 			
 			if(same) {
-				PrintInfoInt(phelp->code);
+				pinsert = phelp->code.First;
+				
+				while(pinsert != NULL) {
+					InsVLastInt(output, pinsert->info);
+					pinsert = pinsert->next;
+				}
+				
+				free(pinsert);
 				i++;
 			}
 		}
@@ -307,6 +310,15 @@ boolean ConvertToHuffmanCode(ListCode the_codes, List sentence) {
 	}
 	
 	return same;
+}
+
+void DeleteHuffmanTree(addr_huffman the_node) {
+	
+	if(the_node != NULL) {
+		DeleteHuffmanTree(the_node->left_c);
+		DeleteHuffmanTree(the_node->right_c);
+		Dealloc(&the_node);
+	}
 }
 
 /*************** Destructor ***************/
@@ -368,9 +380,7 @@ void Indent(int n) {
 /**
  * Menampilkan menu.
  */
-int Menu() {
-	int choice;
-	
+void Menu() {
 	printf("[  M E N U  ]\n\n");
 	printf("1 - Init Huffman Tree\n");
 	printf("2 - Print Huffman Tree\n");
@@ -380,16 +390,12 @@ int Menu() {
 	printf("6 - Delete Huffman Tree\n");
 	printf("7 - Exit\n");
 	printf("Choose a number : ");
-	scanf("%d", &choice);
-	return choice;
  }
  
- int InitMenu() {
-	int choice;
- 	
+void InitMenu() {
 	printf("[  I N I T  M E N U  ]\n\n");
 	printf("1 - Init by sentence\n");
 	printf("2 - Init by word and its probability\n");
+	printf("3 - Back\n");
 	printf("Choose a number : ");
-	scanf("%d", &choice);
  }

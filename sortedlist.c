@@ -243,10 +243,23 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 	}
 }
 
-void InitFromProb(sorted_list *L, infotype info, double prob) {
+void InitFromProb(sorted_list *L) {
 	addr_huffman n_node;
-	n_node = Allocate(info, prob);
-	InsertSorted(L, n_node);
+	infotype info;
+	double prob;
+	int i, n;
+	printf("\nHow many character do you want to enter? : ");
+	scanf(" %d", &n);
+	
+	for(i = 0; i < n; i++) {
+		printf("\nEnter character [%d] : ", i+1);
+		scanf(" %c", &info);
+		printf("Enter probability [%d] : ", i+1);
+		scanf(" %lf", &prob);
+		n_node = Allocate(info, prob);
+		InsertSorted(&(*L), n_node);
+		n_node = NULL;
+	}
 }
 
 void PrintSorted(sorted_list the_list) {
