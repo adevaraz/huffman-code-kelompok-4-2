@@ -33,9 +33,7 @@ int main() {
 	huffman_tree the_tree = CreateEmptyTree();
 	char text[100] = { "ananda bayu" }, temp[26];
 	char *converted_code;
-	int i, j, len, spaces = 0;
-	sorted_list node_list;
-	huffman_tree the_tree;
+	int i, j;
 	List sentence;
 	ListCode codes;
 	
@@ -43,12 +41,16 @@ int main() {
 	
 	while(!end) {
 		system("cls");
-		choice = Menu();
+		Menu();
+		clearstdin();
+		scanf("%d", &choice);
 	
 		switch(choice) {
 			case INIT_TREE :
 				system("cls");
-				init_choice = InitMenu();
+				InitMenu();
+				clearstdin();
+				scanf("%d", &init_choice);
 			
 				switch(init_choice) {
 					case 1 :
@@ -67,7 +69,6 @@ int main() {
 				
 				init_choice = 0;
 			break;
-		
 			case PRINT_TREE :
 				system("cls");
 				
@@ -133,7 +134,6 @@ int main() {
 				break;
 		}
 		getch();
-		choice = 0;
 	}
 	
 //	printf("Spaces : %d\n", spaces);
@@ -172,7 +172,7 @@ int main() {
 	the_tree = GenerateHuffmanTree(&node_list);
 	
 	printf("\nHuffman Tree : ");
-	PrintTreeCoba(the_tree.tree);
+	//PrintTreeCoba(the_tree.tree);
 	
 	CreateListCode(&codes);
 	printf("\n\nCodes : ");
