@@ -48,6 +48,12 @@ void ClearArray(char *arr) {
 	}
 }
 
+ void clearstdin() {
+    /* taken from https://stackoverflow.com/a/7898516  */
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {}
+}
+
 /* ********  MANAJEMEN MEMORY  ********* */
 addr_string Alokasi(infotype  X[])
 {/* Mengirimkan  addr_string  hasil alokasi    sebuah elemen */
@@ -64,41 +70,52 @@ addr_string Alokasi(infotype  X[])
    return P;	   
 }
 
-void InitStr(List *sentence, int *spaces, int *len) {
+boolean InitStr(List *sentence, int *spaces, int *len) {
 	char text[100], temp[26];
 	int i, j;
-	boolean stop;
-	
+	boolean stop, unique;
 	CreateList(sentence);
-	
+	unique = false;
 	printf("Enter the sentence : ");
-	ClearArray(text);
-	scanf(" %s", text);
+	clearstdin();
+	gets(text);
 	
 	(*len) = strlen(text);
 	for(i = 0; i < (*len) ; i++) {
 		text[i] = tolower(text[i]);
 	}
 	
-	CreateList(sentence);
-	for(i = 0; i < (*len); i++) {
-		stop = false;
-		j = 0;
-		while(!stop) {
-			if(text[i] != ' ' && text[i] != '\0') {
-				temp[j] = text[i];
-				i++;
-				j++;
-			} else {
-				stop = true;
-				if(text[i] == ' ') {
-					spaces += 1;
+	i = 1;
+	while(i < (*len) && !unique) {
+		if(text[0] != text[i]) {
+			unique = true;
+		}
+		i++;
+	}
+	
+	if(unique) {
+		CreateList(sentence);
+		for(i = 0; i < (*len); i++) {
+			stop = false;
+			j = 0;
+			while(!stop) {
+				if(text[i] != ' ' && text[i] != '\0') {
+					temp[j] = text[i];
+					i++;
+					j++;
+				} else {
+					stop = true;
+					if(text[i] == ' ') {
+						spaces += 1;
+					}
 				}
 			}
+			InsVLast(sentence, temp);
+			ClearArray(temp);
 		}
-		InsVLast(sentence, temp);
-		ClearArray(temp);
 	}
+	
+	return unique;
 }
 
 void Dealokasi(addr_string *P)
@@ -350,16 +367,6 @@ void DelLast(List *L, addr_string *P)
 	}
 }
 
-
-void DelAfter(List *L, addr_string *Pdel, addr_string Prec)
-{  /* I.S   : List tidak kosong, Prec adalah anggota List	*/
-   /* F.S   : Menghapus Next(Prec) :				*/
-   /*         Pdel adalah alamat elemen List yang dihapus	*/
-	*Pdel=Next(Prec);
-	Next(Prec)=Next(*Pdel);
-}
-
-
 /* *************PROSES SEMUA ELEMEN ****************   */
 void PrintInfo(List L)
 { /* I.S   : List mungkin kosong 	*/
@@ -380,22 +387,6 @@ void PrintInfo(List L)
   printf("\n");
 }
 
-int NbElmt(List L)
-{ /* Mengirimkan banyaknya elemen list, mengirimkan Nol jika kosong */
-  addr_string P;
-  int NbEl=0;
-  if(ListEmpty(L)){
- 	return 0;
-  } else { /* Tidak kosong */
-	      P=First(L);
-       	      do {
-		    NbEl++;  
-		    P=Next(P);  
-	      }while(P!=Nil);
-  	}
-       return NbEl;		      
-}
-
 /******************************************************/
 /***   		PROSES TERHADAP LIST		    ***/
 /******************************************************/
@@ -405,240 +396,4 @@ void DelAll(List *L)
    while(!ListEmpty(*L)) {
 	  DelVFirst(&(*L),&X);
    }
-}
-
-void InversList(List *L)
-{ /* I.S   : sembarang  			*/
-  /* F.S   : elemen list  dibalik		*/
-  /*	   elemen terakhir menjadi elemen pertama, dst    */
-  /*	   Membalik elemen list, tanpa alokasi/dealokasi  */
-
-	/* Kamus */
-	List LTemp;
-	addr_string P;
-
-	/* Algoritma */
-	CreateList(&LTemp);
-	while(First(*L)!=Nil){
-		DelFirst(&(*L),&P);
-		Next(P)=Nil;
-		InsertFirst(&LTemp,P);
-	}
-	First(*L)=First(LTemp);
-}
-
-List FInversList(List L)
-{ /* mengirimkan list baru (LB), hasil invers dari L 	*/
-  /* dengan Alokasi 					*/
-	
-  /* List L tidak kosong ; min 1 elemen				*/	
-	
-  /* Kamus */	
-   List LB;
-   addr_string P,PB;
-   infotype X[MAX_WORD];
-  
-  /* Algoritma */ 
-	P=First(L);
-	CreateList(&LB);
-	do {
-		strcpy(X, Info(P));
-//	    X=Info(P);
-		PB=Alokasi(X);	
-		if(PB!=Nil) { /* berhasil alokasi */
-		    InsertLast(&LB,PB);
-		    P=Next(P);
-		} else { /* alokasi gagal */
-			    DelAll(&LB);
-			    First(LB)=Nil;
-			}
-	} while (P!= Nil);
-   return LB;	
-}
-
-void CopyList(List L1, List *L2)
-{ /* I.S   : L1 sembarang 				*/
-  /* F.S   : L1 dan L2 menunjuk ke list yang sama 	*/
-  /*         tidak ada alokasi/dealokasi 		*/
-   *L2=L1;	
-}
-
-
-List FCopyList(List L)
-{ /* Mengirimkan list yang merupakan salinan L  	*/
-}
-
-void CpAlokList(List Lin, List  *Lout)
-{ /* I.S   : Lin sembarang				    */
-  /* F.S   : Jika semua alokasi berhasil, maka Lout berisi  */
-  /*         hasil copy Lin. Jika ada alokasi yang  gagal   */
-  /*         maka Lout=Nil, dan semua elemen yang terlanjur */
-  /*	   dialokasi, didealokasi dengan melakukan alokasi  */
-  /*	   elemen. Lout adalah List kosong, jika ada alokasi*/
-  /*	   elemen yang gagal				    */
-    	
-	/* Kamus */
-	addr_string P,Pout;
-	infotype X[MAX_WORD];
-	
-	/* ALgoritma */
-	if(!ListEmpty(Lin)) { /* tidak kosong */
-	   
-		CreateList(&(*Lout));
-		P=First(Lin);
-		do 
-		{  
-		   strcpy(X, Info(P));
-//		   X=Info(P);
-		   Pout=Alokasi(X);
-		   if(Pout!=Nil) {  /* Alokasi berhasil */
-			InsertLast(&(*Lout),Pout);
-			P=Next(P);
-		   } else { /* Alokasi Pout gagal */
-			     DelAll(&(*Lout));
-			     First(*Lout)=Nil;
-			     break;  
-		          }
-	        } while	(Next(P) != Nil);   
-	}  
-}
-
-
-void konkat(List L1, List L2, List *L3)
-{ /* I.S   : L1 dan L2 sembarang			      */
-/* F.S   : L1 dan L2 tetap, L3 adalah hasil konkatenasi L1 &  */
-/*	   L2. Jika semua alokasi berhasil, maka L3  adalah   */
-/*	   hasil konkatenasi. Jika ada alokasi yang gagal,    */	
-/*	   semua elemen yang sudah dialokasi, di-dealokasi dan*/
-/*	   L3=Nil					      */
-/*		
-/*      L1, dan L2 tidak kosong */
-
-	/* Kamus */	
-	addr_string P1,P2,P3;
-    infotype X1[MAX_WORD],X2[MAX_WORD];
-	
-	/* Algoritma */
-	CreateList(&(*L3));
-	
-	/* Mengisi L3 dengan L1 */
-	P1=First(L1);
-	do 
-	{ /* L1 minimal 1 elemen */
-		strcpy(X1, Info(P1));
-//		X1=Info(P1);
-		P3=Alokasi(X1);
-		if(P3!=Nil) { /* Alokasi L3 berhasil */
-			InsertLast(&(*L3),P3);
-			P1=Next(P1);
-		} else { /* Alokasi gagal ; L3 di-dealokasi semua */
-			    DelAll(&(*L3));
-			    First(*L3)=Nil;
-			    break;
-			}
-	} while(Next(P1) != Nil);
-
-	/* Mengisi L3 dengan L2 */
-	P2=First(L2);
-	do
-	{ /* L2 minimal 1 elemen */
-		strcpy(X2, Info(P2));
-//		X2=Info(P2);
-		P3=Alokasi(X2);
-		if(P3!=Nil){
-			InsertLast(&(*L3),P3);
-			P2=Next(P2);
-		} else { /* Alokasi L3 gagal */
-			DelAll(&(*L3));
-			First(*L3)=Nil;
-			break;
-		}
-	}while (Next(P2)!=Nil);	
-}
-
-void konkat1(List *L1, List *L2, List *L3)
-{ /* I.S  : L1 dan L2 sembarang	; 			  */
-  /* F.S  : L1 dan L2 kosong,  L3 adalah hasil konkatenasi*/
-  /*	  L1 & L2, 					  */
-  /* Konkatenasi 2 buah list : L1 dan L2 menghasilkan L3  */
-  /* yang baru (dengan elemen list L1 dan L2 menjadi      */
-  /* List kosong. Tidak ada alokasi/dealokasi  		  */
-
-	
-  addr_string P1,P2,P3;
-  infotype X1[MAX_WORD], X2[MAX_WORD], X3[MAX_WORD];
-
-   CreateList(&(*L3));
-
-   while (First(*L1)!=Nil)  /* L1 belum kosong */
-   {   DelFirst(&(*L1),&P1);
-       InsertLast(&(*L3),P1);	   
-   } /* First(L1) == Nil ; Kosong */
-
-   while (First(*L2)!=Nil)  /* L2 belum kosong */
-   {   DelFirst(&(*L2),&P2);
-       InsertLast(&(*L3),P2);	   
-   } /* First (L2) == Nil ; kosong */
-	
-}
-
-void PecahList(List *L1, List *L2, List L)
-{ /* I.S  : L mungkin kosong  */
-  /* F.S  : Berdasarkan L, dibentuk 2 buah list L1 dan L2     */
-  /*        L tidak berubah. Untuk membentuk L1 dan L2 harus  */
-  /*	  alokasi. L1 berisi separuh elemen  L dan L2 berisi  */
-  /*	  sisa elemen L. Jika elemen L ganjil, maka separuh   */
-  /* 	  adalah NbElmt(L)div 2				      */
- 
-  /* Kamus */	
-  addr_string P,P1,P2;
-  infotype X1[MAX_WORD], X2[MAX_WORD];
-
-  int Nb,tengah;
-  
-  /* ALgoritma */
-  if(!ListEmpty(L)) {           /* tidak kosong ; minimal 1 elemen    */
-	  CreateList(&(*L1));
-	  
-	  if(NbElmt(L)==1) {  /* Hanya L1 yang dapat diisi 1 elm, dari L */
-		  First(*L1)=First(L);
-	  } else /* L1 beirisi > 1 elemen */
-	  	{  tengah = NbElmt(L) / 2;
-		   P=First(L);
-		   Nb=1;
-		   
-		   do /* mengisi L1 */
-		   {  
-		      strcpy(X1, Info(P));
-//		      X1=Info(P);
-		      P1=Alokasi(X1);
-	   	      if(P1!=Nil){
-			  InsertLast(&(*L1),P1);      
-			  P=Next(P);
-			  Nb++;
-		      } else { /* alokasi gagal; semua di-dealokasi */
-			  DelAll(&(*L1));
-			  First(*L1)=Nil;
-		    	  break;	  
-		      	}	
-		   } while(Nb<=tengah);
-
-		   do  /* Mengisi L2 */ 
-		   {  
-		      strcpy(X2, Info(P));
-//		      X2=Info(P);
-	       	      P2=Alokasi(X2);
-	   	      if(P2!=Nil) {
-			      InsertLast(&(*L2),P2);
-			      P=Next(P);
-		      } else {
-			      DelAll(&(*L2));
-			      First(*L2)=Nil;
-			      break;
-		      }		      
-		   } while(Next(P)!=Nil);
-		} /* End ; L > 1 elemen */	  
-  } else { /* First(L) == Nil */
-		printf("List tidak dapat dipecah ! Kosong !\n");
-	  }
 }

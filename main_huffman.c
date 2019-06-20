@@ -28,6 +28,7 @@
 int main() {
 	boolean end = false;
 	boolean exist;
+	boolean unique;
 	int choice = 0;
 	int init_choice = 0;
 	
@@ -50,37 +51,45 @@ int main() {
 		ClearArray(to_be_converted);
 		system("cls");
 		Menu();
-		scanf(" %d", &choice);
+		clearstdin();
+		scanf("%d", &choice);
+		
 		switch(choice) {
 			case INIT_TREE :
 				system("cls");
 				if(the_tree.tree == NULL) {
 					InitMenu();
-					scanf(" %d", &init_choice);
+					clearstdin();
+					scanf("%d", &init_choice);
+					
 					switch(init_choice) {
 						case INIT_BY_SENTENCE :
 							system("cls");
 							printf("[  I N I T  B Y  S E N T E N C E  ]\n\n");
-							InitStr(&sentence, &spaces, &len);
-							GenerateSortedList(sentence, &node_list, (double) (len - spaces));
-							
-							the_tree = GenerateHuffmanTree(&node_list);
-							
-							codes = CreateHuffmanCode(the_tree);
-							
-							printf("\nThe Codes :\n");
-							PrintInfoCode(codes);
-							exist  = ConvertToHuffmanCode(codes, sentence, &converted_sent);
-							
-							switch(exist) {
-								case CODE_EXIST :
-									printf("\nConversion Result : ");
-									PrintInfoInt(converted_sent);
-								break;
-					
-								case CODE_NOT_EXIST :
-									printf("\nThe sentence cannot be converted\n");
-								break;
+							unique = InitStr(&sentence, &spaces, &len);
+							if(unique) {
+								GenerateSortedList(sentence, &node_list, (double) (len - spaces));
+								
+								the_tree = GenerateHuffmanTree(&node_list);
+								
+								codes = CreateHuffmanCode(the_tree);
+								
+								printf("\nThe Codes :\n");
+								PrintInfoCode(codes);
+								exist  = ConvertToHuffmanCode(codes, sentence, &converted_sent);
+								
+								switch(exist) {
+									case CODE_EXIST :
+										printf("\nConversion Result : ");
+										PrintInfoInt(converted_sent);
+									break;
+						
+									case CODE_NOT_EXIST :
+										printf("\nThe sentence cannot be converted\n");
+									break;
+								}
+							} else {
+								printf("\nPlease enter different sentence");
 							}
 							break;
 					
@@ -157,12 +166,14 @@ int main() {
 			case CONVERT_CODE :
 				system("cls");
 				
+				converted_code = NULL;
 				printf("[  C O N V E R T  C O D E  ]\n\n");
 				printf("Available codes : \n");
 				PrintInfoCode(codes);
 				
 				printf("Enter the codes : ");
 				scanf(" %s", to_be_converted);
+				
 				
 				exist = ConvertToSymbol(the_tree, to_be_converted, &converted_code);
 				switch(exist) {
@@ -205,34 +216,6 @@ int main() {
 		getch();
 	}
 	
-	InitFromProb(&node_list, 'a', 0.18);
-	InitFromProb(&node_list, 'e', 0.04);
-	InitFromProb(&node_list, 'k', 0.3);
-	InitFromProb(&node_list, 'l', 0.03);
-	InitFromProb(&node_list, 'n', 0.2);
-	InitFromProb(&node_list, 'b', 0.1);
-	InitFromProb(&node_list, 'y', 0.15);
-	//GenerateSortedList(sentence, &node_list, (double) (len - spaces));
-	
-	printf("\nSorted List :\n");
-	PrintSorted(node_list);
-	
-	the_tree = GenerateHuffmanTree(&node_list);
-	
-	printf("\nHuffman Tree : ");
-	PrintTree(the_tree.tree);
-	
-	CreateListCode(&codes);
-	printf("\n\nCodes : ");
-	printf("\n");
-	codes = CreateHuffmanCode(the_tree);
-	PrintInfoCode(codes);
-	
-	printf("\n");
-//	ConvertToHuffmanCode(codes, sentence);
-	
-	printf("\nyahooo!");
-	getch();
 	return 0;
 }
 
