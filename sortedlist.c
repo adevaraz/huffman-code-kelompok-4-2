@@ -68,7 +68,7 @@ void InsertSorted(sorted_list *the_list, struct huffmanNode* value) {
 	if(the_list->front == NULL) {
 		the_list->front = n_node;
 	} else {
-		if(n_node->info->probability > the_list->front->info->probability) {
+		if(n_node->info->probability >= the_list->front->info->probability) {
 
 			while(prec_node->next != NULL) {
 					/* Loop for comparing new element to element list*/

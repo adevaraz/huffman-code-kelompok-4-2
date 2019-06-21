@@ -51,7 +51,7 @@ int main() {
 		ClearArray(to_be_converted);
 		system("cls");
 		Menu();
-		clearstdin();
+		fflush(stdin);
 		scanf("%d", &choice);
 		
 		switch(choice) {
@@ -193,6 +193,9 @@ int main() {
 				
 				if(the_tree.tree != NULL) {
 					DeleteHuffmanTree(the_tree.tree);
+					DeleteList(&node_list);
+					DelAll(&sentence);
+					DelAllCode(&codes);
 					the_tree.tree = NULL;
 					printf("Deleting..");
 					getch();

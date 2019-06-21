@@ -190,6 +190,7 @@ void DelVFirstCode(ListCode *L, symboltype *X)
   
   DelFirstCode(&(*L),&P); /* Hapus elemem pertama, blm didealokasi */
   *X=Symbol(P); 		/* info dari First disimpan di X       */
+  DelAllInt(&(L->First->code));
   DealokasiCode(&P);	  
 }
 
@@ -331,7 +332,7 @@ void DelAllCode(ListCode *L)
 { /* Delete semua elemen ListCode, dan alamat elemen di-dealokasi */
    symboltype X;
    while(!ListEmptyCode(*L)) {
-	  DelVFirst(&(*L),&X);
+	  DelVFirstCode(&(*L),&X);
    } /* kosong */
 }
 
