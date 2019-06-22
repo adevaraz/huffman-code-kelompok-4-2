@@ -106,7 +106,7 @@ boolean InitStr(List *sentence, int *spaces, int *len) {
 				} else {
 					stop = true;
 					if(text[i] == ' ') {
-						spaces += 1;
+						*spaces += 1;
 					}
 				}
 			}

@@ -72,7 +72,7 @@ int main() {
 							unique = InitStr(&sentence, &spaces, &len);
 							if(unique) {
 								printf("\nProcessing..\n");
-								GenerateSortedList(sentence, &node_list, (double) (len - spaces));
+								GenerateSortedList(sentence, &node_list, (double) len - spaces);
 
 								the_tree = GenerateHuffmanTree(&node_list);
 

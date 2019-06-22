@@ -210,6 +210,7 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 	psearch = sorted_l->front;
 	*sorted_l = CreateEmptyList();
 	prob = CountProbability(1, total);
+	//prob = 1;
 	psearch = (*sorted_l).front;
 	while(phelp != NULL) {
 		strcpy(word, phelp->info);
