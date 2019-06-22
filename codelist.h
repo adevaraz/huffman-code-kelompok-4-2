@@ -40,7 +40,7 @@ typedef struct  tElmtListCode   {
 /* Setiap elemen dengan addr_code P dapat diacu Symbol(P),Next(P)       */
 /* Elemen terakhir  ListCode :jika addr_codenya Last, maka next(Last)=Nil */
 
-typedef struct {
+typedef struct ListCode {
 	addr_code First;
 } ListCode;
 

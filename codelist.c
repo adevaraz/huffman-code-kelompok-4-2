@@ -20,6 +20,7 @@
 #include "intlist.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 /* ** Prototype   **  */
 /* ** Test ListCode Kosong **  */
@@ -245,7 +246,7 @@ void DelFirstCode(ListCode *L, addr_code *P)
   /* First elemen yang baru adalah suksesor elemen pertama yang lama */
           
       *P=First(*L);
-      First(*L)=Next(First(*L));
+      First(*L)=L->First->next;
       Next(*P)=Nil;
     
  }
@@ -315,14 +316,12 @@ void PrintInfoCode(ListCode L)
   	  printf("ListCode Kosong !\n");
   } else { /* ListCode tidak kosong */
 	    do { 
-	 	  printf("[ %c ] ",Symbol(P));
+	 	  printf("\n[ %c ] ",Symbol(P));
 	 	  PrintInfoInt(Code(P));
-	 	  printf("\n");
 		  P=Next(P);
 		  i++;
 	    } while(P!=Nil); 
 	 }
-  printf("\n");
 }
 
 /******************************************************/
@@ -330,10 +329,22 @@ void PrintInfoCode(ListCode L)
 /******************************************************/
 void DelAllCode(ListCode *L)
 { /* Delete semua elemen ListCode, dan alamat elemen di-dealokasi */
+	
+	assert(L != NULL);
    symboltype X;
-   while(!ListEmptyCode(*L)) {
-	  DelVFirstCode(&(*L),&X);
+   
+   while(L->First != NULL) {
+	  DelVFirstCode(L,&X);
    } /* kosong */
 }
 
-
+void DelCodeList(addr_code node) {
+	addr_code pdel = node;
+	addr_code phelp;
+	
+	while(pdel != NULL) {
+		free(pdel);
+		pdel = pdel->next;
+		pdel->next = NULL;
+	}
+}
