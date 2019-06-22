@@ -52,7 +52,7 @@ void CreateList(List *L);
 /* I.S  :  Sembarang    		*/
 /* F.S  :  Terbentuk  List kosong  	*/
 
-void ClearArray(char *arr);
+void ClearArray(char *arr, int max_i);
 
 /* Manajeman  memory  			*/
 addr_string Alokasi(infotype  X[]);

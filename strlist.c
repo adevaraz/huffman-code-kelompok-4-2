@@ -40,10 +40,9 @@ void CreateList(List *L)
  * Membuat array menjadi kosong seperti saat pertama
  * di deklarasikan
  **/
-void ClearArray(char *arr) {
-	int i, n;
-	n = strlen(arr);
-	for(i = n; i >= 0; i--){
+void ClearArray(char *arr, int max_i) {
+	int i;
+	for(i = max_i; i >= 0; i--){
 		arr[i] = '\0';
 	}
 }
@@ -76,7 +75,7 @@ boolean InitStr(List *sentence, int *spaces, int *len) {
 	boolean stop, unique;
 	CreateList(sentence);
 	unique = false;
-	printf("Enter the sentence : ");
+	printf("\nEnter the sentence : ");
 	clearstdin();
 	gets(text);
 	
@@ -94,6 +93,7 @@ boolean InitStr(List *sentence, int *spaces, int *len) {
 	}
 	
 	if(unique) {
+		ClearArray(temp, 26);
 		CreateList(sentence);
 		for(i = 0; i < (*len); i++) {
 			stop = false;
@@ -111,7 +111,6 @@ boolean InitStr(List *sentence, int *spaces, int *len) {
 				}
 			}
 			InsVLast(sentence, temp);
-			ClearArray(temp);
 		}
 	}
 	
