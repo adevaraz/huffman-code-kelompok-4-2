@@ -152,7 +152,7 @@ huffman_tree GenerateHuffmanTree(sorted_list *nodes_list) {
  * Huffman tree dimungkinkan tidak kosong.
  * Terbentuk sebuah list yang berisi simbol dan code huffmannya.
  **/
-ListCode CreateHuffmanCode(huffman_tree the_tree) {
+addr_code CreateHuffmanCode(huffman_tree the_tree) {
 	addr_huffman checked_node = the_tree.tree, phelp;
 	ListCode the_code_list;
 	IntList code;
@@ -195,7 +195,7 @@ ListCode CreateHuffmanCode(huffman_tree the_tree) {
 		}
 	}
 	
-	return the_code_list;
+	return the_code_list.First;
 }
 
 /**
@@ -344,7 +344,11 @@ void PrintTree(addr_huffman T) {
 	if(phelp != NULL) {
 		level = Level(phelp);
 		Indent(level);
-		printf("[ %c ] %g ", phelp->symbol, phelp->probability);
+		if(IsLeaf(T)) {
+			printf("[ %c ] %g ", phelp->symbol, phelp->probability);
+		} else {
+			printf("[ %g ]", phelp->probability);
+		}
 		PrintTree(phelp->left_c);
 		PrintTree(phelp->right_c);
 	}
@@ -381,21 +385,25 @@ void Indent(int n) {
  * Menampilkan menu.
  */
 void Menu() {
-	printf("[  M E N U  ]\n\n");
-	printf("1 - Init Huffman Tree\n");
-	printf("2 - Print Huffman Tree\n");
-	printf("3 - List of codes\n");
-	printf("4 - Convert new sentence from exist Huffman Tree\n");
+	printf("====================\n");
+	printf("MENU\n");
+	printf("====================\n\n");
+	printf("1 - Init huffman tree\n");
+	printf("2 - Print huffman tree\n");
+	printf("3 - Code list\n");
+	printf("4 - Convert sentence to huffman code\n");
 	printf("5 - Convert code to symbol\n");
-	printf("6 - Delete Huffman Tree\n");
+	printf("6 - Delete huffman tree\n");
 	printf("7 - Exit\n");
 	printf("Choose a number : ");
  }
  
 void InitMenu() {
-	printf("[  I N I T  M E N U  ]\n\n");
+	printf("====================\n");
+	printf("INIT MENU\n");
+	printf("====================\n\n");
 	printf("1 - Init by sentence\n");
-	printf("2 - Init by word and its probability\n");
+	printf("2 - Init by character and probability\n");
 	printf("3 - Back\n");
 	printf("Choose a number : ");
  }
