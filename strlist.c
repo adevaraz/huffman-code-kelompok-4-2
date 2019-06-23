@@ -75,8 +75,10 @@ boolean InitStr(List *sentence, int *spaces, int *len) {
 	boolean stop, unique;
 	CreateList(sentence);
 	unique = false;
+	ClearArray(text, 100);
 	printf("\nEnter the sentence : ");
 	clearstdin();
+	fflush(stdin);
 	gets(text);
 	
 	(*len) = strlen(text);
@@ -108,9 +110,10 @@ boolean InitStr(List *sentence, int *spaces, int *len) {
 					if(text[i] == ' ') {
 						*spaces += 1;
 					}
-				}
+				}				
 			}
 			InsVLast(sentence, temp);
+			ClearArray(temp, 26);
 		}
 	}
 	

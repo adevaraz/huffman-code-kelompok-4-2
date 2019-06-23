@@ -160,78 +160,11 @@ void PrintInfoInt(IntList L);
 /*         elemen list di-print					 */
 /*         Jika list kosong, hanya menuliskan "IntList Kosong"	 */
 
-int NbElmtInt(IntList L);
-/* Mengirimkan banyaknya elemen list, mengirimkan Nol jika kosong */
-
-type MaxInt(IntList L);
-/* Mengirimkan nilai info(P) yang maksimum */
-
-addr_int AdrMaxInt(IntList L);
-/* mengirimkan addr_int P, dengan info (P) yang maksimum */
-
-type MinInt(IntList L);
-/* mengirimkan nilai info(P), yang minumum    */
-
-addr_int AdrMinInt(IntList L);
-/* mengirimkan addr_int P, dengan info(P) yang minimum */
-
-float AverageInt(IntList L);
-/* mengirimkan nilai rata-rata info(P)	*/
-
 /******************************************************/
 /***   		PROSES TERHADAP LIST		    ***/
 /******************************************************/
 void DelAllInt(IntList *L);
 /* Delete semua elemen list, dan alamat elemen di-dealokasi */
 
-void InversListInt(IntList *L);
-/* I.S   : sembarang  			*/
-/* F.S   : elemen list  dibalik		*/
-/*	   elemen terakhir menjadi elemen pertama, dst    */
-/*	   Membalik elemen list, tanpa alokasi/dealokasi  */
-
-IntList FInversListInt(IntList L);
-/* mengirimkan list baru, hasil invers dari L 	*/
-
-void CopyListInt(IntList L1, IntList *L2);
-/* I.S   : L1 sembarang 				*/
-/* F.S   : L1 dan L2 menunjuk ke list yang sama 	*/
-/*         tidak ada alokasi/dealokasi yang elemen	*/
-
-IntList FCopyListInt(IntList L);
-/* Mengirimkan list yang merupakan salinan L  		*/
-
-void CpAlokListInt(IntList Lin, IntList  *Lout);
-/* I.S   : Lin sembarang				    */
-/* F.S   : Jika semua alokasi berhasil, maka Lout berisi    */
-/*         hasil copy Lin. Jika ada alokasi yang  gagal     */
-/*         maka Lout=Nil, dan semua elemen yang terlanjur   */
-/*	   dialokasi, didealokasi dengan melakukan alokasi  */
-/*	   elemen. Lout adalah IntList kosong, jika ada alokasi*/
-/*	   elemen yang gagal				    */
-
-void konkatInt(IntList L1, IntList L2, IntList *L3);
-/* I.S   : L1 dan L2 sembarang				      */
-/* F.S   : L1 dan L2 tetap, L3 adalah hasil konkatenasi L1 &  */
-/*	   L2. Jika semua alokasi berhasil, maka L3  adalah   */
-/*	   hasil konkatenasi. Jika ada alokasi yang gagal,    */	
-/*	   semua elemen yang sudah dialokasi, di-dealokasi dan*/
-/*	   L3=Nil					      */
-
-void konkat1Int(IntList *L1, IntList *L2, IntList *L3);
-/* I.S  : L1 dan L2 sembarang				*/
-/* F.S  : L1 dan L2 kosong,  L3 adalah hasil konkatenasi*/
-/*	  L1 & L2, 					*/
-/* Konkatenasi 2 buah list : L1 dan L2 menghasilkan L3  */
-/* yang baru (dengan elemen list L1 dan L2). Dan L1 dan */
-/* L2 menjadi IntList kosong. Tidak ada alokasi/dealokasi  */
-
-void PecahListInt(IntList *L1, IntList *L2, IntList L);
-/* I.S  : L mungkin kosong  */
-/* F.S  : Berdasarkan L, dibentuk 2 buah list L1 dan L2     */
-/*        L tidak berubah. Untuk membentuk L1 dan L2 harus  */
-/*	  alokasi. L1 berisi separuh elemen  L dan L2 berisi*/
-/*	  sisa elemen L. Jika elemen L ganjil, maka separuh */
-/* 	  adalah NbElmt(L)div 2				    */
 
 #endif

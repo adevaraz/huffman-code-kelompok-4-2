@@ -210,9 +210,9 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 	psearch = sorted_l->front;
 	*sorted_l = CreateEmptyList();
 	prob = CountProbability(1, total);
-	//prob = 1;
 	psearch = (*sorted_l).front;
 	while(phelp != NULL) {
+		ClearArray(word, MAX_WORD);
 		strcpy(word, phelp->info);
 		for(i = 0; i < strlen(word); i++) {
 			psearch = sorted_l->front;
@@ -234,16 +234,21 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 					}
 				}
 				if(!found) {
-					n_node = Allocate(word[i], prob);
+					n_node = Allocate(word[i], 0.0);
+					n_node->probability = prob;
 					InsertSorted(sorted_l, n_node);
+					
 				}				
 			}
 		}
 		phelp = phelp->next;
-		ClearArray(word, MAX_WORD);
 	}
 }
 
+/**
+ * Membuat list terurut melalui probabilitas
+ * yang sudah ada
+ **/
 int InitFromProb(sorted_list *L) {
 	addr_huffman n_node;
 	infotype info;
@@ -267,6 +272,9 @@ int InitFromProb(sorted_list *L) {
 	return n;
 }
 
+/**
+ * Menampilkan list yang terurut ke layar
+ **/
 void PrintSorted(sorted_list the_list) {
 	addr_sorted phelp = the_list.front;
 	
@@ -278,6 +286,9 @@ void PrintSorted(sorted_list the_list) {
 	}
 }
 
+/**
+ * Membuat salinan dari sebuah node
+ **/
 void CopyElmt(addr_sorted *dest, addr_sorted source) {
 	*dest = AllocateElmt(source->info);
 }

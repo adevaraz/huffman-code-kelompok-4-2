@@ -397,7 +397,10 @@ void Menu() {
 	printf("7 - Exit\n");
 	printf("Choose a number : ");
  }
- 
+
+/**
+ * Menampilkan submenu.
+ */ 
 void InitMenu() {
 	printf("====================\n");
 	printf("INIT MENU\n");

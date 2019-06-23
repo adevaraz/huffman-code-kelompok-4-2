@@ -73,7 +73,7 @@ int main() {
 							if(unique) {
 								printf("\nProcessing..\n");
 								GenerateSortedList(sentence, &node_list, (double) len - spaces);
-
+								
 								the_tree = GenerateHuffmanTree(&node_list);
 
 								codes.First = CreateHuffmanCode(the_tree);

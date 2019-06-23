@@ -66,25 +66,6 @@ void DealokasiCode(addr_code *P);
 /* F.S  :   P dikembalikan ke  sistem 	*/
 /*   	    Melakukan  dealokasi, pengembalian addr_code  P */
 
-
-/*   ** PENCARIAN SEBUAH ELEMEN ListCode **   */
-
-addr_code Search1Code(ListCode L, symboltype  X);
-/* Mencari apakah  ada elemen ListCode dengan info(P)=X      */
-/* Jika ada, mengirimkan  addr_code elemen tersebut	 */
-/* Jika  tidak ada, mengirimkan Nil 			 */
-
-boolean FSearchCode(ListCode L, addr_code P);
-/* Mencari apakah  ada elemen ListCode yang  beralamat   P   */
-/* Mengirimkan true jika ada, false jika tidak ada  	 */
-
-
-addr_code SearchPrecCode(ListCode L, symboltype X);
-/* mencari apakah ada elemen ListCode  yang beralamat P 	     */
-/* Mnegirimkan addr_code elemen sebelum elemen yang nilainya X */
-/* Mencari apakah ada elemen ListCode dengan info(P)=X	     */
-/* Jika ada, mengirimkan addr_code Prec, dengan Next(Prec)=P   */
-
 /* ** PRIMITIF BERDASARKAN NILAI ** */
 
 /* ** Penambahan Elemen ** */
@@ -165,63 +146,10 @@ void PrintInfoCode(ListCode L);
 /*         elemen ListCode di-print					 */
 /*         Jika ListCode kosong, hanya menuliskan "ListCode Kosong"	 */
 
-int NbElmtCode(ListCode L);
-/* Mengirimkan banyaknya elemen ListCode, mengirimkan Nol jika kosong */
-
 /******************************************************/
 /***   		PROSES TERHADAP ListCode		    ***/
 /******************************************************/
 void DelAllCode(ListCode *L);
 /* Delete semua elemen ListCode, dan alamat elemen di-dealokasi */
-
-void InversListCode(ListCode *L);
-/* I.S   : sembarang  			*/
-/* F.S   : elemen ListCode  dibalik		*/
-/*	   elemen terakhir menjadi elemen pertama, dst    */
-/*	   Membalik elemen ListCode, tanpa alokasi/dealokasi  */
-
-ListCode FInversListCode(ListCode L);
-/* mengirimkan ListCode baru, hasil invers dari L 	*/
-
-void CopyListCode(ListCode L1, ListCode *L2);
-/* I.S   : L1 sembarang 				*/
-/* F.S   : L1 dan L2 menunjuk ke ListCode yang sama 	*/
-/*         tidak ada alokasi/dealokasi yang elemen	*/
-
-ListCode FCopyListCode(ListCode L);
-/* Mengirimkan ListCode yang merupakan salinan L  		*/
-
-void CpAlokListCode(ListCode Lin, ListCode  *Lout);
-/* I.S   : Lin sembarang				    */
-/* F.S   : Jika semua alokasi berhasil, maka Lout berisi    */
-/*         hasil copy Lin. Jika ada alokasi yang  gagal     */
-/*         maka Lout=Nil, dan semua elemen yang terlanjur   */
-/*	   dialokasi, didealokasi dengan melakukan alokasi  */
-/*	   elemen. Lout adalah ListCode kosong, jika ada alokasi*/
-/*	   elemen yang gagal				    */
-
-void konkatCode(ListCode L1, ListCode L2, ListCode *L3);
-/* I.S   : L1 dan L2 sembarang				      */
-/* F.S   : L1 dan L2 tetap, L3 adalah hasil konkatenasi L1 &  */
-/*	   L2. Jika semua alokasi berhasil, maka L3  adalah   */
-/*	   hasil konkatenasi. Jika ada alokasi yang gagal,    */	
-/*	   semua elemen yang sudah dialokasi, di-dealokasi dan*/
-/*	   L3=Nil					      */
-
-void konkat1Code(ListCode *L1, ListCode *L2, ListCode *L3);
-/* I.S  : L1 dan L2 sembarang				*/
-/* F.S  : L1 dan L2 kosong,  L3 adalah hasil konkatenasi*/
-/*	  L1 & L2, 					*/
-/* Konkatenasi 2 buah ListCode : L1 dan L2 menghasilkan L3  */
-/* yang baru (dengan elemen ListCode L1 dan L2). Dan L1 dan */
-/* L2 menjadi ListCode kosong. Tidak ada alokasi/dealokasi  */
-
-void PecahListCode(ListCode *L1, ListCode *L2, ListCode L);
-/* I.S  : L mungkin kosong  */
-/* F.S  : Berdasarkan L, dibentuk 2 buah ListCode L1 dan L2     */
-/*        L tidak berubah. Untuk membentuk L1 dan L2 harus  */
-/*	  alokasi. L1 berisi separuh elemen  L dan L2 berisi*/
-/*	  sisa elemen L. Jika elemen L ganjil, maka separuh */
-/* 	  adalah NbElmt(L)div 2				    */
 
 #endif
