@@ -55,12 +55,13 @@ IntList GenerateCode(addr_huffman node);
 addr_code CreateHuffmanCode(huffman_tree the_tree);
 void DeleteHuffmanTree(addr_huffman the_node);
 
+/********** Compressing Operation **********/
+void CompressFile();
+
 /*************** Destructor ***************/
 addr_huffman Dealloc(addr_huffman *N);
 
 /***************  Display  ***************/
-void Menu();
-void InitMenu();
 void PrintTree(addr_huffman T);
 int Level(addr_huffman node);
 void Indent(int n);

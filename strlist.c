@@ -69,30 +69,27 @@ addr_string Alokasi(infotype  X[])
    return P;	   
 }
 
+/**
+ *
+ *
+ **/
 boolean InitStr(List *sentence, int *spaces, int *len) {
 	char text[100], temp[26];
 	int i, j;
 	boolean stop, unique;
-	CreateList(sentence);
 	unique = false;
-	ClearArray(text, 100);
+	
+	CreateList(sentence);
+	
 	printf("\nEnter the sentence : ");
 	clearstdin();
-	fflush(stdin);
 	gets(text);
 	
 	(*len) = strlen(text);
-	for(i = 0; i < (*len) ; i++) {
-		text[i] = tolower(text[i]);
-	}
 	
-	i = 1;
-	while(i < (*len) && !unique) {
-		if(text[0] != text[i]) {
-			unique = true;
-		}
-		i++;
-	}
+	ToLowerSentence(text);
+	
+	unique = IsUnique(text);
 	
 	if(unique) {
 		ClearArray(temp, 26);
@@ -108,16 +105,39 @@ boolean InitStr(List *sentence, int *spaces, int *len) {
 				} else {
 					stop = true;
 					if(text[i] == ' ') {
-						*spaces += 1;
+						spaces += 1;
 					}
-				}				
+				}
 			}
 			InsVLast(sentence, temp);
-			ClearArray(temp, 26);
 		}
 	}
 	
 	return unique;
+}
+
+boolean IsUnique(char text[]) {
+	int i = 1;
+	boolean unique = false;
+	int len = strlen(text);
+	
+	while(i < len && !unique) {
+		if(text[0] != text[i]) {
+			unique = true;
+		}
+		i++;
+	}
+	
+	return unique;
+}
+
+void ToLowerSentence(char *text) {
+	int i;
+	int len = strlen(text);
+	
+	for(i = 0; i < len ; i++) {
+		text[i] = tolower(text[i]);
+	}
 }
 
 void Dealokasi(addr_string *P)
