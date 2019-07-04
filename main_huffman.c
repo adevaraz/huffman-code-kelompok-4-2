@@ -29,12 +29,14 @@ int main() {
 	boolean end = false;
 	boolean exist;
 	boolean unique;
+	boolean number;
 	int choice = 0;
 	int init_choice = 0;
 
 	int len = 0;
 	int spaces = 0;
 	int n = 0;
+	int i = 0;
 
 	char to_be_converted[100];
 
@@ -195,8 +197,23 @@ int main() {
 				printf("Available codes : ");
 				PrintInfoCode(codes);
 
-				printf("\nEnter the codes : ");
-				scanf(" %s", to_be_converted);
+				do{
+					printf("\nEnter the codes : ");
+					fflush(stdin);
+					scanf(" %s", to_be_converted);
+					i = 0;
+					number = false;
+					while(i < strlen(to_be_converted) - 1) {
+						if(to_be_converted[i] == '0' || to_be_converted[i] == '1') {
+							number = true;
+						} else {
+							printf("\nThe codes must be 0 or 1\n");
+							break;
+						}
+						i++;
+					}					
+				}while(!number);
+
 
 				exist = ConvertToSymbol(the_tree, to_be_converted, &converted_code);
 				switch(exist) {

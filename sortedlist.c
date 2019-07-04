@@ -254,8 +254,18 @@ int InitFromProb(sorted_list *L) {
 	infotype info;
 	double prob;
 	int i, n;
-	printf("\nHow many character do you want to enter? : ");
-	scanf(" %d", &n);
+	
+	do{
+		printf("\nHow many character do you want to enter? : ");
+		fflush(stdin);
+		scanf(" %d", &n);
+		if(n < 1){
+			printf("\nPlease enter the right number.\n");
+		} else {
+			break;
+		}		
+	}while(true);
+
 	
 	if(n != 1) {
 		for(i = 0; i < n; i++) {
