@@ -17,6 +17,8 @@
 #include "stack.h"
 #include "intlist.h"
 
+#define COMPRESSED_FILE "compressed_file.txt"
+
 /*************** Constructor ***************/
 /**
  * Membuat tree baru yang kosong.
@@ -312,6 +314,10 @@ boolean ConvertToHuffmanCode(ListCode the_codes, List sentence, IntList *output)
 	return same;
 }
 
+/**
+ * Huffman tree tidak kosong.
+ * Menghapus huffman tree menjadi kosong.
+ **/
 void DeleteHuffmanTree(addr_huffman the_node) {
 	
 	if(the_node != NULL) {
@@ -321,7 +327,87 @@ void DeleteHuffmanTree(addr_huffman the_node) {
 	}
 }
 
+/********** Compressing Operation ***********/
+
+/**
+ * File masih dalam bentuk text.
+ * Hasil kompresi melalui Huffman Code disimpan ke file dalam bentuk simbol-simbol ASCII.
+ **/
+void CompressFile() {
+	char text[100], src_file[100], temp[26];
+	int space = 0;
+	int len = 0;
+	int i, j;
+	List list_txt;
+	boolean unique, exist;
+	FILE *fsrc;
+	huffman_tree the_tree;
+	sorted_list node_list;
+	ListCode the_codes;
+	IntList converted_text;
+	
+	the_tree = CreateEmptyTree();
+	node_list = CreateEmptyList();
+	ClearArray(text, 100);
+	ClearArray(src_file, 100);
+	CreateList(&list_txt);
+	
+	fsrc = fopen("cerpen_nz.txt", "r");
+	
+	if(fsrc != NULL) {
+		while(fread(&text, (sizeof(char)) * 100 , 1, fsrc) != 0) {
+			if(feof(fsrc)) {
+				break;
+			}
+		}
+		printf("Text : %s\n", text);
+			
+		ToLowerSentence(text);
+		unique = IsUnique(text);
+				
+		if(unique) {
+			printf("\nProcessing..\n");
+			
+			ClearArray(temp, 26);
+			len = strlen(text);
+			for(i = 0; i < len; i++) {
+				boolean stop = false;
+				j = 0;
+				while(!stop) {
+					if(text[i] != ' ' && text[i] != '\0') {
+						temp[j] = text[i];
+						i++;
+						j++;
+					} else {
+						stop = true;
+						if(text[i] == ' ') {
+							space += 1;
+						}
+					}
+				}
+				InsVLast(&list_txt, temp);
+			}
+				
+			GenerateSortedList(list_txt, &node_list, (double) len - space);
+			the_tree = GenerateHuffmanTree(&node_list);
+			PrintTree(the_tree.tree);		
+			the_codes.First = CreateHuffmanCode(the_tree);
+				
+			exist = ConvertToHuffmanCode(the_codes, list_txt, &converted_text);
+				
+			if(exist) {
+				printf("\nConversion : ");
+				PrintInfoInt(converted_text);
+			}
+		}
+	} else {
+		printf("The file doesn't exist!");
+	}
+	fclose(fsrc);
+}
+
 /*************** Destructor ***************/
+
 /**
  * Menghapus keberadaan node di memori
  **/
@@ -394,13 +480,11 @@ void Menu() {
 	printf("4 - Convert sentence to huffman code\n");
 	printf("5 - Convert code to symbol\n");
 	printf("6 - Delete huffman tree\n");
-	printf("7 - Exit\n");
+	printf("7 - Compress file\n");
+	printf("8 - Exit\n");
 	printf("Choose a number : ");
  }
-
-/**
- * Menampilkan submenu.
- */ 
+ 
 void InitMenu() {
 	printf("====================\n");
 	printf("INIT MENU\n");

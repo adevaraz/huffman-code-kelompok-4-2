@@ -165,6 +165,23 @@ void PrintInfo(List L);
 /*         elemen list di-print					 */
 /*         Jika list kosong, hanya menuliskan "List Kosong"	 */
 
+int NbElmt(List L);
+/* Mengirimkan banyaknya elemen list, mengirimkan Nol jika kosong */
+
+infotype Max(List L);
+/* Mengirimkan nilai info(P) yang maksimum */
+
+addr_string AdrMax(List L);
+/* mengirimkan addr_string P, dengan info (P) yang maksimum */
+
+infotype Min(List L);
+/* mengirimkan nilai info(P), yang minumum    */
+
+addr_string AdrMin(List L);
+/* mengirimkan addr_string P, dengan info(P) yang minimum */
+
+float Average(List L);
+/* mengirimkan nilai rata-rata info(P)	*/
 
 /******************************************************/
 /***   		PROSES TERHADAP LIST		    ***/
@@ -172,4 +189,57 @@ void PrintInfo(List L);
 void DelAll(List *L);
 /* Delete semua elemen list, dan alamat elemen di-dealokasi */
 
+void InversList(List *L);
+/* I.S   : sembarang  			*/
+/* F.S   : elemen list  dibalik		*/
+/*	   elemen terakhir menjadi elemen pertama, dst    */
+/*	   Membalik elemen list, tanpa alokasi/dealokasi  */
+
+List FInversList(List L);
+/* mengirimkan list baru, hasil invers dari L 	*/
+
+void CopyList(List L1, List *L2);
+/* I.S   : L1 sembarang 				*/
+/* F.S   : L1 dan L2 menunjuk ke list yang sama 	*/
+/*         tidak ada alokasi/dealokasi yang elemen	*/
+
+List FCopyList(List L);
+/* Mengirimkan list yang merupakan salinan L  		*/
+
+void CpAlokList(List Lin, List  *Lout);
+/* I.S   : Lin sembarang				    */
+/* F.S   : Jika semua alokasi berhasil, maka Lout berisi    */
+/*         hasil copy Lin. Jika ada alokasi yang  gagal     */
+/*         maka Lout=Nil, dan semua elemen yang terlanjur   */
+/*	   dialokasi, didealokasi dengan melakukan alokasi  */
+/*	   elemen. Lout adalah List kosong, jika ada alokasi*/
+/*	   elemen yang gagal				    */
+
+void konkat(List L1, List L2, List *L3);
+/* I.S   : L1 dan L2 sembarang				      */
+/* F.S   : L1 dan L2 tetap, L3 adalah hasil konkatenasi L1 &  */
+/*	   L2. Jika semua alokasi berhasil, maka L3  adalah   */
+/*	   hasil konkatenasi. Jika ada alokasi yang gagal,    */	
+/*	   semua elemen yang sudah dialokasi, di-dealokasi dan*/
+/*	   L3=Nil					      */
+
+void konkat1(List *L1, List *L2, List *L3);
+/* I.S  : L1 dan L2 sembarang				*/
+/* F.S  : L1 dan L2 kosong,  L3 adalah hasil konkatenasi*/
+/*	  L1 & L2, 					*/
+/* Konkatenasi 2 buah list : L1 dan L2 menghasilkan L3  */
+/* yang baru (dengan elemen list L1 dan L2). Dan L1 dan */
+/* L2 menjadi List kosong. Tidak ada alokasi/dealokasi  */
+
+void PecahList(List *L1, List *L2, List L);
+/* I.S  : L mungkin kosong  */
+/* F.S  : Berdasarkan L, dibentuk 2 buah list L1 dan L2     */
+/*        L tidak berubah. Untuk membentuk L1 dan L2 harus  */
+/*	  alokasi. L1 berisi separuh elemen  L dan L2 berisi*/
+/*	  sisa elemen L. Jika elemen L ganjil, maka separuh */
+/* 	  adalah NbElmt(L)div 2				    */
+
+boolean InitStr(List *sentence, int *spaces, int *len);
+boolean IsUnique(char text[]);
+void ToLowerSentence(char *text);
 #endif

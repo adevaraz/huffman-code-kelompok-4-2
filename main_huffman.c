@@ -14,7 +14,8 @@
 #define CONVERT_SENTENCE 4
 #define CONVERT_CODE 5
 #define DELETE_TREE 6
-#define EXIT 7
+#define COMPRESS_FILE 7
+#define EXIT 8
 
 #define INIT_BY_SENTENCE 1
 #define INIT_BY_C_P 2
@@ -72,8 +73,8 @@ int main() {
 							unique = InitStr(&sentence, &spaces, &len);
 							if(unique) {
 								printf("\nProcessing..\n");
-								GenerateSortedList(sentence, &node_list, (double) len - spaces);
-								
+								GenerateSortedList(sentence, &node_list, (double) (len - spaces));
+
 								the_tree = GenerateHuffmanTree(&node_list);
 
 								codes.First = CreateHuffmanCode(the_tree);
@@ -225,6 +226,10 @@ int main() {
 					printf("\nThe Huffman Tree is empty\n");
 				}
 
+			break;
+			
+			case COMPRESS_FILE :
+				CompressFile();
 			break;
 
 			case EXIT :
