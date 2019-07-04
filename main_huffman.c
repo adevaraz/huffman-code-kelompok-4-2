@@ -246,6 +246,7 @@ int main() {
 			break;
 			
 			case COMPRESS_FILE :
+				printf("Working..");
 				CompressFile();
 			break;
 
