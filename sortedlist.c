@@ -235,37 +235,23 @@ void GenerateSortedList(List string_l, sorted_list *sorted_l, double total) {
 				}
 				if(!found) {
 					n_node = Allocate(word[i], 0.0);
-					n_node->probability = prob;
+					n_node = Allocate(word[i], prob);
 					InsertSorted(sorted_l, n_node);
-					
 				}				
 			}
 		}
 		phelp = phelp->next;
+		ClearArray(word, MAX_WORD);
 	}
 }
 
-/**
- * Membuat list terurut melalui probabilitas
- * yang sudah ada
- **/
 int InitFromProb(sorted_list *L) {
 	addr_huffman n_node;
 	infotype info;
 	double prob;
 	int i, n;
-	
-	do{
-		printf("\nHow many character do you want to enter? : ");
-		fflush(stdin);
-		scanf(" %d", &n);
-		if(n < 1){
-			printf("\nPlease enter the right number.\n");
-		} else {
-			break;
-		}		
-	}while(true);
-
+	printf("\nHow many character do you want to enter? : ");
+	scanf(" %d", &n);
 	
 	if(n != 1) {
 		for(i = 0; i < n; i++) {
@@ -282,9 +268,6 @@ int InitFromProb(sorted_list *L) {
 	return n;
 }
 
-/**
- * Menampilkan list yang terurut ke layar
- **/
 void PrintSorted(sorted_list the_list) {
 	addr_sorted phelp = the_list.front;
 	
@@ -296,9 +279,6 @@ void PrintSorted(sorted_list the_list) {
 	}
 }
 
-/**
- * Membuat salinan dari sebuah node
- **/
 void CopyElmt(addr_sorted *dest, addr_sorted source) {
 	*dest = AllocateElmt(source->info);
 }

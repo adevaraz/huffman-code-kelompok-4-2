@@ -334,13 +334,14 @@ void DeleteHuffmanTree(addr_huffman the_node) {
  * Hasil kompresi melalui Huffman Code disimpan ke file dalam bentuk simbol-simbol ASCII.
  **/
 void CompressFile() {
-	char text[100], src_file[100], temp[26];
+	char text[100], src_file[100], temp[26], compressed[100];
 	int space = 0;
 	int len = 0;
 	int i, j;
+	addr_int phelp;
 	List list_txt;
 	boolean unique, exist;
-	FILE *fsrc;
+	FILE *fsrc, *fdest;
 	huffman_tree the_tree;
 	sorted_list node_list;
 	ListCode the_codes;
@@ -352,16 +353,19 @@ void CompressFile() {
 	ClearArray(src_file, 100);
 	CreateList(&list_txt);
 	
-	fsrc = fopen("cerpen_nz.txt", "r");
+	printf("\nEnter the file name : ");
+	fflush(stdin);
+	scanf(" %s", src_file);
+	
+	fsrc = fopen(src_file, "r");
 	
 	if(fsrc != NULL) {
 		while(fread(&text, (sizeof(char)) * 100 , 1, fsrc) != 0) {
 			if(feof(fsrc)) {
 				break;
 			}
-		}
-		printf("Text : %s\n", text);
-			
+		}	
+		
 		ToLowerSentence(text);
 		unique = IsUnique(text);
 				
@@ -386,18 +390,37 @@ void CompressFile() {
 					}
 				}
 				InsVLast(&list_txt, temp);
+				ClearArray(temp, 26);
 			}
 				
 			GenerateSortedList(list_txt, &node_list, (double) len - space);
-			the_tree = GenerateHuffmanTree(&node_list);
-			PrintTree(the_tree.tree);		
+			the_tree = GenerateHuffmanTree(&node_list);		
 			the_codes.First = CreateHuffmanCode(the_tree);
 				
 			exist = ConvertToHuffmanCode(the_codes, list_txt, &converted_text);
-				
+			
 			if(exist) {
-				printf("\nConversion : ");
-				PrintInfoInt(converted_text);
+				fdest = fopen(COMPRESSED_FILE, "w+");
+				
+				phelp = converted_text.First;
+				ClearArray(compressed, 100);
+				i = 0;
+				while(phelp != NULL) {
+					//For sampe 8 kali
+					//Konversi ke dec
+					//Cast ke char
+					//Simpen ke file
+					compressed[i]  = phelp->info;
+					phelp = phelp->next;
+					i++;
+				}
+				
+				fprintf(fdest, compressed);
+				
+				printf("Conversion completed.\n");
+				fclose(fdest);
+			} else {
+				printf("Compression failed.");
 			}
 		}
 	} else {
