@@ -281,6 +281,7 @@ boolean ConvertToHuffmanCode(ListCode the_codes, List sentence, IntList *output)
 	CreateListInt(output);
 	pword = sentence.First;
 	
+	//Loop for checking whether the word can be converted or no
 	while(pword != NULL && same) {
 		len = strlen(pword->info);
 		i = 0;
@@ -410,13 +411,11 @@ void CompressFile() {
 					//Konversi ke dec
 					//Cast ke char
 					//Simpen ke file
-					compressed[i]  = phelp->info;
+					itoa(phelp->info, &compressed[i], 10);
 					phelp = phelp->next;
 					i++;
 				}
-				
 				fprintf(fdest, compressed);
-				
 				printf("Conversion completed.\n");
 				fclose(fdest);
 			} else {
