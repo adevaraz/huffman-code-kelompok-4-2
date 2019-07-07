@@ -57,6 +57,8 @@ void DeleteHuffmanTree(addr_huffman the_node);
 
 /********** Compressing Operation **********/
 void CompressFile();
+unsigned long binaryToDecimal(char *binary, int length);
+void binaryToText(char *binary, int binaryLength, char *text, int symbolCount);
 
 /*************** Destructor ***************/
 addr_huffman Dealloc(addr_huffman *N);

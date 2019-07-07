@@ -408,16 +408,13 @@ void CompressFile() {
 				ClearArray(compressed, 100);
 				i = 0;
 				while(phelp != NULL) {
-					//For sampe 8 kali
-					//Konversi ke dec
-					//Cast ke char
-					//Simpen ke file
 					itoa(phelp->info, &compressed[i], 10);
 					phelp = phelp->next;
 					i++;
 				}
 			    binaryLength = strlen(compressed);
 			    symbolCount = binaryLength / 8 + 1;
+			    compressed_text = malloc(symbolCount + 1);
 				binaryToText(compressed, binaryLength, compressed_text, symbolCount);
 				fprintf(fdest, compressed_text);
 				printf("Conversion completed.\n");
@@ -429,6 +426,7 @@ void CompressFile() {
 	} else {
 		printf("The file doesn't exist!");
 	}
+	free(compressed_text);
 	fclose(fsrc);
 }
 
