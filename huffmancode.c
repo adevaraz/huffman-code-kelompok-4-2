@@ -336,9 +336,10 @@ void DeleteHuffmanTree(addr_huffman the_node) {
  **/
 void CompressFile() {
 	char text[100], src_file[100], temp[26], compressed[100];
+	char *compressed_text;
 	int space = 0;
 	int len = 0;
-	int i, j;
+	int i, j, binaryLength, symbolCount;
 	addr_int phelp;
 	List list_txt;
 	boolean unique, exist;
@@ -415,7 +416,10 @@ void CompressFile() {
 					phelp = phelp->next;
 					i++;
 				}
-				fprintf(fdest, compressed);
+			    binaryLength = strlen(compressed);
+			    symbolCount = binaryLength / 8 + 1;
+				binaryToText(compressed, binaryLength, compressed_text, symbolCount);
+				fprintf(fdest, compressed_text);
 				printf("Conversion completed.\n");
 				fclose(fdest);
 			} else {
@@ -426,6 +430,33 @@ void CompressFile() {
 		printf("The file doesn't exist!");
 	}
 	fclose(fsrc);
+}
+
+unsigned long binaryToDecimal(char *binary, int length) {
+    int i;
+    int len = length - 1;
+    unsigned long decimal = 0;
+    unsigned long weight = 1;
+    binary += len;
+    weight = 1;
+    for(i = 0; i < len; i++, binary--) {
+        if(*binary == '1') {
+            decimal += weight;
+            weight *= 2;
+        }
+    }
+    
+	return decimal;
+}
+
+void binaryToText(char *binary, int binaryLength, char *text, int symbolCount) {
+    int i;
+    for(i = 0; i < binaryLength; i+=8, binary += 8) {
+        char *byte = binary;
+        byte[8] = '\0';
+        *text++ = binaryToDecimal(byte, 8);
+    }
+    text -= symbolCount;
 }
 
 /*************** Destructor ***************/
