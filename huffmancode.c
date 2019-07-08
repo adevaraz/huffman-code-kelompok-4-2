@@ -387,7 +387,8 @@ void CompressFile() {
 					} else {
 						stop = true;
 						if(text[i] == ' ') {
-							space += 1;
+							temp[j] = text[i];
+//							space += 1;
 						}
 					}
 				}
@@ -395,10 +396,10 @@ void CompressFile() {
 				ClearArray(temp, 26);
 			}
 				
-			GenerateSortedList(list_txt, &node_list, (double) len - space);
+			GenerateSortedList(list_txt, &node_list, (double) len);
 			the_tree = GenerateHuffmanTree(&node_list);		
 			the_codes.First = CreateHuffmanCode(the_tree);
-				
+			PrintTree(the_tree.tree);
 			exist = ConvertToHuffmanCode(the_codes, list_txt, &converted_text);
 			
 			if(exist) {
